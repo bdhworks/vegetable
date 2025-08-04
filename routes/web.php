@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DiscountCodeController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\GroupController;
 use App\Http\Controllers\Admin\ModuleController;
@@ -114,6 +115,19 @@ Route::prefix('admin')->group(function () {
 
             Route::get('active/{id}', [ProductController::class, 'active'])->name('active');
             Route::get('hidden/{id}', [ProductController::class, 'hidden'])->name('hidden');
+        });
+
+        // Mã code giảm giá
+        Route::prefix('discount-code')->name('discountCode.')->group(function () {
+            Route::get('/', [DiscountCodeController::class, 'index'])->name('index');
+            Route::get('create', [DiscountCodeController::class, 'create'])->name('create');
+            Route::post('create', [DiscountCodeController::class, 'store'])->name('store');
+            Route::get('edit/{id}', [DiscountCodeController::class, 'edit'])->name('edit');
+            Route::post('edit/{id}', [DiscountCodeController::class, 'update'])->name('update');
+            Route::post('delete', [DiscountCodeController::class, 'destroy'])->name('destroy');
+
+            Route::get('active/{post}', [DiscountCodeController::class, 'active'])->name('active');
+            Route::get('hidden/{post}', [DiscountCodeController::class, 'hidden'])->name('hidden');
         });
 
         // Discount

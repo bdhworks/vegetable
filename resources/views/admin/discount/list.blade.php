@@ -30,6 +30,9 @@
                                     <h6 class="fw-semibold mb-0">#</h6>
                                 </th>
                                 <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0 text-center">Mã code</h6>
+                                </th>
+                                <th class="border-bottom-0">
                                     <h6 class="fw-semibold mb-0 text-center">Tên mã giảm giá</h6>
                                 </th>
                                 <th class="border-bottom-0 text-center">
@@ -50,7 +53,7 @@
                                 <th class="border-bottom-0 text-center">
                                     <h6 class="fw-semibold mb-0">Hành động</h6>
                                 </th>
-                                
+
                             </tr>
                         </thead>
                         <tbody>
@@ -60,6 +63,9 @@
                                     <tr>
                                         <td class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0 text-center">{{$discount->id}}</h6>
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0 text-center">{{$discount->code_id}}</h6>
                                         </td>
                                         <td class="border-bottom-0 ">
                                             <h6 class="fw-semibold mb-0 text-center">{{$discount->name}}</h6>
@@ -91,14 +97,14 @@
                                         </td>
                                         <td class="border-bottom-0 text-center d-flex justify-content-center">
                                             <a href="{{route('discount.edit', $discount)}}" class="btn btn-outline-secondary m-1">Sửa</a>
-    
+
                                             <button type="button" name="delete-discount" data-id_discount="{{ $discount->id }}" class="btn btn-outline-danger m-1 delete-discount">
                                                 Xóa
-                                            </button>   
+                                            </button>
                                         </td>
                                     </tr>
                                 </form>
-                                
+
                             @endforeach
                         </tbody>
                     </table>
