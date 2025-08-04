@@ -74,16 +74,22 @@
                                             <h6 class="fw-semibold mb-0 text-center">{{$discount->code}}</h6>
                                         </td>
                                         <td class="border-bottom-0 ">
-                                            <h6 class="fw-semibold mb-0 text-center">{{$discount->value}}</h6>
+                                            <h6 class="fw-semibold mb-0 text-center">
+                                                @if ($discount->condition == 1)
+                                                    <h6 class="fw-semibold mb-0 text-center">{{ number_format($discount->value) }} %</h6>
+                                                @else
+                                                    <h6 class="fw-semibold mb-0 text-center">{{ number_format($discount->value) }} VNĐ</h6>
+                                                @endif
+                                            </h6>
                                         </td>
                                         <td class="border-bottom-0 ">
                                             <h6 class="fw-semibold mb-0 text-center">{{$discount->quantity}}</h6>
                                         </td>
                                         <td class="border-bottom-0 ">
                                             @if ($discount->condition == 1)
-                                                <h6 class="fw-semibold mb-0 text-center">Giảm {{ $discount->value }} %</h6>
+                                                <h6 class="fw-semibold mb-0 text-center">Giảm %</h6>
                                             @else
-                                                <h6 class="fw-semibold mb-0 text-center">Giảm {{ number_format($discount->value) }} VNĐ</h6>
+                                                <h6 class="fw-semibold mb-0 text-center">Giảm theo tiền</h6>
                                             @endif
                                         </td>
                                         <td class="border-bottom-0 text-center">
