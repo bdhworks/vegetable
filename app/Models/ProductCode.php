@@ -19,6 +19,6 @@ class ProductCode extends Model
     ];
 
     public function Products() {
-        return $this->hasMany(ProductCode::class);
+        return $this->hasMany(Product::class);
     }
 }

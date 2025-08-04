@@ -861,7 +861,11 @@ ol {
 }
 
 .featured__item {
-	margin-bottom: 50px;
+	height: 410px;
+    margin-bottom: 50px;
+    border: 1px solid;
+	border-radius: 5px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .featured__item:hover .featured__item__pic .featured__item__pic__hover {
@@ -937,7 +941,7 @@ ol {
 }
 
 .featured__item__text {
-	text-align: center;
+	margin-left: 15px;
 	padding-top: 15px;
 	
 }
@@ -3242,7 +3246,7 @@ ol {
 		margin-bottom: 30px;
 	}
 	.hero__search__form {
-		width: 100%;
+		width: 92%;
 	}
 	.hero__search__form form input {
 		width: 100%;
@@ -3252,7 +3256,7 @@ ol {
 	}
 	.hero__search__phone {
 		float: left;
-		margin-top: 30px;
+		margin-top: 70px;
 	}
 	.categories__slider.owl-carousel .owl-nav {
 		text-align: center;

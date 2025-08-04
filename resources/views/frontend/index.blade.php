@@ -42,7 +42,7 @@
                                 </ul>
                             </div>
                             <div class="featured__item__text">
-                                <span class="text-warning">Đã bán {{$product->sold}}</span>
+                                <span class="text-warning" style="margin-bottom: 10px">Đã bán {{$product->sold}}</span>
                                 <h4>{{ number_format($product->price_sale) }} VNĐ</h4>
                                 <h4><a href="{{route('product', [$product,Str::slug($product->name)])}}">{{$product->name}}</a></h4>
 

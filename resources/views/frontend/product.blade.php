@@ -53,19 +53,19 @@
                         </div>
                         <button type="submit" class="primary-btn border-0">Thêm vào giỏ hàng</button>
                         <ul>
-                            <li><b>Mã sản phẩm</b>{{$product->product_code}}</li>
+                            <li><b>Mã sản phẩm :</b>{{$product->productCode->name}}</li>
                             <li>
-                                <b>Tình trạng</b>
+                                <b>Tình trạng :</b>
                                 @if ($product->quantity > 0)
                                 <span class="text-success">Còn hàng</span>
                                 @else
                                 <span class="text-danger">Hết hàng</span>
                                 @endif
                             </li>
-                            <li><b>Đã bán</b> {{$product->sold}} sản phẩm</li>
-                            <li><b>Xuất xứ</b> {{$product->origin->name}}</li>
-                            <li><b>Khối lượng</b>{{$product->weight}} / hộp</li>
-                            <li><b>Chính sách giao hàng</b>Nhận hàng trong 4 tiếng - 6 tiếng</li>
+                            <li><b>Đã bán :</b> {{$product->sold}} sản phẩm</li>
+                            <li><b>Xuất xứ :</b> {{$product->origin->name}}</li>
+                            <li><b>Khối lượng :</b>{{$product->weight}} / hộp</li>
+                            <li><b>Chính sách giao hàng :</b>Nhận hàng trong 4 tiếng - 6 tiếng</li>
                             <li><b>Chia sẻ</b>
                                 <div class="share">
                                     <a href="#"><i class="fa fa-facebook"></i></a>
