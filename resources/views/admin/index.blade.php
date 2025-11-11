@@ -1213,7 +1213,7 @@
 
 .performance-title {
     font-size: 1.375rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--text-primary);
     margin: 0 0 0.25rem 0;
     font-family: 'Poppins', sans-serif;

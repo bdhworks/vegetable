@@ -640,6 +640,7 @@
         .nav-icon {
             font-size: 15px;
             color: inherit;
+            color: #e2e8f0;
         }
 
         .nav-text {
@@ -1443,7 +1444,7 @@
         }
 
         .section-title {
-            font-size: 11px;
+            font-size: 16px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
