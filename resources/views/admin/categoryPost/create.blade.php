@@ -1,7 +1,7 @@
 @extends('admin.layout.master')
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container">
         <h1 class="mt-4">Thêm danh mục bài viết</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="{{ route('categoryPost.index') }}">Danh sách danh mục bài viết</a></li>

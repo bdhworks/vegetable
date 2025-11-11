@@ -292,7 +292,7 @@
         }
 
         .section-title {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 800;
             color: #333;
             margin-bottom: 10px;

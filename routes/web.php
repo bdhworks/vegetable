@@ -43,7 +43,7 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 
 //--------------------------Admin-------------------------------------
 
-Route::prefix('admin')->group(function () {
+Route::prefix('ad')->group(function () {
 
     //Auth
     Route::get('login', [AuthController::class, 'login'])->name('admin.login');

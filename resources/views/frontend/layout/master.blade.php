@@ -7,6 +7,7 @@
     <meta name="keywords" content="Vegetable, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/png" href="{{ asset('assets/frontend/img/icon_logo.png') }}">
     <title>Nông Sản Việt</title>
 
     <!-- Google Font -->
@@ -289,7 +290,7 @@
         }
 
         .logo-section .logo img {
-            max-height: 50px;
+            max-height: 68px;
             width: auto;
         }
 
@@ -1210,7 +1211,7 @@
         }
 
         .footer-logo-img {
-            height: 60px;
+            height: 130px;
             filter: brightness(1.4) contrast(1.2);
         }
 
@@ -1873,7 +1874,6 @@
                         <div class="footer-brand">
                             <div class="brand-logo mb-4">
                                 <img src="/assets/frontend/img/logo.png" alt="Nông Sản Việt" class="footer-logo-img">
-                                <h3 class="brand-name">Nông Sản Việt</h3>
                             </div>
                             <p class="brand-description">
                                 🌱 Mang thiên nhiên tươi xanh đến từng gia đình Việt. Chúng tôi cam kết cung cấp nông sản sạch, 
@@ -1962,7 +1962,7 @@
                                 </p>
                                 <form class="newsletter-form-modern">
                                     <div class="newsletter-input-group">
-                                        <input type="email" placeholder="email@example.com" required>
+                                        <input type="email" required>
                                         <button type="submit">
                                             <i class="fa fa-rocket"></i>
                                         </button>
@@ -2098,7 +2098,7 @@
             });
 
             // Original search functionality
-            $('#search').keyup(function() {
+            /**$('#search').keyup(function() {
                 $('#result').html('');
                 var search = $('#search').val();
                 if (search != '') {
@@ -2126,7 +2126,7 @@
                 $('#result').html('');
                 $('#result').css('display', 'none');
                 $('.search-input-wrapper').addClass('active');
-            });
+            });**/
 
 
             // delete group

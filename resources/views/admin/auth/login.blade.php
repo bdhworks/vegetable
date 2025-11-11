@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Quản trị viên - đăng nhâp</title>
+    <link rel="icon" type="image/png" href="{{ asset('assets/frontend/img/icon_logo.png') }}">
+    <title>Admin - Login</title>
     <link rel="stylesheet" href="/assets/admin/css/styles.min.css" />
 </head>
 

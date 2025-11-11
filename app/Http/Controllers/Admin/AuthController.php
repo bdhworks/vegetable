@@ -22,7 +22,7 @@ class AuthController extends Controller
         if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
  
-            return redirect()->intended('admin/dashboard')->with('success','Xin chào ' . Auth::guard('admin')->user()->name . ', chào mừng quay trở lại.');
+            return redirect()->intended('ad/dashboard')->with('success','Xin chào ' . Auth::guard('admin')->user()->name . ', chào mừng quay trở lại.');
         }
  
         return back()->withErrors([
@@ -35,7 +35,7 @@ class AuthController extends Controller
  
         $request->session()->regenerateToken();
     
-        return redirect('/admin/login');
+        return redirect('/ad/login');
     }
 
     public function password(){

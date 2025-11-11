@@ -3,7 +3,7 @@
 @section('content')
 
 
-<div class="container-fluid">
+<div class="container">
 
     <h1 class="mt-4">Danh sách danh mục bài viết</h1>
     <ol class="breadcrumb mb-4">
