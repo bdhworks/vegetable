@@ -865,7 +865,7 @@
             right: -4px;
             width: 18px;
             height: 18px;
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            background: #dc2626;
             color: white;
             border-radius: 50%;
             font-size: 10px;

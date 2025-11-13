@@ -1,5 +1,5 @@
 
-@extends('frontend.layout.master')
+@extends('frontend.layout.fe')
 
 @section('content')
     <!-- Breadcrumb Section Begin -->
