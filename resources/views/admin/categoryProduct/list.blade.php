@@ -1,8 +1,13 @@
 @extends('admin.layout.be')
 
+@section('title_one')
+Danh mục sản phẩm
+@endsection
+@section('title_two')
+Quản lý sản phẩm / Danh mục
+@endsection
+
 @section('content')
-
-
 <div class="container-fluid">
 
     <h1 class="mt-4">Danh mục sản phẩm</h1>

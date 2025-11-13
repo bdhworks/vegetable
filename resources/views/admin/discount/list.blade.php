@@ -1,8 +1,13 @@
 @extends('admin.layout.be')
 
+@section('title_one')
+Khuyến mãi
+@endsection
+@section('title_two')
+Quản lý sản phẩm / Mã sản phẩm
+@endsection
+
 @section('content')
-
-
 <div class="container-fluid">
 
     <h1 class="mt-4">Danh sách mã giảm giá</h1>

@@ -255,7 +255,7 @@ Route::get('/', [ShopController::class, 'index'])->name('home');
 Route::get('/bai-viet', [HomeController::class, 'blog'])->name('blog');
 Route::get('/bai-viet-chi-tiet/{id}', [HomeController::class, 'blogDetail'])->name('blogDetail');
 
-Route::get('/cua-hang', [ShopController::class, 'shop'])->name('shop');
+Route::get('/san-pham', [ShopController::class, 'shop'])->name('shop');
 Route::get('/danh-muc/{category_id}', [ShopController::class, 'getProductByCategory'])->name('category');
 Route::get('/thuong-hieu/{brand_id?}', [ShopController::class, 'getProductByBrand'])->name('brand');
 Route::get('/san-pham/{product}-{product_slug}', [ShopController::class, 'product'])->name('product');

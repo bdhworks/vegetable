@@ -1,8 +1,13 @@
 @extends('admin.layout.be')
 
+@section('title_one')
+Bài viết
+@endsection
+@section('title_two')
+Quản lý nội dung / Bài viết
+@endsection
+
 @section('content')
-
-
 <div class="container-fluid">
 
     <h1 class="mt-4">Danh sách bài viết</h1>

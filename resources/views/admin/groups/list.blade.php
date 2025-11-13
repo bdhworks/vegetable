@@ -1,8 +1,13 @@
 @extends('admin.layout.be')
 
+@section('title_one')
+Phân quyền
+@endsection
+@section('title_two')
+Quản lý người dùng / Phân quyền
+@endsection
+
 @section('content')
-
-
 <div class="container-fluid">
 
     <h1 class="mt-4">Nhóm người dùng</h1>

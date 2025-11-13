@@ -1,5 +1,12 @@
 @extends('admin.layout.be')
 
+@section('title_one')
+Xuất xứ
+@endsection
+@section('title_two')
+Quản lý sản phẩm / Xuất xứ
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <h1 class="mt-4">Xuất xứ sản phẩm</h1>

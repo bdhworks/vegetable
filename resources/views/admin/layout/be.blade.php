@@ -1638,8 +1638,8 @@
                                     <i class="fas fa-chart-pie" id="page-icon"></i>
                                 </div>
                                 <div class="page-text">
-                                    <h6 class="page-title" id="page-title">Dashboard</h6>
-                                    <p class="page-breadcrumb" id="page-breadcrumb">Trang chủ / Quản lý hệ thống</p>
+                                    <h6 class="page-title" id="page-title">@yield('title_one') </h6>
+                                    <p class="page-breadcrumb" id="page-breadcrumb">@yield('title_two')</p>
                                 </div>
                             </div>
                         </div>
@@ -1960,7 +1960,7 @@
     <script>
         // Enhanced header interactions
         document.addEventListener('DOMContentLoaded', function() {
-            // Update time displays
+            Update time displays
             function updateTimeDisplays() {
                 const now = new Date();
                 const timeString = now.toLocaleTimeString('vi-VN', {
@@ -1978,7 +1978,7 @@
             setInterval(updateTimeDisplays, 1000);
             updateTimeDisplays();
 
-            // Enhanced page title and breadcrumb management - FIXED
+            Enhanced page title and breadcrumb management - FIXED
             function updatePageInfo() {
                 const currentPath = window.location.pathname;
                 const titleElement = document.getElementById('page-title');

@@ -967,7 +967,7 @@
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
                 <li class="active"><a href="{{route('home')}}">Trang chủ</a></li>
-                <li><a href="{{route('shop')}}">Cửa hàng</a></li>
+                <li><a href="{{route('shop')}}">Sản phẩm</a></li>
                 <li><a href="#">Thương hiệu</a>
                     <ul class="header__menu__dropdown">
                          @foreach ($brands as $brand)
@@ -1069,7 +1069,7 @@
                     <a href="#" class="action-beautiful">
                         <div class="action-icon-beautiful">
                             <i class="fa fa-heart"></i>
-                            <span class="action-badge-beautiful">3</span>
+                            <span class="action-badge-beautiful"></span>
                         </div>
                         <div class="action-text-beautiful">Yêu thích</div>
                     </a>

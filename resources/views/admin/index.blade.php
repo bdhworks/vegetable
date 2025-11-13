@@ -1,5 +1,13 @@
 @extends('admin.layout.be')
 
+@section('title_one')
+Dashboard
+@endsection
+
+@section('title_two')
+Trang chủ / Quản lý hệ thống
+@endsection
+
 @section('content')
 <div class="dashboard-container">
     <!-- Welcome Section - Redesigned -->
