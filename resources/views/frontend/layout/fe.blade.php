@@ -1224,6 +1224,17 @@
                                 <div class="action-text-beautiful">{{ Auth::guard('web')->user()->name }}</div>
                             </div>
                         </a>
+
+                        <a href="#" class="action-beautiful wishlist-action">
+                            <div class="action-icon-wrapper">
+                                <i class="action-icon-beautiful fa fa-heart"></i>
+                                <span class="action-badge-beautiful">0</span>
+                            </div>
+                            <div class="action-content-beautiful">
+                                <div class="action-label-beautiful">Danh sách</div>
+                                <div class="action-text-beautiful">Yêu thích</div>
+                            </div>
+                        </a>
                     @else
                         <a href="{{route('login')}}" class="action-beautiful login-action">
                             <div class="action-icon-wrapper">
@@ -1235,17 +1246,6 @@
                             </div>
                         </a>
                     @endif
-
-                    <a href="#" class="action-beautiful wishlist-action">
-                        <div class="action-icon-wrapper">
-                            <i class="action-icon-beautiful fa fa-heart"></i>
-                            <span class="action-badge-beautiful">0</span>
-                        </div>
-                        <div class="action-content-beautiful">
-                            <div class="action-label-beautiful">Danh sách</div>
-                            <div class="action-text-beautiful">Yêu thích</div>
-                        </div>
-                    </a>
 
                     <a href="{{route('cart')}}" class="action-beautiful cart-action">
                         <div class="action-icon-wrapper">

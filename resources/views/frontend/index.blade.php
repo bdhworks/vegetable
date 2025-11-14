@@ -347,7 +347,7 @@
                             <i class="fa fa-heart-o"></i>
                         </button>
                         <button class="action-icon-btn" title="Xem nhanh">
-                            <i class="fa fa-search"></i>
+                            <i class="fa fa-eye"></i>
                         </button>
                         <button class="action-icon-btn" title="So sánh">
                             <i class="fa fa-exchange"></i>
