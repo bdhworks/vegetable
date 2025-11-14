@@ -17,8 +17,8 @@ class CartController extends Controller
 
     public function add(Product $product, Request $request){
         $quantity = $request->quantity ?? 1;
-
         $priceProduct = $product->price_sale;
+        $qty = $product->quantity;
 
         if($quantity > $product->quantity){
             toastr()->error('Quá số lượng sản phẩm.');
@@ -36,6 +36,7 @@ class CartController extends Controller
                     'image' => $product->images->first()->image,
                     'name' => $product->name,
                     'quantity' => $quantity,
+                    'qty' => $qty,
                     'price'=> $priceProduct,
                 ];
             }

@@ -350,79 +350,199 @@
             box-shadow: var(--shadow-soft);
         }
 
-        /* Beautiful Header Actions */
+        /* Beautiful Header Actions - Compact Borderless Design */
         .header-actions-beautiful {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 8px;
         }
 
         .action-beautiful {
             position: relative;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            padding: 12px 16px;
-            background: var(--neutral-gray-50);
-            border: 2px solid transparent;
-            border-radius: var(--border-radius-xl);
+            gap: 10px;
+            padding: 10px 14px;
+            background: transparent;
+            border: none;
+            border-radius: var(--border-radius-lg);
             text-decoration: none;
-            color: var(--neutral-gray-600);
+            color: var(--neutral-gray-700);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            min-width: 70px;
+            min-height: 48px;
             font-size: 12px;
-            text-align: center;
-            box-shadow: var(--shadow-subtle);
         }
 
         .action-beautiful:hover {
-            border-color: var(--primary-emerald);
-            background: white;
-            color: var(--primary-emerald);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-soft);
+            transform: translateY(-2px);
+        }
+
+        .action-icon-wrapper {
+            position: relative;
+            width: 38px;
+            height: 38px;
+            border-radius: var(--border-radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+        }
+
+        .action-beautiful:hover .action-icon-wrapper {
+            transform: scale(1.15);
         }
 
         .action-icon-beautiful {
             font-size: 20px;
-            margin-bottom: 4px;
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
 
-        .action-beautiful:hover .action-icon-beautiful {
-            transform: scale(1.15);
+        .action-content-beautiful {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            min-width: 65px;
+        }
+
+        .action-label-beautiful {
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.5;
+            line-height: 1;
         }
 
         .action-text-beautiful {
-            font-size: 11px;
-            font-weight: 600;
-            line-height: 1;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1.2;
             font-family: 'Inter', sans-serif;
         }
 
         .action-badge-beautiful {
             position: absolute;
-            top: 4px;
-            right: 8px;
-            background: var(--gradient-sunset);
+            top: -4px;
+            right: -4px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
             color: white;
             font-size: 10px;
-            font-weight: 700;
-            padding: 3px 6px;
+            font-weight: 800;
+            padding: 2px 6px;
             border-radius: var(--border-radius-full);
             min-width: 18px;
             height: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: var(--shadow-subtle);
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
             border: 2px solid white;
-            animation: badgeBounce 2s ease-in-out infinite;
+            z-index: 10;
         }
 
-        @keyframes badgeBounce {
+        /* Login Action Styles */
+        .action-beautiful.login-action .action-icon-wrapper {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            color: #3b82f6;
+        }
+
+        .action-beautiful.login-action:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .action-beautiful.login-action:hover .action-icon-wrapper {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .action-beautiful.login-action:hover .action-text-beautiful {
+            color: #1e40af;
+        }
+
+        /* Account Action Styles */
+        .action-beautiful.account-action .action-icon-wrapper {
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            color: #6366f1;
+        }
+
+        .action-beautiful.account-action:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .action-beautiful.account-action:hover .action-icon-wrapper {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .action-beautiful.account-action:hover .action-text-beautiful {
+            color: #4338ca;
+        }
+
+        /* Wishlist Action Styles */
+        .action-beautiful.wishlist-action .action-icon-wrapper {
+            background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+            color: #ec4899;
+        }
+
+        .action-beautiful.wishlist-action:hover {
+            background: rgba(236, 72, 153, 0.05);
+        }
+
+        .action-beautiful.wishlist-action:hover .action-icon-wrapper {
+            background: linear-gradient(135deg, #ec4899, #db2777);
+            color: white;
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+        }
+
+        .action-beautiful.wishlist-action:hover .action-text-beautiful {
+            color: #be185d;
+        }
+
+        .action-beautiful.wishlist-action:hover .action-icon-beautiful {
+            animation: heartBeat 0.6s ease-in-out;
+        }
+
+        @keyframes heartBeat {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.15); }
+            25% { transform: scale(1.15); }
+            50% { transform: scale(0.95); }
+            75% { transform: scale(1.1); }
+        }
+
+        /* Cart Action Styles */
+        .action-beautiful.cart-action .action-icon-wrapper {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            color: var(--primary-emerald);
+        }
+
+        .action-beautiful.cart-action:hover {
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .action-beautiful.cart-action:hover .action-icon-wrapper {
+            background: var(--gradient-emerald);
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .action-beautiful.cart-action:hover .action-text-beautiful {
+            color: var(--primary-emerald-dark);
+        }
+
+        .action-beautiful.cart-action:hover .action-icon-beautiful {
+            animation: cartShake 0.5s ease-in-out;
+        }
+
+        @keyframes cartShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-2px) rotate(-3deg); }
+            75% { transform: translateX(2px) rotate(3deg); }
         }
 
         /* Beautiful Navigation */
@@ -648,7 +768,7 @@
 
             .header-actions-beautiful {
                 order: 2;
-                gap: 12px;
+                gap: 6px;
             }
 
             .nav-beautiful {
@@ -667,13 +787,24 @@
                 display: none;
             }
 
-            .action-text-beautiful {
+            .action-content-beautiful {
                 display: none;
             }
 
             .action-beautiful {
-                min-width: 50px;
-                padding: 10px;
+                padding: 8px;
+                min-height: 42px;
+                min-width: 42px;
+                justify-content: center;
+            }
+
+            .action-icon-wrapper {
+                width: 36px;
+                height: 36px;
+            }
+
+            .action-icon-beautiful {
+                font-size: 18px;
             }
 
             .features-beautiful {
@@ -705,12 +836,32 @@
             }
 
             .action-beautiful {
-                min-width: 44px;
-                padding: 8px;
+                padding: 6px;
+                min-height: 38px;
+                min-width: 38px;
+            }
+
+            .action-icon-wrapper {
+                width: 32px;
+                height: 32px;
             }
 
             .action-icon-beautiful {
-                font-size: 18px;
+                font-size: 16px;
+            }
+
+            .action-badge-beautiful {
+                top: -3px;
+                right: -3px;
+                min-width: 16px;
+                height: 16px;
+                font-size: 9px;
+                padding: 2px 4px;
+                border-width: 1.5px;
+            }
+
+            .header-actions-beautiful {
+                gap: 4px;
             }
         }
 
@@ -781,6 +932,19 @@
 
         .footer-logo {
             margin-bottom: 24px;
+        }
+
+        .footer-logo a {
+            transition: all 0.3s ease;
+            display: inline-flex;
+        }
+
+        .footer-logo a:hover {
+            transform: translateY(-2px);
+        }
+
+        .footer-logo a:hover img {
+            filter: brightness(1.3) drop-shadow(0 6px 12px rgba(16, 185, 129, 0.4));
         }
 
         .footer-logo img {
@@ -1051,35 +1215,47 @@
                 <!-- Beautiful Header Actions -->
                 <div class="header-actions-beautiful">
                     @if (Auth::guard('web')->check())
-                        <a href="{{route('account')}}" class="action-beautiful">
-                            <div class="action-icon-beautiful">
-                                <i class="fa fa-user-circle"></i>
+                        <a href="{{route('account')}}" class="action-beautiful account-action">
+                            <div class="action-icon-wrapper">
+                                <i class="action-icon-beautiful fa fa-user-circle"></i>
                             </div>
-                            <div class="action-text-beautiful">Tài khoản</div>
+                            <div class="action-content-beautiful">
+                                <div class="action-label-beautiful">Xin chào</div>
+                                <div class="action-text-beautiful">{{ Auth::guard('web')->user()->name }}</div>
+                            </div>
                         </a>
                     @else
-                        <a href="{{route('login')}}" class="action-beautiful">
-                            <div class="action-icon-beautiful">
-                                <i class="fa fa-sign-in"></i>
+                        <a href="{{route('login')}}" class="action-beautiful login-action">
+                            <div class="action-icon-wrapper">
+                                <i class="action-icon-beautiful fa fa-sign-in"></i>
                             </div>
-                            <div class="action-text-beautiful">Đăng nhập</div>
+                            <div class="action-content-beautiful">
+                                <div class="action-label-beautiful">Chào bạn</div>
+                                <div class="action-text-beautiful">Đăng nhập</div>
+                            </div>
                         </a>
                     @endif
 
-                    <a href="#" class="action-beautiful">
-                        <div class="action-icon-beautiful">
-                            <i class="fa fa-heart"></i>
-                            <span class="action-badge-beautiful"></span>
+                    <a href="#" class="action-beautiful wishlist-action">
+                        <div class="action-icon-wrapper">
+                            <i class="action-icon-beautiful fa fa-heart"></i>
+                            <span class="action-badge-beautiful">0</span>
                         </div>
-                        <div class="action-text-beautiful">Yêu thích</div>
+                        <div class="action-content-beautiful">
+                            <div class="action-label-beautiful">Danh sách</div>
+                            <div class="action-text-beautiful">Yêu thích</div>
+                        </div>
                     </a>
 
-                    <a href="{{route('cart')}}" class="action-beautiful">
-                        <div class="action-icon-beautiful">
-                            <i class="fa fa-shopping-bag"></i>
+                    <a href="{{route('cart')}}" class="action-beautiful cart-action">
+                        <div class="action-icon-wrapper">
+                            <i class="action-icon-beautiful fa fa-shopping-bag"></i>
                             <span class="action-badge-beautiful">{{ session('cart') !== null ? count(session('cart')) : 0 }}</span>
                         </div>
-                        <div class="action-text-beautiful">Giỏ hàng</div>
+                        <div class="action-content-beautiful">
+                            <div class="action-label-beautiful">Giỏ hàng</div>
+                            <div class="action-text-beautiful">{{ session('cart') !== null ? count(session('cart')) : 0 }} sản phẩm</div>
+                        </div>
                     </a>
 
                     <!-- Mobile Menu Toggle -->
@@ -1184,7 +1360,13 @@
                 <div class="footer-grid">
                     <div class="footer-section">
                         <div class="footer-logo">
-                            <img src="/assets/frontend/img/logo.png" alt="Nông Sản Việt">
+                            <a href="{{route('home')}}" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                                <img src="{{ asset('assets/frontend/img/icon_logo.png') }}" alt="Nông Sản Việt" style="height: 48px; width: auto; filter: brightness(1.2) drop-shadow(0 4px 8px rgba(16, 185, 129, 0.3));">
+                                <div style="display: flex; flex-direction: column;">
+                                    <div style="font-size: 20px; font-weight: 800; color: white; line-height: 1; font-family: 'Plus Jakarta Sans', sans-serif;">Nông Sản Việt</div>
+                                    <div style="font-size: 11px; color: rgba(255, 255, 255, 0.7); margin-top: 4px; font-weight: 500; letter-spacing: 0.5px;">Tự nhiên • Tươi ngon • An toàn</div>
+                                </div>
+                            </a>
                         </div>
                         <p class="footer-desc">
                             Nông Sản Việt - Cung cấp nông sản sạch, tươi ngon và an toàn cho sức khỏe. 

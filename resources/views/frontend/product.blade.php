@@ -8,7 +8,7 @@
         <div class="breadcrumb-content">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="/"><i class="fa fa-home"></i> Trang chủ</a></li>
                     <li class="breadcrumb-item"><a href="{{route('shop')}}">Sản phẩm</a></li>
                     <li class="breadcrumb-item"><a href="#">{{$product->category->name}}</a></li>
                     <li class="breadcrumb-item active">{{$product->name}}</li>
@@ -18,197 +18,328 @@
     </div>
 </section>
 
-<!-- Product Detail Section -->
-<section class="product-detail-modern">
+<!-- Product Detail Section - Redesigned -->
+<section class="product-detail-redesigned">
     <div class="container">
-        <div class="row">
-            <!-- Product Gallery -->
-            <div class="col-lg-6">
-                <div class="product-gallery">
-                    <div class="main-image-wrapper">
-                        <div class="product-badges">
+        <div class="product-main-wrapper">
+            <!-- Product Gallery - Enhanced -->
+            <div class="product-gallery-modern">
+                <div class="gallery-container">
+                    <div class="main-image-container">
+                        <div class="product-labels-modern">
                             @if($product->quantity <= 5 && $product->quantity > 0)
-                            <span class="badge low-stock">Sắp hết hàng</span>
+                            <span class="label-badge low-stock">
+                                <i class="fa fa-exclamation-circle"></i>
+                                Sắp hết hàng
+                            </span>
                             @elseif($product->quantity <= 0)
-                            <span class="badge out-stock">Hết hàng</span>
+                            <span class="label-badge out-stock">
+                                <i class="fa fa-times-circle"></i>
+                                Hết hàng
+                            </span>
                             @endif
                             @if($product->created_at->diffInDays(now()) <= 30)
-                            <span class="badge new-product">Mới</span>
+                            <span class="label-badge new-badge">
+                                <i class="fa fa-star"></i>
+                                Mới
+                            </span>
                             @endif
+                            <span class="label-badge discount-badge">
+                                <i class="fa fa-tag"></i>
+                                -20%
+                            </span>
                         </div>
                         
-                        <div class="main-image">
+                        <div class="main-product-image">
                             <img id="mainProductImage" src="{{$product->images->first()->image}}" alt="{{$product->name}}">
-                            <button class="zoom-btn" onclick="openImageModal()">
-                                <i class="fa fa-search-plus"></i>
-                            </button>
-                        </div>
-                        
-                        <div class="image-navigation">
-                            <button class="nav-btn prev-btn" onclick="previousImage()">
-                                <i class="fa fa-chevron-left"></i>
-                            </button>
-                            <button class="nav-btn next-btn" onclick="nextImage()">
-                                <i class="fa fa-chevron-right"></i>
-                            </button>
+                            <div class="image-actions">
+                                <button class="image-action-btn zoom-btn" onclick="openImageModal()">
+                                    <i class="fa fa-search-plus"></i>
+                                    <span>Phóng to</span>
+                                </button>
+                                <button class="image-action-btn share-btn">
+                                    <i class="fa fa-share-alt"></i>
+                                    <span>Chia sẻ</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="thumbnail-gallery">
-                        @foreach ($product->images as $index => $image)
-                        <div class="thumbnail-item {{ $index === 0 ? 'active' : '' }}" 
-                             onclick="changeMainImage('{{$image->image}}', this)">
-                            <img src="{{$image->image}}" alt="{{$product->name}}">
+                    <div class="thumbnail-slider">
+                        <button class="thumb-nav prev-thumb" onclick="scrollThumbnails('prev')">
+                            <i class="fa fa-chevron-left"></i>
+                        </button>
+                        
+                        <div class="thumbnail-container" id="thumbnailContainer">
+                            @foreach ($product->images as $index => $image)
+                            <div class="thumbnail-card {{ $index === 0 ? 'active' : '' }}" 
+                                 onclick="changeMainImage('{{$image->image}}', this)">
+                                <img src="{{$image->image}}" alt="{{$product->name}}">
+                                <div class="thumb-overlay"></div>
+                            </div>
+                            @endforeach
                         </div>
-                        @endforeach
+                        
+                        <button class="thumb-nav next-thumb" onclick="scrollThumbnails('next')">
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Trust Badges -->
+                <div class="trust-badges-section">
+                    <div class="trust-badge-item">
+                        <div class="trust-icon">
+                            <i class="fa fa-shield"></i>
+                        </div>
+                        <div class="trust-text">
+                            <strong>100% An toàn</strong>
+                            <span>Chứng nhận VietGAP</span>
+                        </div>
+                    </div>
+                    <div class="trust-badge-item">
+                        <div class="trust-icon">
+                            <i class="fa fa-sync"></i>
+                        </div>
+                        <div class="trust-text">
+                            <strong>Đổi trả dễ dàng</strong>
+                            <span>Trong vòng 7 ngày</span>
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Product Info -->
-            <div class="col-lg-6">
-                <div class="product-info">
-                    <div class="product-meta">
-                        <span class="product-category">{{$product->category->name}}</span>
-                        <div class="product-rating">
-                            <div class="stars">
+            <!-- Product Info - Enhanced -->
+            <div class="product-info-modern">
+                <div class="product-header-section">
+                    <div class="product-category-badge">
+                        <i class="fa fa-tag"></i>
+                        {{$product->category->name}}
+                    </div>
+                    
+                    <h1 class="product-name-modern">{{$product->name}}</h1>
+                    
+                    <div class="product-meta-row">
+                        <div class="rating-display">
+                            <div class="stars-large">
                                 @for($i = 1; $i <= 5; $i++)
-                                <i class="fa fa-star {{ $i <= 4.5 ? 'active' : '' }}"></i>
+                                <i class="fa fa-star {{ $i <= 4 ? 'filled' : '' }}"></i>
                                 @endfor
                             </div>
-                            <span class="rating-text">(4.5)</span>
-                            <span class="review-count">{{$product->sold ?? rand(10, 100)}} đánh giá</span>
-                        </div>
-                    </div>
-                    
-                    <h1 class="product-title">{{$product->name}}</h1>
-                    
-                    <div class="product-pricing">
-                        <div class="price-main">
-                            <span class="current-price">{{ convertPrice($product->price_sale) }}</span>
-                            @if($product->price_sale < $product->price_sale * 1.2)
-                            <span class="original-price">{{ convertPrice($product->price_sale * 1.2) }}</span>
-                            <span class="discount-percent">-17%</span>
-                            @endif
-                        </div>
-                        <div class="price-per-unit">{{ convertPrice($product->price_sale / 500) }}/100g</div>
-                    </div>
-                    
-                    <div class="product-features">
-                        <div class="feature-item">
-                            <i class="fa fa-leaf"></i>
-                            <span>100% Tự nhiên</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fa fa-truck"></i>
-                            <span>Giao hàng 2-4h</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fa fa-shield"></i>
-                            <span>An toàn thực phẩm</span>
-                        </div>
-                    </div>
-                    
-                    <form action="{{route('cart.add', $product)}}" class="add-to-cart-form">
-                        <div class="quantity-selection">
-                            <label class="quantity-label">Số lượng :</label>
-                            <div class="quantity-controls">
-                                <button type="button" class="qty-btn minus" onclick="decreaseQuantity()">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{$product->quantity}}">
-                                <button type="button" class="qty-btn plus" onclick="increaseQuantity()">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                            <span class="stock-info">{{$product->quantity}} sản phẩm có sẵn</span>
+                            <span class="rating-score">4.5</span>
+                            <span class="rating-divider">|</span>
+                            <span class="review-link">{{$product->sold ?? rand(10, 100)}} đánh giá</span>
+                            <span class="rating-divider">|</span>
+                            <span class="sold-count">
+                                <i class="fa fa-shopping-bag"></i>
+                                Đã bán {{$product->sold}}
+                            </span>
                         </div>
                         
-                        <div class="action-buttons">
-                            @if($product->quantity > 0)
-                            <button type="submit" class="btn-add-cart">
-                                <i class="fa fa-shopping-cart"></i>
-                                <span>Thêm vào giỏ hàng</span>
-                            </button>
-                            <button type="button" class="btn-buy-now" onclick="buyNow()">
-                                <i class="fa fa-flash"></i>
-                                <span>Mua ngay</span>
-                            </button>
-                            @else
-                            <button type="button" class="btn-notify" disabled>
-                                <i class="fa fa-bell"></i>
-                                <span>Báo khi có hàng</span>
-                            </button>
+                        <button class="wishlist-btn-modern" onclick="toggleWishlist()">
+                            <i class="fa fa-heart-o"></i>
+                            <span>Yêu thích</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Pricing Section - Enhanced -->
+                <div class="pricing-section-modern">
+                    <div class="price-container">
+                        <div class="main-pricing">
+                            <span class="current-price-large">{{ convertPrice($product->price_sale) }}</span>
+                            @if($product->price_sale < $product->price_sale * 1.2)
+                            <span class="original-price-large">{{ convertPrice($product->price_sale * 1.2) }}</span>
+                            <div class="discount-tag-large">
+                                <i class="fa fa-bolt"></i>
+                                Giảm 20%
+                            </div>
                             @endif
-                            
-                            <button type="button" class="btn-wishlist" onclick="toggleWishlist()">
-                                <i class="fa fa-heart-o"></i>
-                                <span>Yêu thích</span>
+                        </div>
+                        <div class="price-per-unit-display">
+                            <i class="fa fa-balance-scale"></i>
+                            {{ convertPrice($product->price_sale / 500) }}/100g
+                        </div>
+                    </div>
+                    
+                    <div class="price-benefits">
+                        <div class="benefit-tag-item">
+                            <i class="fa fa-gift"></i>
+                            <span>Tích điểm thưởng</span>
+                        </div>
+                        <div class="benefit-tag-item">
+                            <i class="fa fa-truck"></i>
+                            <span>Miễn phí ship từ 300K</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Highlights -->
+                <div class="product-highlights-modern">
+                    <div class="highlight-card">
+                        <div class="highlight-icon green">
+                            <i class="fa fa-leaf"></i>
+                        </div>
+                        <div class="highlight-content">
+                            <strong>100% Tự nhiên</strong>
+                            <span>Không chất bảo quản</span>
+                        </div>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="highlight-icon blue">
+                            <i class="fa fa-truck"></i>
+                        </div>
+                        <div class="highlight-content">
+                            <strong>Giao nhanh 2-4h</strong>
+                            <span>Trong nội thành</span>
+                        </div>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="highlight-icon orange">
+                            <i class="fa fa-shield"></i>
+                        </div>
+                        <div class="highlight-content">
+                            <strong>An toàn tuyệt đối</strong>
+                            <span>Chứng nhận VietGAP</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Add to Cart Form - Enhanced -->
+                <form action="{{route('cart.add', $product)}}" class="cart-form-modern">
+                    <div class="quantity-selector-modern">
+                        <label class="selector-label">
+                            <i class="fa fa-cubes"></i>
+                            Số lượng
+                        </label>
+                        <div class="quantity-input-group">
+                            <button type="button" class="qty-control minus" onclick="decreaseQuantity()">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{$product->quantity}}" readonly>
+                            <button type="button" class="qty-control plus" onclick="increaseQuantity()">
+                                <i class="fa fa-plus"></i>
                             </button>
                         </div>
-                    </form>
+                        <span class="stock-available">
+                            <i class="fa fa-check-circle"></i>
+                            {{$product->quantity}} sản phẩm có sẵn
+                        </span>
+                    </div>
                     
-                    <div class="product-details-list">
-                        <div class="detail-item">
-                            <span class="label">Mã sản phẩm :</span>
-                            <span class="value">{{$product->productCode->name}}</span>
+                    <div class="cart-actions-modern">
+                        @if($product->quantity > 0)
+                        <button type="button" class="btn-buy-now-modern" onclick="buyNow()">
+                            <i class="fa fa-bolt"></i>
+                            <span>Mua Ngay</span>
+                        </button>
+                        <button type="submit" class="btn-add-cart-modern">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span>Thêm Vào Giỏ</span>
+                        </button>
+                        @else
+                        <button type="button" class="btn-notify-modern" disabled>
+                            <i class="fa fa-bell"></i>
+                            <span>Thông Báo Khi Có Hàng</span>
+                        </button>
+                        @endif
+                    </div>
+                </form>
+                
+                <!-- Product Details List - Enhanced -->
+                <div class="product-specs-modern">
+                    <h4 class="specs-title">
+                        <i class="fa fa-info-circle"></i>
+                        Thông tin sản phẩm
+                    </h4>
+                    <div class="specs-grid">
+                        <div class="spec-row">
+                            <span class="spec-label">Mã sản phẩm</span>
+                            <span class="spec-value">{{$product->productCode->name}}</span>
                         </div>
-                        <div class="detail-item">
-                            <span class="label">Tình trạng :</span>
-                            <span class="value {{ $product->quantity > 0 ? 'text-success' : 'text-danger' }}">
+                        <div class="spec-row">
+                            <span class="spec-label">Tình trạng</span>
+                            <span class="spec-value {{ $product->quantity > 0 ? 'in-stock' : 'out-stock' }}">
+                                <i class="fa fa-{{$product->quantity > 0 ? 'check-circle' : 'times-circle'}}"></i>
                                 {{ $product->quantity > 0 ? 'Còn hàng' : 'Hết hàng' }}
                             </span>
                         </div>
-                        <div class="detail-item">
-                            <span class="label">Đã bán :</span>
-                            <span class="value">{{$product->sold}} sản phẩm</span>
+                        <div class="spec-row">
+                            <span class="spec-label">Xuất xứ</span>
+                            <span class="spec-value">
+                                <i class="fa fa-map-marker"></i>
+                                {{$product->origin->name}}
+                            </span>
                         </div>
-                        <div class="detail-item">
-                            <span class="label">Xuất xứ :</span>
-                            <span class="value">{{$product->origin->name}}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="label">Khối lượng :</span>
-                            <span class="value">{{$product->weight}}/hộp</span>
+                        <div class="spec-row">
+                            <span class="spec-label">Khối lượng</span>
+                            <span class="spec-value">
+                                <i class="fa fa-balance-scale"></i>
+                                {{$product->weight}}/hộp
+                            </span>
                         </div>
                     </div>
-                    
-                    <div class="delivery-info">
-                        <h4>Thông tin giao hàng</h4>
-                        <div class="delivery-options">
-                            <div class="delivery-option">
+                </div>
+                
+                <!-- Delivery Info - Enhanced -->
+                <div class="delivery-section-modern">
+                    <h4 class="delivery-title">
+                        <i class="fa fa-truck"></i>
+                        Phương thức vận chuyển
+                    </h4>
+                    <div class="delivery-methods">
+                        <div class="delivery-method-card active">
+                            <div class="method-icon">
                                 <i class="fa fa-rocket"></i>
-                                <div class="option-details">
-                                    <strong>Giao hàng nhanh</strong>
-                                    <span>Nhận hàng trong 2-4 giờ</span>
-                                </div>
                             </div>
-                            <div class="delivery-option">
+                            <div class="method-info">
+                                <strong>Giao hàng nhanh</strong>
+                                <span>Nhận hàng trong 2-4 giờ</span>
+                                <div class="method-price free">Miễn phí</div>
+                            </div>
+                            <div class="method-check">
+                                <i class="fa fa-check-circle"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="delivery-method-card">
+                            <div class="method-icon">
                                 <i class="fa fa-truck"></i>
-                                <div class="option-details">
-                                    <strong>Giao hàng tiêu chuẩn</strong>
-                                    <span>Miễn phí với đơn từ 500.000₫</span>
-                                </div>
+                            </div>
+                            <div class="method-info">
+                                <strong>Giao hàng tiêu chuẩn</strong>
+                                <span>Nhận hàng trong 1-2 ngày</span>
+                                <div class="method-price">20.000₫</div>
+                            </div>
+                            <div class="method-check">
+                                <i class="fa fa-circle-o"></i>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="social-share">
-                        <span class="share-label">Chia sẻ:</span>
-                        <div class="share-buttons">
-                            <a href="#" class="share-btn facebook">
-                                <i class="fa fa-facebook"></i>
-                            </a>
-                            <a href="#" class="share-btn twitter">
-                                <i class="fa fa-twitter"></i>
-                            </a>
-                            <a href="#" class="share-btn instagram">
-                                <i class="fa fa-instagram"></i>
-                            </a>
-                            <a href="#" class="share-btn whatsapp">
-                                <i class="fa fa-whatsapp"></i>
-                            </a>
-                        </div>
+                </div>
+                
+                <!-- Social Share - Enhanced -->
+                <div class="social-share-modern">
+                    <span class="share-text">
+                        <i class="fa fa-share-alt"></i>
+                        Chia sẻ
+                    </span>
+                    <div class="social-buttons-modern">
+                        <a href="#" class="social-btn facebook" title="Facebook">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="#" class="social-btn messenger" title="Messenger">
+                            <i class="fa fa-comment"></i>
+                        </a>
+                        <a href="#" class="social-btn zalo" title="Zalo">
+                            <i class="fa fa-phone"></i>
+                        </a>
+                        <a href="#" class="social-btn twitter" title="Twitter">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <button class="social-btn copy-link" onclick="copyProductLink()" title="Sao chép link">
+                            <i class="fa fa-link"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -259,15 +390,15 @@
                                     <label>Đánh giá của bạn:</label>
                                     <div class="star-rating">
                                         <input type="radio" name="rating" value="5" id="star5">
-                                        <label for="star5"><i class="fas fa-star"></i></label>
+                                        <label for="star5"><i class="fa fa-star"></i></label>
                                         <input type="radio" name="rating" value="4" id="star4">
-                                        <label for="star4"><i class="fas fa-star"></i></label>
+                                        <label for="star4"><i class="fa fa-star"></i></label>
                                         <input type="radio" name="rating" value="3" id="star3">
-                                        <label for="star3"><i class="fas fa-star"></i></label>
+                                        <label for="star3"><i class="fa fa-star"></i></label>
                                         <input type="radio" name="rating" value="2" id="star2">
-                                        <label for="star2"><i class="fas fa-star"></i></label>
+                                        <label for="star2"><i class="fa fa-star"></i></label>
                                         <input type="radio" name="rating" value="1" id="star1">
-                                        <label for="star1"><i class="fas fa-star"></i></label>
+                                        <label for="star1"><i class="fa fa-star"></i></label>
                                     </div>
                                 </div>
                                 <div class="comment-input">
@@ -292,7 +423,7 @@
                                         <h5 class="commenter-name">{{$comment->user->name}}</h5>
                                         <div class="comment-rating">
                                             @for($i = 1; $i <= 5; $i++)
-                                            <i class="fas fa-star {{ $i <= 4 ? 'active' : '' }}"></i>
+                                            <i class="fa fa-star {{ $i <= 4 ? 'active' : '' }}"></i>
                                             @endfor
                                         </div>
                                         <span class="comment-date">{{$comment->created_at->diffForHumans()}}</span>
@@ -325,84 +456,107 @@
     </div>
 </section>
 
-<!-- Related Products -->
-<section class="related-products-modern">
+<!-- Related Products - Redesigned -->
+<section class="related-products-redesigned">
     <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Sản phẩm tương tự</h2>
-            <p class="section-subtitle">Khám phá những sản phẩm khác trong cùng danh mục</p>
+        <div class="section-header-modern">
+            <div class="header-content">
+                <h2 class="section-title-modern">
+                    <i class="fa fa-heart"></i>
+                    Sản phẩm tương tự
+                </h2>
+                <p class="section-subtitle-modern">Khám phá những sản phẩm khác trong cùng danh mục</p>
+            </div>
+            <a href="{{route('shop')}}" class="view-all-link">
+                Xem tất cả
+                <i class="fa fa-arrow-right"></i>
+            </a>
         </div>
         
-        <div class="products-carousel-wrapper">
-            <div class="carousel-controls">
-                <button class="carousel-btn prev-btn" onclick="scrollCarousel('prev')">
-                    <i class="fa fa-chevron-left"></i>
-                </button>
-                <button class="carousel-btn next-btn" onclick="scrollCarousel('next')">
-                    <i class="fa fa-chevron-right"></i>
-                </button>
-            </div>
+        <div class="products-carousel-modern">
+            <button class="carousel-control prev" onclick="scrollCarousel('prev')">
+                <i class="fa fa-chevron-left"></i>
+            </button>
             
-            <div class="products-carousel" id="productsCarousel">
+            <div class="products-track" id="productsCarousel">
                 @foreach($relatedProducts as $relatedProduct)
-                <div class="product-card-carousel">
-                    <div class="product-image">
+                <div class="product-card-modern">
+                    <div class="product-card-image">
+                        @if($relatedProduct->quantity <= 5 && $relatedProduct->quantity > 0)
+                        <span class="card-badge low-stock">Sắp hết</span>
+                        @endif
+                        
                         <img src="{{$relatedProduct->images->first()->image}}" alt="{{$relatedProduct->name}}">
-                        <div class="product-overlay">
-                            <div class="product-actions">
-                                <a href="{{route('product', [$relatedProduct, Str::slug($relatedProduct->name)])}}" class="action-btn" title="Xem chi tiết">
-                                    <i class="fa fa-eye"></i>
-                                </a>
-                                <a href="{{route('cart.add', $relatedProduct)}}" class="action-btn" title="Thêm vào giỏ">
-                                    <i class="fa fa-shopping-cart"></i>
-                                </a>
-                                <button class="action-btn wishlist-btn" title="Yêu thích">
-                                    <i class="fa fa-heart-o"></i>
-                                </button>
-                            </div>
+                        
+                        <div class="card-actions-overlay">
+                            <button class="card-action-btn" onclick="quickView({{$relatedProduct->id}})" title="Xem nhanh">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button class="card-action-btn" onclick="addToWishlist({{$relatedProduct->id}})" title="Yêu thích">
+                                <i class="fa fa-heart-o"></i>
+                            </button>
+                            <button class="card-action-btn" onclick="compareProduct({{$relatedProduct->id}})" title="So sánh">
+                                <i class="fa fa-exchange"></i>
+                            </button>
                         </div>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">{{$relatedProduct->category->name}}</div>
-                        <h4 class="product-name">
-                            <a href="{{route('product', [$relatedProduct, Str::slug($relatedProduct->name)])}}">{{$relatedProduct->name}}</a>
-                        </h4>
-                        <div class="product-rating">
-                            @for($i = 1; $i <= 5; $i++)
-                            <i class="fa fa-star {{ $i <= 4 ? 'active' : '' }}"></i>
-                            @endfor
-                            <span class="rating-count">({{rand(10, 50)}})</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">{{ convertPrice($relatedProduct->price_sale) }}</span>
-                            @if($relatedProduct->price_sale < $relatedProduct->price_sale * 1.2)
-                            <span class="original-price">{{ convertPrice($relatedProduct->price_sale * 1.2) }}</span>
-                            @endif
-                        </div>
-                        <button class="quick-add-btn" onclick="addToCart({{$relatedProduct->id}})">
+                        
+                        <button class="quick-add-btn-overlay" onclick="addToCart({{$relatedProduct->id}})">
                             <i class="fa fa-shopping-cart"></i>
                             <span>Thêm vào giỏ</span>
                         </button>
                     </div>
+                    
+                    <div class="product-card-content">
+                        <div class="card-category">{{$relatedProduct->category->name}}</div>
+                        <h4 class="card-title">
+                            <a href="{{route('product', [$relatedProduct, Str::slug($relatedProduct->name)])}}">
+                                {{$relatedProduct->name}}
+                            </a>
+                        </h4>
+                        
+                        <div class="card-rating">
+                            @for($i = 1; $i <= 5; $i++)
+                            <i class="fa fa-star {{ $i <= 4 ? 'filled' : '' }}"></i>
+                            @endfor
+                            <span class="rating-number">({{rand(10, 50)}})</span>
+                        </div>
+                        
+                        <div class="card-pricing">
+                            <span class="card-price-current">{{ convertPrice($relatedProduct->price_sale) }}</span>
+                            @if($relatedProduct->price_sale < $relatedProduct->price_sale * 1.2)
+                            <span class="card-price-old">{{ convertPrice($relatedProduct->price_sale * 1.2) }}</span>
+                            <span class="card-discount">-20%</span>
+                            @endif
+                        </div>
+                        
+                        <div class="card-stock-info">
+                            <div class="stock-bar">
+                                <div class="stock-fill" style="width: 70%"></div>
+                            </div>
+                            <span class="stock-text">Đã bán {{$relatedProduct->sold}}</span>
+                        </div>
+                    </div>
                 </div>
                 @endforeach
             </div>
+            
+            <button class="carousel-control next" onclick="scrollCarousel('next')">
+                <i class="fa fa-chevron-right"></i>
+            </button>
         </div>
     </div>
 </section>
 
 <!-- Image Modal -->
-<div id="imageModal" class="image-modal">
-    <span class="close-modal" onclick="closeImageModal()">&times;</span>
+<div id="imageModal" class="image-modal" onclick="closeImageModal()">
+    <span class="modal-close">&times;</span>
+    <button class="modal-nav prev" onclick="event.stopPropagation(); previousModalImage()">
+        <i class="fa fa-chevron-left"></i>
+    </button>
     <img class="modal-content" id="modalImage">
-    <div class="modal-navigation">
-        <button class="modal-nav-btn prev" onclick="previousModalImage()">
-            <i class="fa fa-chevron-left"></i>
-        </button>
-        <button class="modal-nav-btn next" onclick="nextModalImage()">
-            <i class="fa fa-chevron-right"></i>
-        </button>
-    </div>
+    <button class="modal-nav next" onclick="event.stopPropagation(); nextModalImage()">
+        <i class="fa fa-chevron-right"></i>
+    </button>
 </div>
 
 <style>
@@ -412,22 +566,39 @@
     --primary-light: #34d399;
     --secondary-color: #f59e0b;
     --accent-color: #ef4444;
+    --success-color: #22c55e;
+    --info-color: #3b82f6;
     --dark-color: #1f2937;
     --light-color: #f9fafb;
     --border-color: #e5e7eb;
     --text-dark: #374151;
     --text-light: #6b7280;
     --white: #ffffff;
-    --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --box-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    --border-radius: 8px;
-    --border-radius-lg: 12px;
-    --transition: all 0.3s ease;
+    
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-2xl: 24px;
+    --radius-full: 9999px;
+    
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Breadcrumb */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Modern Breadcrumb */
 .breadcrumb-modern {
-    background: var(--light-color);
+    background: linear-gradient(to right, #f9fafb, white);
     padding: 20px 0;
     border-bottom: 1px solid var(--border-color);
 }
@@ -436,17 +607,28 @@
     background: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+.breadcrumb-item {
+    font-size: 14px;
 }
 
 .breadcrumb-item + .breadcrumb-item::before {
     content: "/";
     color: var(--text-light);
+    padding: 0 8px;
 }
 
 .breadcrumb-item a {
     color: var(--text-dark);
     text-decoration: none;
     transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .breadcrumb-item a:hover {
@@ -457,482 +639,805 @@
     color: var(--text-light);
 }
 
-/* Product Detail */
-.product-detail-modern {
+/* Product Detail Redesigned */
+.product-detail-redesigned {
     padding: 60px 0;
-    background: var(--white);
+    background: white;
 }
 
-/* Product Gallery */
-.product-gallery {
+.product-main-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+}
+
+/* Product Gallery Modern */
+.product-gallery-modern {
     position: sticky;
-    top: 20px;
+    top: 100px;
 }
 
-.main-image-wrapper {
+.gallery-container {
+    background: var(--light-color);
+    border-radius: var(--radius-2xl);
+    padding: 20px;
+    box-shadow: var(--shadow-lg);
+}
+
+.main-image-container {
     position: relative;
     margin-bottom: 20px;
-    border-radius: var(--border-radius-lg);
+    border-radius: var(--radius-xl);
     overflow: hidden;
-    box-shadow: var(--box-shadow-lg);
+    background: white;
 }
 
-.product-badges {
+.product-labels-modern {
     position: absolute;
-    top: 15px;
-    left: 15px;
+    top: 20px;
+    left: 20px;
     z-index: 10;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-}
-
-.badge {
-    padding: 6px 12px;
-    border-radius: 15px;
-    font-size: 12px;
-    font-weight: 600;
-    color: white;
-}
-
-.badge.low-stock {
-    background: var(--secondary-color);
-}
-
-.badge.out-stock {
-    background: var(--accent-color);
-}
-
-.badge.new-product {
-    background: var(--primary-color);
-}
-
-.main-image {
-    position: relative;
-    width: 100%;
-    height: 500px;
-    overflow: hidden;
-}
-
-.main-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.zoom-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 40px;
-    height: 40px;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition);
-}
-
-.zoom-btn:hover {
-    background: rgba(0, 0, 0, 0.7);
-}
-
-.image-navigation {
-    position: absolute;
-    top: 50%;
-    left: 15px;
-    right: 15px;
-    transform: translateY(-50%);
-    display: flex;
-    justify-content: space-between;
-    pointer-events: none;
-}
-
-.nav-btn {
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.8);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition);
-    pointer-events: all;
-    opacity: 0;
-}
-
-.main-image-wrapper:hover .nav-btn {
-    opacity: 1;
-}
-
-.nav-btn:hover {
-    background: white;
-    transform: scale(1.1);
-}
-
-.thumbnail-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
     gap: 10px;
 }
 
-.thumbnail-item {
-    width: 80px;
-    height: 80px;
-    border-radius: var(--border-radius);
+.label-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-md);
+}
+
+.label-badge.low-stock {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.label-badge.out-stock {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.label-badge.new-badge {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.label-badge.discount-badge {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.main-product-image {
+    position: relative;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: var(--transition);
 }
 
-.thumbnail-item.active {
-    border-color: var(--primary-color);
+.main-product-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
 }
 
-.thumbnail-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.thumbnail-item:hover {
+.main-product-image:hover img {
     transform: scale(1.05);
 }
 
-/* Product Info */
-.product-info {
-    padding: 0 20px;
-}
-
-.product-meta {
-    margin-bottom: 15px;
-}
-
-.product-category {
-    display: inline-block;
-    background: var(--primary-color);
-    color: white;
-    padding: 4px 12px;
-    border-radius: 15px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-}
-
-.product-rating {
+.image-actions {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
     display: flex;
-    align-items: center;
     gap: 10px;
 }
 
-.stars i {
-    color: #d1d5db;
-    font-size: 16px;
-}
-
-.stars i.active {
-    color: #fbbf24;
-}
-
-.rating-text {
-    font-weight: 600;
-    color: var(--text-dark);
-}
-
-.review-count {
-    color: var(--text-light);
-    font-size: 14px;
-}
-
-.product-title {
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: var(--dark-color);
-    margin-bottom: 20px;
-    line-height: 1.3;
-}
-
-.product-pricing {
-    margin-bottom: 25px;
-    padding: 20px;
-    background: var(--light-color);
-    border-radius: var(--border-radius-lg);
-    border-left: 4px solid var(--primary-color);
-}
-
-.price-main {
+.image-action-btn {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 8px;
-}
-
-.current-price {
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--primary-color);
-}
-
-.original-price {
-    font-size: 1.2rem;
-    color: var(--text-light);
-    text-decoration: line-through;
-}
-
-.discount-percent {
-    background: var(--accent-color);
-    color: white;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 12px;
+    gap: 6px;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: var(--radius-full);
     font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
 }
 
-.price-per-unit {
-    color: var(--text-light);
-    font-size: 14px;
+.image-action-btn:hover {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
 }
 
-.product-features {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
+.thumbnail-slider {
+    position: relative;
+    padding: 0 40px;
 }
 
-.feature-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--text-dark);
-    font-weight: 500;
-    font-size: 14px;
-}
-
-.feature-item i {
-    color: var(--primary-color);
-    font-size: 16px;
-}
-
-.add-to-cart-form {
-    margin-bottom: 30px;
-}
-
-.quantity-selection {
-    margin-bottom: 25px;
-}
-
-.quantity-label {
-    font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: 10px;
-    display: block;
-}
-
-.quantity-controls {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 8px;
-}
-
-.qty-btn {
-    width: 35px;
-    height: 35px;
-    background: var(--light-color);
-    border: 1px solid var(--border-color);
+.thumb-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    background: white;
+    border: 2px solid var(--border-color);
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10;
     transition: var(--transition);
 }
 
-.qty-btn:hover {
+.thumb-nav:hover {
     background: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
+}
+
+.thumb-nav.prev-thumb {
+    left: 0;
+}
+
+.thumb-nav.next-thumb {
+    right: 0;
+}
+
+.thumbnail-container {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.thumbnail-container::-webkit-scrollbar {
+    display: none;
+}
+
+.thumbnail-card {
+    position: relative;
+    flex-shrink: 0;
+    width: 90px;
+    height: 90px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: var(--transition);
+    background: white;
+}
+
+.thumbnail-card.active {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+.thumbnail-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.thumbnail-card:hover {
+    transform: scale(1.05);
+}
+
+.thumb-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.thumbnail-card:hover .thumb-overlay {
+    opacity: 1;
+}
+
+/* Trust Badges */
+.trust-badges-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.trust-badge-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.trust-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.trust-text strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 2px;
+}
+
+.trust-text span {
+    font-size: 11px;
+    color: var(--text-light);
+}
+
+/* Product Info Modern */
+.product-info-modern {
+    background: white;
+}
+
+.product-header-section {
+    margin-bottom: 30px;
+}
+
+.product-category-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--primary-color);
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.product-name-modern {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--dark-color);
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.product-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.rating-display {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.stars-large i {
+    color: #d1d5db;
+    font-size: 18px;
+    margin-right: 2px;
+}
+
+.stars-large i.filled {
+    color: #fbbf24;
+}
+
+.rating-score {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--dark-color);
+}
+
+.rating-divider {
+    color: var(--border-color);
+}
+
+.review-link {
+    color: var(--primary-color);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.review-link:hover {
+    text-decoration: underline;
+}
+
+.sold-count {
+    color: var(--text-light);
+    font-size: 14px;
+}
+
+.wishlist-btn-modern {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: transparent;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--text-dark);
+}
+
+.wishlist-btn-modern:hover,
+.wishlist-btn-modern.active {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.wishlist-btn-modern.active i::before {
+    content: "\f004";
+}
+
+/* Pricing Section Modern */
+.pricing-section-modern {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(5, 150, 105, 0.05));
+    border: 2px solid var(--primary-light);
+    border-radius: var(--radius-xl);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.main-pricing {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.current-price-large {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--primary-color);
+    line-height: 1;
+}
+
+.original-price_large {
+    font-size: 1.5rem;
+    color: var(--text-light);
+    text-decoration: line-through;
+    font-weight: 500;
+}
+
+.discount-tag-large {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent-color);
+    color: white;
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.price-per-unit-display {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-light);
+    font-size: 15px;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.price-benefits {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.benefit-tag-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-dark);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.benefit-tag-item i {
+    color: var(--primary-color);
+}
+
+/* Product Highlights */
+.product-highlights-modern {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.highlight-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--light-color);
+    border-radius: var(--radius-lg);
+    transition: var(--transition);
+}
+
+.highlight-card:hover {
+    background: white;
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.highlight-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: white;
+    flex-shrink: 0;
+}
+
+.highlight-icon.green {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.highlight-icon.blue {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.highlight-icon.orange {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.highlight-content strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 2px;
+}
+
+.highlight-content span {
+    font-size: 12px;
+    color: var(--text-light);
+}
+
+/* Cart Form Modern */
+.cart-form-modern {
+    margin-bottom: 30px;
+}
+
+.quantity-selector-modern {
+    margin-bottom: 25px;
+}
+
+.selector-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--dark-color);
+    margin-bottom: 12px;
+}
+
+.quantity-input-group {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    width: fit-content;
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-full);
+    padding: 4px;
+    margin-bottom: 10px;
+}
+
+.qty-control {
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dark);
+    transition: var(--transition);
+    font-size: 16px;
+}
+
+.qty-control:hover {
+    background: var(--primary-color);
+    color: white;
 }
 
 #quantity {
     width: 60px;
-    height: 35px;
     text-align: center;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    font-weight: 600;
+    border: none;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--dark-color);
+    background: transparent;
 }
 
-.stock-info {
-    color: var(--text-light);
+.stock-available {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--success-color);
+    font-weight: 600;
     font-size: 14px;
 }
 
-.action-buttons {
+.cart-actions-modern {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
-    margin-bottom: 30px;
 }
 
-.btn-add-cart,
-.btn-buy-now,
-.btn-notify,
-.btn-wishlist {
-    padding: 15px 25px;
-    border: none;
-    border-radius: var(--border-radius);
-    font-weight: 600;
-    font-size: 16px;
-    cursor: pointer;
+.btn-buy-now-modern,
+.btn-add-cart-modern,
+.btn-notify-modern {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
+    padding: 16px 24px;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
     transition: var(--transition);
     text-decoration: none;
 }
 
-.btn-add-cart {
-    background: var(--primary-color);
+.btn-buy-now-modern {
+    background: linear-gradient(135deg, var(--secondary-color), #d97706);
     color: white;
-    grid-column: 1 / -1;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
 }
 
-.btn-add-cart:hover {
-    background: var(--primary-dark);
+.btn-buy-now-modern:hover {
     transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4);
 }
 
-.btn-buy-now {
-    background: var(--secondary-color);
+.btn-add-cart-modern {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
     color: white;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
-.btn-buy-now:hover {
-    background: #d97706;
+.btn-add-cart-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
 }
 
-.btn-notify {
+.btn-notify-modern {
+    grid-column: 1 / -1;
     background: var(--text-light);
     color: white;
     cursor: not-allowed;
 }
 
-.btn-wishlist {
-    background: transparent;
-    color: var(--text-dark);
-    border: 2px solid var(--border-color);
-}
-
-.btn-wishlist:hover,
-.btn-wishlist.active {
-    border-color: var(--accent-color);
-    color: var(--accent-color);
-}
-
-.product-details-list {
-    margin-bottom: 30px;
+/* Product Specs Modern */
+.product-specs-modern {
     background: white;
-    border-radius: var(--border-radius-lg);
-    overflow: hidden;
-    box-shadow: var(--box-shadow);
-}
-
-.detail-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.detail-item:last-child {
-    border-bottom: none;
-}
-
-.detail-item .label {
-    font-weight: 600;
-    color: var(--text-dark);
-}
-
-.detail-item .value {
-    color: var(--text-light);
-}
-
-.delivery-info {
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: 25px;
     margin-bottom: 30px;
 }
 
-.delivery-info h4 {
+.specs-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--dark-color);
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--border-color);
 }
 
-.delivery-options {
+.specs-grid {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-.delivery-option {
+.spec-row {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 15px;
-    padding: 15px;
-    background: var(--light-color);
-    border-radius: var(--border-radius);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.delivery-option i {
-    color: var(--primary-color);
-    font-size: 20px;
-    width: 24px;
+.spec-row:last-child {
+    border-bottom: none;
 }
 
-.option-details strong {
-    display: block;
-    color: var(--text-dark);
-    margin-bottom: 5px;
-}
-
-.option-details span {
+.spec-label {
+    font-weight: 600;
     color: var(--text-light);
     font-size: 14px;
 }
 
-.social-share {
+.spec-value {
+    font-weight: 700;
+    color: var(--dark-color);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.spec-value.in-stock {
+    color: var(--success-color);
+}
+
+.spec-value.out-stock {
+    color: var(--accent-color);
+}
+
+/* Delivery Section Modern */
+.delivery-section-modern {
+    background: var(--light-color);
+    border-radius: var(--radius-xl);
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.delivery-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 20px;
+}
+
+.delivery-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.delivery-method-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 16px;
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.delivery-method-card:hover,
+.delivery-method-card.active {
+    border-color: var(--primary-color);
+    background: rgba(16, 185, 129, 0.05);
+}
+
+.method-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.method-info {
+    flex: 1;
+}
+
+.method-info strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 4px;
+}
+
+.method-info span {
+    font-size: 13px;
+    color: var(--text-light);
+    display: block;
+    margin-bottom: 6px;
+}
+
+.method-price {
+    font-weight: 700;
+    color: var(--dark-color);
+    font-size: 15px;
+}
+
+.method-price.free {
+    color: var(--success-color);
+}
+
+.method-check {
+    font-size: 20px;
+    color: var(--text-light);
+}
+
+.delivery-method-card.active .method-check {
+    color: var(--primary-color);
+}
+
+/* Social Share Modern */
+.social-share-modern {
     display: flex;
     align-items: center;
     gap: 15px;
     padding: 20px 0;
-    border-top: 1px solid var(--border-color);
+    border-top: 2px solid var(--border-color);
 }
 
-.share-label {
-    font-weight: 600;
-    color: var(--text-dark);
+.share-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    color: var(--dark-color);
 }
 
-.share-buttons {
+.social-buttons-modern {
     display: flex;
     gap: 10px;
 }
 
-.share-btn {
-    width: 40px;
-    height: 40px;
+.social-btn {
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -940,17 +1445,35 @@
     color: white;
     text-decoration: none;
     transition: var(--transition);
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
 }
 
-.share-btn:hover {
-    transform: scale(1.1);
-    color: white;
+.social-btn:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: var(--shadow-lg);
 }
 
-.share-btn.facebook { background: #3b5998; }
-.share-btn.twitter { background: #1da1f2; }
-.share-btn.instagram { background: #e4405f; }
-.share-btn.whatsapp { background: #25d366; }
+.social-btn.facebook {
+    background: #3b5998;
+}
+
+.social-btn.messenger {
+    background: #0084ff;
+}
+
+.social-btn.zalo {
+    background: #0180c7;
+}
+
+.social-btn.twitter {
+    background: #1da1f2;
+}
+
+.social-btn.copy-link {
+    background: var(--text-dark);
+}
 
 /* Product Tabs */
 .product-tabs-section {
@@ -1154,461 +1677,491 @@
     opacity: 0.5;
 }
 
-/* Related Products Carousel */
-.related-products-modern {
-    padding: 60px 0;
-    background: white;
-    position: relative;
+/* Related Products Redesigned */
+.related-products-redesigned {
+    padding: 80px 0;
+    background: linear-gradient(to bottom, white, var(--light-color));
 }
 
-.products-carousel-wrapper {
-    position: relative;
-    margin-top: 20px;
-}
-
-.carousel-controls {
-    position: absolute;
-    top: 50%;
-    left: -25px;
-    right: -25px;
-    transform: translateY(-50%);
+.section-header-modern {
     display: flex;
     justify-content: space-between;
-    z-index: 10;
-    pointer-events: none;
+    align-items: center;
+    margin-bottom: 40px;
 }
 
-.carousel-btn {
+.header-content {
+    flex: 1;
+}
+
+.section-title-modern {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--dark-color);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.section-title-modern i {
+    color: var(--primary-color);
+}
+
+.section-subtitle-modern {
+    color: var(--text-light);
+    font-size: 15px;
+}
+
+.view-all-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 20px;
+    border-radius: var(--radius-full);
+    transition: var(--transition);
+}
+
+.view-all-link:hover {
+    background: rgba(16, 185, 129, 0.1);
+    gap: 12px;
+}
+
+.products-carousel-modern {
+    position: relative;
+}
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     width: 50px;
     height: 50px;
     background: white;
     border: 2px solid var(--border-color);
     border-radius: 50%;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
-    color: var(--text-dark);
+    cursor: pointer;
+    z-index: 10;
     transition: var(--transition);
-    box-shadow: var(--box-shadow);
-    pointer-events: all;
+    box-shadow: var(--shadow-lg);
 }
 
-.carousel-btn:hover {
+.carousel-control:hover {
     background: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
-    transform: scale(1.1);
+    transform: translateY(-50%) scale(1.1);
 }
 
-.carousel-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background: var(--light-color);
+.carousel-control.prev {
+    left: -25px;
 }
 
-.carousel-btn:disabled:hover {
-    transform: none;
-    background: var(--light-color);
-    color: var(--text-light);
+.carousel-control.next {
+    right: -25px;
 }
 
-.products-carousel {
+.products-track {
     display: flex;
-    gap: 20px;
+    gap: 24px;
     overflow-x: auto;
     scroll-behavior: smooth;
-    padding: 20px 10px;
+    padding: 10px 5px 30px;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
 
-.products-carousel::-webkit-scrollbar {
+.products-track::-webkit-scrollbar {
     display: none;
 }
 
-.product-card-carousel {
-    flex: 0 0 280px;
+.product-card-modern {
+    flex: 0 0 calc(25% - 18px);
+    min-width: 280px;
     background: white;
-    border-radius: var(--border-radius-lg);
+    border-radius: var(--radius-xl);
     overflow: hidden;
-    box-shadow: var(--box-shadow);
+    box-shadow: var(--shadow-md);
     transition: var(--transition);
-    border: 1px solid var(--border-color);
+    border: 2px solid transparent;
 }
 
-.product-card-carousel:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--box-shadow-lg);
+.product-card-modern:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
     border-color: var(--primary-color);
 }
 
-.product-card-carousel .product-image {
+.product-card-image {
     position: relative;
-    height: 220px;
+    height: 260px;
     overflow: hidden;
+    background: var(--light-color);
 }
 
-.product-card-carousel .product-image img {
+.card-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--secondary-color);
+    color: white;
+    padding: 6px 12px;
+    border-radius: var(--radius-full);
+    font-size: 11px;
+    font-weight: 700;
+    z-index: 10;
+}
+
+.card-badge.low-stock {
+    background: var(--accent-color);
+}
+
+.product-card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.6s ease;
 }
 
-.product-card-carousel:hover .product-image img {
-    transform: scale(1.05);
+.product-card-modern:hover .product-card-image img {
+    transform: scale(1.1);
 }
 
-.product-overlay {
+.card-actions-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
+    top: 12px;
+    right: 12px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
     opacity: 0;
+    transform: translateX(20px);
     transition: var(--transition);
 }
 
-.product-card-carousel:hover .product-overlay {
+.product-card-modern:hover .card-actions-overlay {
     opacity: 1;
+    transform: translateX(0);
 }
 
-.product-actions {
-    display: flex;
-    gap: 8px;
-}
-
-.product-actions .action-btn {
+.card-action-btn {
     width: 40px;
     height: 40px;
     background: white;
-    color: var(--text-dark);
     border: none;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-decoration: none;
-    transition: var(--transition);
-    font-size: 16px;
     cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
 }
 
-.product-actions .action-btn:hover {
+.card-action-btn:hover {
     background: var(--primary-color);
     color: white;
-    transform: scale(1.1);
+    transform: scale(1.1) rotate(5deg);
 }
 
-.product-card-carousel .product-info {
-    padding: 20px;
-}
-
-.product-card-carousel .product-category {
-    font-size: 12px;
-    color: var(--primary-color);
-    font-weight: 600;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-}
-
-.product-card-carousel .product-name {
-    margin-bottom: 10px;
-    font-size: 16px;
-}
-
-.product-card-carousel .product-name a {
-    color: var(--text-dark);
-    text-decoration: none;
-    font-weight: 600;
-    transition: var(--transition);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    line-height: 1.4;
-}
-
-.product-card-carousel .product-name a:hover {
-    color: var(--primary-color);
-}
-
-.product-card-carousel .product-rating {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-bottom: 12px;
-}
-
-.product-card-carousel .product-rating .fa {
-    color: #ddd;
-    font-size: 14px;
-}
-
-.product-card-carousel .product-rating .fa.active {
-    color: #fbbf24;
-}
-
-.product-card-carousel .rating-count {
-    font-size: 12px;
-    color: var(--text-light);
-    margin-left: 5px;
-}
-
-.product-card-carousel .product-price {
-    margin-bottom: 15px;
-}
-
-.product-card-carousel .current-price {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--primary-color);
-}
-
-.product-card-carousel .original-price {
-    font-size: 14px;
-    color: var(--text-light);
-    text-decoration: line-through;
-    margin-left: 8px;
-}
-
-.quick-add-btn {
-    width: 100%;
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: var(--border-radius);
-    font-weight: 600;
-    cursor: pointer;
+.quick-add-btn-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    padding: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
+    color: white;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px);
     transition: var(--transition);
+}
+
+.product-card-modern:hover .quick-add-btn-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.quick-add-btn-overlay:hover {
+    background: linear-gradient(to top, var(--primary-color), transparent);
+}
+
+.product-card-content {
+    padding: 20px;
+}
+
+.card-category {
+    color: var(--primary-color);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.card-title {
+    margin-bottom: 12px;
+}
+
+.card-title a {
+    color: var(--dark-color);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.card-title a:hover {
+    color: var(--primary-color);
+}
+
+.card-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+.card-rating i {
+    color: #d1d5db;
     font-size: 14px;
 }
 
-.quick-add-btn:hover {
-    background: var(--primary-dark);
-    transform: translateY(-1px);
+.card-rating i.filled {
+    color: #fbbf24;
 }
 
-/* Fix Icons - Updated icon definitions */
-.fa:before {
-    font-family: "FontAwesome" !important;
+.rating-number {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-left: 4px;
 }
 
-.fa-heart-o:before {
-    content: "\f08a";
+.card-pricing {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
 }
 
-.fa-shopping-cart:before {
-    content: "\f07a";
+.card-price_current {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--primary-color);
 }
 
-.fa-eye:before {
-    content: "\f06e";
+.card-price-old {
+    font-size: 14px;
+    color: var(--text-light);
+    text-decoration: line-through;
 }
 
-.fa-chevron-left:before {
-    content: "\f053";
+.card-discount {
+    background: var(--accent-color);
+    color: white;
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 700;
 }
 
-.fa-chevron-right:before {
-    content: "\f054";
+.card-stock-info {
+    margin-top: 12px;
 }
 
-.fa-star:before {
-    content: "\f005";
+.stock-bar {
+    height: 6px;
+    background: var(--border-color);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin-bottom: 6px;
 }
 
-.fa-search-plus:before {
-    content: "\f00e";
+.stock-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+    border-radius: var(--radius-full);
+    transition: width 0.3s ease;
 }
 
-.fa-minus:before {
-    content: "\f068";
+.stock-text {
+    font-size: 12px;
+    color: var(--text-light);
 }
 
-.fa-plus:before {
-    content: "\f067";
+/* Image Modal */
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
 }
 
-.fa-flash:before {
-    content: "\f0e7";
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.fa-bell:before {
-    content: "\f0f3";
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition);
 }
 
-.fa-heart:before {
-    content: "\f004";
+.modal-close:hover {
+    color: var(--primary-color);
 }
 
-.fa-truck:before {
-    content: "\f0d1";
+.modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-size: 24px;
+    padding: 15px 20px;
+    cursor: pointer;
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
 }
 
-.fa-leaf:before {
-    content: "\f06c";
+.modal-nav:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
 
-.fa-shield:before {
-    content: "\f132";
+.modal-nav.prev {
+    left: 20px;
 }
 
-.fa-rocket:before {
-    content: "\f135";
-}
-
-.fa-info-circle:before {
-    content: "\f05a";
-}
-
-.fa-paper-plane:before {
-    content: "\f1d8";
-}
-
-.fa-thumbs-up:before {
-    content: "\f164";
-}
-
-.fa-comment:before {
-    content: "\f075";
-}
-
-.fa-comments:before {
-    content: "\f086";
-}
-
-.fa-facebook:before {
-    content: "\f09a";
-}
-
-.fa-twitter:before {
-    content: "\f099";
-}
-
-.fa-instagram:before {
-    content: "\f16d";
-}
-
-.fa-whatsapp:before {
-    content: "\f232";
+.modal-nav.next {
+    right: 20px;
 }
 
 /* Responsive */
 @media (max-width: 1200px) {
-    .carousel-controls {
-        left: -15px;
-        right: -15px;
+    .product-main-wrapper {
+        gap: 40px;
     }
     
-    .carousel-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
+    .product-card-modern {
+        flex: 0 0 calc(33.333% - 16px);
+    }
+}
+
+@media (max-width: 992px) {
+    .product-main-wrapper {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .product-gallery-modern {
+        position: static;
+    }
+    
+    .product-card-modern {
+        flex: 0 0 calc(50% - 12px);
+    }
+    
+    .product-highlights-modern {
+        grid-template-columns: 1fr;
+    }
+    
+    .cart-actions-modern {
+        grid-template-columns: 1fr;
     }
 }
 
 @media (max-width: 768px) {
-    .carousel-controls {
-        display: none;
+    .product-name-modern {
+        font-size: 2rem;
     }
     
-    .product-card-carousel {
-        flex: 0 0 240px;
+    .current-price-large {
+        font-size: 2.5rem;
     }
     
-    .products-carousel {
-        padding: 10px 5px;
-        gap: 15px;
+    .main-product-image {
+        height: 350px;
     }
     
-    .product-card-carousel .product-image {
-        height: 180px;
+    .thumbnail-slider {
+        padding: 0 35px;
     }
     
-    .product-card-carousel .product-info {
-        padding: 15px;
-    }
-    
-    .product-title {
-        font-size: 1.8rem;
-    }
-    
-    .action-buttons {
+    .trust-badges-section {
         grid-template-columns: 1fr;
     }
     
-    .btn-add-cart {
-        grid-column: 1;
+    .carousel-control {
+        display: none;
     }
     
-    .quantity-controls {
-        justify-content: center;
-    }
-    
-    .tab-header {
-        flex-direction: column;
-    }
-    
-    .product-features {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .social-share {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-    
-    .main-image {
-        height: 300px;
+    .product-card-modern {
+        flex: 0 0 250px;
     }
 }
 
 @media (max-width: 576px) {
-    .product-info {
-        padding: 0 10px;
+    .product-name-modern {
+        font-size: 1.6rem;
     }
     
-    .tab-content {
+    .current-price_large {
+        font-size: 2rem;
+    }
+    
+    .main-product-image {
+        height: 280px;
+    }
+    
+    .thumbnail-card {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .pricing-section-modern {
         padding: 20px;
     }
     
-    .comment-form-wrapper {
+    .product-specs-modern,
+    .delivery-section-modern {
         padding: 20px;
-    }
-    
-    .product-card-carousel {
-        flex: 0 0 200px;
-    }
-    
-    .product-card-carousel .product-image {
-        height: 150px;
-    }
-    
-    .product-card-carousel .product-info {
-        padding: 12px;
-    }
-    
-    .product-card-carousel .current-price {
-        font-size: 16px;
-    }
-    
-    .quick-add-btn {
-        padding: 8px;
-        font-size: 12px;
     }
 }
 </style>
@@ -1673,7 +2226,7 @@ function toggleWishlist() {
     
     btn.classList.toggle('active');
     if (btn.classList.contains('active')) {
-        icon.className = 'fas fa-heart';
+        icon.className = 'fa fa-heart';
         btn.querySelector('span').textContent = 'Đã thích';
     } else {
         icon.className = 'far fa-heart';

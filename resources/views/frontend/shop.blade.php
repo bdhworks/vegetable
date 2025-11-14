@@ -922,6 +922,7 @@ input[type="checkbox"]:checked + .checkbox-label .checkmark::after {
 .product-card-modern .product-image {
     position: relative;
     height: 250px;
+    width: 100%;
     overflow: hidden;
 }
 

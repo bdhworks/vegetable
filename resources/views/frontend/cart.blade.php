@@ -116,7 +116,7 @@
                                     </button>
                                 </div>
                                 <div class="stock-info">
-                                    <span class="stock-available">Còn 15 sản phẩm</span>
+                                    <span class="stock-available">Còn ... sản phẩm</span>
                                 </div>
                             </div>
 
