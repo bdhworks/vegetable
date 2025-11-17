@@ -1298,7 +1298,7 @@
                             <i class="nav-icon-beautiful fa fa-shopping-bag"></i>
                             <span>Sản phẩm</span>
                         </a>
-                        <div class="nav-dropdown-beautiful">
+                        {{-- <div class="nav-dropdown-beautiful">
                             <div class="dropdown-header-beautiful">
                                 <i class="fa fa-leaf"></i>
                                 Danh mục sản phẩm
@@ -1311,12 +1311,12 @@
                                     </div>
                                     <div class="dropdown-text-beautiful">
                                         <div class="dropdown-title-beautiful">{{ $category->name }}</div>
-                                        <div class="dropdown-desc-beautiful">{{ $category->products_count ?? 0 }} sản phẩm</div>
+                                        <div class="dropdown-desc-beautiful">{{ $category->products->quantity ?? 0 }} sản phẩm</div>
                                     </div>
                                 </a>
                                 @endforeach
                             </div>
-                        </div>
+                        </div> --}}
                     </li>
                     <li class="nav-item-beautiful">
                         <a href="{{route('blog')}}" class="nav-link-beautiful">

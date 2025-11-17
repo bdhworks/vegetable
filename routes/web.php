@@ -22,6 +22,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\AuthUserController;
 use App\Http\Controllers\Frontend\AccountController;
+use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\CommentController;
 use App\Http\Controllers\Frontend\HomeController;
 use Laravel\Socialite\Facades\Socialite;
@@ -252,21 +253,23 @@ Route::get('auth/facebook/callback', function (){
 
 Route::get('/', [ShopController::class, 'index'])->name('home');
 
-Route::get('/bai-viet', [HomeController::class, 'blog'])->name('blog');
-Route::get('/bai-viet-chi-tiet/{id}', [HomeController::class, 'blogDetail'])->name('blogDetail');
+// Blog
+Route::get('/bai-viet', [BlogController::class, 'blog'])->name('blog');
+Route::get('/bai-viet-chi-tiet/{id}', [BlogController::class, 'blogDetail'])->name('blogDetail');
 
+// Product
 Route::get('/san-pham', [ShopController::class, 'shop'])->name('shop');
 Route::get('/danh-muc/{category_id}', [ShopController::class, 'getProductByCategory'])->name('category');
 Route::get('/thuong-hieu/{brand_id?}', [ShopController::class, 'getProductByBrand'])->name('brand');
 Route::get('/san-pham/{product}-{product_slug}', [ShopController::class, 'product'])->name('product');
 Route::get('/lien-he', [ShopController::class, 'contact'])->name('contact');
 
+// Cart
 Route::get('/gio-hang', [CartController::class, 'cart'])->name('cart');
 Route::get('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
 Route::get('/cart/increase/{product_id}', [CartController::class, 'increase'])->name('cart.increase');
 Route::get('/cart/decrease/{product_id}', [CartController::class, 'decrease'])->name('cart.decrease');
 Route::get('/cart/delete/{product_id}', [CartController::class, 'delete'])->name('cart.delete');
-
 Route::post('/ma-giam-gia', [CartController::class, 'discount'])->name('discount');
 Route::get('/xoa-ma-giam-gia', [CartController::class, 'deleteDiscount'])->name('deleteDiscount');
 
@@ -283,15 +286,18 @@ Route::middleware(['guest:web'])->group(function () {
 });
 
 Route::middleware(['auth:web'])->group(function () {
-    Route::get('/dang-xuat', [AuthUserController::class, 'logout'])->name('logout');
-
+    // Checkout
     Route::get('/dat-hang', [CheckoutController::class, 'index'])->name('checkout');
     Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkoutPost');
     Route::get('/checkout/vnPayCheck', [CheckoutController::class, 'vnPayCheck'])->name('checkout.vnpay');
     Route::get('/dat-hang/thanh-cong', [CheckoutController::class, 'notification'])->name('checkout.success');
 
+    // User Account
+    Route::post('/dang-xuat', [AuthUserController::class, 'logout'])->name('logout');
     Route::get('/tai-khoan', [AccountController::class, 'account'])->name('account');
     Route::post('/tai-khoan', [AccountController::class, 'updateAccount'])->name('account.update');
+    Route::get('/doi-mat-khau', [AccountController::class, 'changePassword'])->name('account.change-password');
+    Route::post('/doi-mat-khau', [AccountController::class, 'updatePassword'])->name('account.update-password');
 
     Route::get('/lich-su-don-hang', [AccountController::class, 'orderHistory'])->name('account.orderHistory');
     Route::get('/chi-tiet-don-hang/{order}', [AccountController::class, 'orderDetail'])->name('order.detail');
@@ -300,9 +306,6 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('/order-history/return/{order}', [AccountController::class, 'return'])->name('order.return');
 
     Route::put('/phan-hoi-khach-hang/{order}', [AccountController::class, 'feedback'])->name('account.feedback');
-
-    Route::get('/doi-mat-khau', [AccountController::class, 'changePassword'])->name('account.change-password');
-    Route::post('/doi-mat-khau', [AccountController::class, 'updatePassword'])->name('account.update-password');
 
     Route::get('products/{product}/comments', [CommentController::class, 'index'])->name('comment.index');
     Route::post('products/{product}/comments', [CommentController::class, 'store'])->name('comment.store');

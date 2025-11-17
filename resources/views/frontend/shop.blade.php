@@ -12,7 +12,7 @@
                     <li class="breadcrumb-item active">Cửa hàng</li>
                 </ol>
             </nav>
-            <h1 class="page-title">Cửa hàng nông sản</h1>
+            <h1 class="page-title">Sản phẩm nông sản</h1>
             <p class="page-subtitle">Khám phá các sản phẩm nông sản tươi ngon, chất lượng cao</p>
         </div>
     </div>

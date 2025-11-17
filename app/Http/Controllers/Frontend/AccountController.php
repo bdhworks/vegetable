@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class AccountController extends Controller
 {
     public function account(){
-        return view('frontend.account');
+        return view('frontend.user.account');
     }
 
     public function updateAccount(Request $request){
@@ -34,7 +34,7 @@ class AccountController extends Controller
 
     public function orderHistory(){
         $orders = Order::where('user_id', Auth::guard('web')->id())->orderByDesc('id')->paginate(10);
-        return view('frontend.order-history', compact('orders'));
+        return view('frontend.user.order-history', compact('orders'));
     }
 
     public function cancel(Order $order){
@@ -62,11 +62,11 @@ class AccountController extends Controller
     }
 
     public function orderDetail(Order $order){
-        return view('frontend.order-detail', compact('order'));
+        return view('frontend.user.order-detail', compact('order'));
     }
 
     public function changePassword(){
-        return view('frontend.change-password');
+        return view('frontend.user.change-password');
     }
 
     public function updatePassword(Request $request){
