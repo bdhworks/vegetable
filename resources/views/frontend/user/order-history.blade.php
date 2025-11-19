@@ -115,9 +115,9 @@
                         </a>
                         <a class="account-nav-link" href="{{ route('account.change-password') }}">
                             <span class="nav-icon">
-                                <i class="fa fa-key"></i>
+                                <i class="fa fa-user"></i>
                             </span>
-                            <span class="nav-text">Đổi mật khẩu</span>
+                            <span class="nav-text">Thông tin tài khoản</span>
                             <i class="fa fa-chevron-right nav-arrow"></i>
                         </a>
                         <div class="nav-divider"></div>

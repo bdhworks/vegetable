@@ -1225,7 +1225,7 @@
                             </div>
                         </a>
 
-                        <a href="#" class="action-beautiful wishlist-action">
+                        <a href="{{ route('account.favorite') }}" class="action-beautiful wishlist-action">
                             <div class="action-icon-wrapper">
                                 <i class="action-icon-beautiful fa fa-heart"></i>
                                 <span class="action-badge-beautiful">0</span>

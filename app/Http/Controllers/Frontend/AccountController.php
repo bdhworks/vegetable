@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Auth;
 class AccountController extends Controller
 {
     public function account(){
-        return view('frontend.user.account');
+        $orders = Order::where('user_id', Auth::guard('web')->id())->orderByDesc('id')->paginate(10);
+        return view('frontend.user.account', compact('orders'));
     }
 
     public function updateAccount(Request $request){
@@ -99,6 +100,14 @@ class AccountController extends Controller
         $order->save();
 
         return redirect()->back();
+    }
+
+    public function favorite(){
+        return view('frontend.user.favorite');
+    }
+
+    public function info(){
+        return view('frontend.user.info');
     }
 
 }

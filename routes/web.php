@@ -266,10 +266,10 @@ Route::get('/lien-he', [ShopController::class, 'contact'])->name('contact');
 
 // Cart
 Route::get('/gio-hang', [CartController::class, 'cart'])->name('cart');
-Route::get('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
-Route::get('/cart/increase/{product_id}', [CartController::class, 'increase'])->name('cart.increase');
-Route::get('/cart/decrease/{product_id}', [CartController::class, 'decrease'])->name('cart.decrease');
-Route::get('/cart/delete/{product_id}', [CartController::class, 'delete'])->name('cart.delete');
+Route::get('/gio-hang/them/{product}', [CartController::class, 'add'])->name('cart.add');
+Route::get('/gio-hang/tang/{product_id}', [CartController::class, 'increase'])->name('cart.increase');
+Route::get('/gio-hang/giam/{product_id}', [CartController::class, 'decrease'])->name('cart.decrease');
+Route::get('/gio-hang/xoa/{product_id}', [CartController::class, 'delete'])->name('cart.delete');
 Route::post('/ma-giam-gia', [CartController::class, 'discount'])->name('discount');
 Route::get('/xoa-ma-giam-gia', [CartController::class, 'deleteDiscount'])->name('deleteDiscount');
 
@@ -279,38 +279,39 @@ Route::middleware(['guest:web'])->group(function () {
     Route::get('/dang-ky', [AuthUserController::class, 'register'])->name('register');
     Route::post('/dang-ky', [AuthUserController::class, 'registerPost'])->name('registerPost');
 
-    Route::get('/forgot-password', [AuthUserController::class, 'forgotPassword'])->name('password.request');
-    Route::post('/forgot-password', [AuthUserController::class, 'forgotPasswordPost'])->name('password.email');
-    Route::get('/reset-password/{token}', [AuthUserController::class, 'resetPassword'])->name('password.reset');
-    Route::post('/reset-password', [AuthUserController::class, 'resetPasswordPost'])->name('password.update');
+    Route::get('/quen-mat-khau', [AuthUserController::class, 'forgotPassword'])->name('password.request');
+    Route::post('/quen-mat-khau', [AuthUserController::class, 'forgotPasswordPost'])->name('password.email');
+    Route::get('/dat-lai-mat-khau/{token}', [AuthUserController::class, 'resetPassword'])->name('password.reset');
+    Route::post('/dat-lai-mat-khau', [AuthUserController::class, 'resetPasswordPost'])->name('password.update');
 });
 
 Route::middleware(['auth:web'])->group(function () {
     // Checkout
     Route::get('/dat-hang', [CheckoutController::class, 'index'])->name('checkout');
-    Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkoutPost');
-    Route::get('/checkout/vnPayCheck', [CheckoutController::class, 'vnPayCheck'])->name('checkout.vnpay');
+    Route::post('/thanh-toan', [CheckoutController::class, 'checkout'])->name('checkoutPost');
+    Route::get('/thanh-toan/vnPayCheck', [CheckoutController::class, 'vnPayCheck'])->name('checkout.vnpay');
     Route::get('/dat-hang/thanh-cong', [CheckoutController::class, 'notification'])->name('checkout.success');
 
     // User Account
     Route::post('/dang-xuat', [AuthUserController::class, 'logout'])->name('logout');
     Route::get('/tai-khoan', [AccountController::class, 'account'])->name('account');
+    Route::get('/tai-khoan/yeu-thich', [AccountController::class, 'favorite'])->name('account.favorite');
+    Route::get('/tai-khoan/thong-tin', [AccountController::class, 'info'])->name('account.info');
     Route::post('/tai-khoan', [AccountController::class, 'updateAccount'])->name('account.update');
-    Route::get('/doi-mat-khau', [AccountController::class, 'changePassword'])->name('account.change-password');
-    Route::post('/doi-mat-khau', [AccountController::class, 'updatePassword'])->name('account.update-password');
+    Route::get('/tai-khoan/doi-mat-khau', [AccountController::class, 'changePassword'])->name('account.change-password');
+    Route::post('/tai-khoan/doi-mat-khau', [AccountController::class, 'updatePassword'])->name('account.update-password');
 
-    Route::get('/lich-su-don-hang', [AccountController::class, 'orderHistory'])->name('account.orderHistory');
-    Route::get('/chi-tiet-don-hang/{order}', [AccountController::class, 'orderDetail'])->name('order.detail');
-    Route::post('/order-history/cancel/{order}', [AccountController::class, 'cancel'])->name('order.cancel');
-    Route::post('/order-history/receive/{order}', [AccountController::class, 'receive'])->name('order.receive');
-    Route::post('/order-history/return/{order}', [AccountController::class, 'return'])->name('order.return');
+    Route::get('/tai-khoan/lich-su-don-hang', [AccountController::class, 'orderHistory'])->name('account.orderHistory');
+    Route::get('/tai-khoan/chi-tiet-don-hang/{order}', [AccountController::class, 'orderDetail'])->name('order.detail');
+    Route::post('/tai-khoan/lich-su-don-hang/cancel/{order}', [AccountController::class, 'cancel'])->name('order.cancel');
+    Route::post('/tai-khoan/lich-su-don-hang/receive/{order}', [AccountController::class, 'receive'])->name('order.receive');
+    Route::post('/tai-khoan/lich-su-don-hang/return/{order}', [AccountController::class, 'return'])->name('order.return');
+    Route::put('/tai-khoan/phan-hoi-khach-hang/{order}', [AccountController::class, 'feedback'])->name('account.feedback');
 
-    Route::put('/phan-hoi-khach-hang/{order}', [AccountController::class, 'feedback'])->name('account.feedback');
+    Route::get('san-pham/{product}/binh-luan', [CommentController::class, 'index'])->name('comment.index');
+    Route::post('san-pham/{product}/binh-luan', [CommentController::class, 'store'])->name('comment.store');
 
-    Route::get('products/{product}/comments', [CommentController::class, 'index'])->name('comment.index');
-    Route::post('products/{product}/comments', [CommentController::class, 'store'])->name('comment.store');
-
-    Route::get('/product/{product}', function (App\Models\Product $product) {
+    Route::get('/san-pham/{product}', function (App\Models\Product $product) {
         return view('frontend.product', compact('product'));
     });
 });

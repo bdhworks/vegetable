@@ -13,13 +13,13 @@ class BlogController extends Controller
         $categoryPosts = CategoryPost::all();
         $posts = Post::all();
 
-        return view('frontend.blog', compact('categoryPosts', 'posts'));
+        return view('frontend.post.blog', compact('categoryPosts', 'posts'));
     }
 
     public function blogDetail($slug) {
         $categoryPosts = CategoryPost::all();
         $post = Post::where('slug', $slug)->first();
 
-        return view('frontend.blogDetail', compact('post', 'categoryPosts'));
+        return view('frontend.post.blogDetail', compact('post', 'categoryPosts'));
     }
 }
