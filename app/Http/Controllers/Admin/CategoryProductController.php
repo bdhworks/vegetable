@@ -16,13 +16,23 @@ class CategoryProductController extends Controller
 {
     public function index(Request $request)
     {
-        $name = $request->input('name');
+        $query = CategoryProduct::query();
+        
+        // Search by name
+        if ($request->has('name') && $request->name != '') {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+        
+        // Paginate results
+        $categoryProducts = $query->orderBy('id', 'desc')->paginate(10);
+        
+        // Get statistics for all records
+        $totalCategories = CategoryProduct::count();
+        $activeCategories = CategoryProduct::where('status', 0)->count();
+        $inactiveCategories = CategoryProduct::where('status', 1)->count();
+        $withImageCategories = CategoryProduct::whereNotNull('image')->count();
 
-        $categoryProducts = CategoryProduct::when($name, function($query, $name){
-            $query->where('name', 'LIKE', "%$name%");
-        })->orderByDesc('id')->paginate(8);
-
-        return view('admin.categoryProduct.list', compact('categoryProducts'));
+        return view('admin.categoryProduct.list', compact('categoryProducts', 'totalCategories', 'activeCategories', 'inactiveCategories', 'withImageCategories'));
     }
 
     public function create()

@@ -12,10 +12,23 @@ use Throwable;
 
 class CategoryPostController extends Controller
 {
-    public function index(){
-        $categoryPosts = CategoryPost::all();
+    public function index(Request $request){
+        $query = CategoryPost::query();
+        
+        // Search by name
+        if ($request->has('name') && $request->name != '') {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+        
+        // Paginate results
+        $categoryPosts = $query->orderBy('id', 'desc')->paginate(10);
+        
+        // Get statistics - FIXED to get all records, not just current page
+        $totalCategories = CategoryPost::count();
+        $activeCategories = CategoryPost::where('status', 1)->count();
+        $inactiveCategories = CategoryPost::where('status', 0)->count();
 
-        return view('admin.categoryPost.list', compact('categoryPosts'));
+        return view('admin.categoryPost.list', compact('categoryPosts', 'totalCategories', 'activeCategories', 'inactiveCategories'));
     }
 
     public function create(){
