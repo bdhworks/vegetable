@@ -12,8 +12,17 @@ use Throwable;
 
 class ProductCodeController extends Controller
 {
-    public function index(){
-        $productCodes = ProductCode::OrderBy('created_at', 'desc')->paginate(5);
+    public function index(Request $request){
+        $query = ProductCode::query();
+        
+        // Search by product_code or title
+        if ($request->has('product_code') && $request->product_code != '') {
+            $query->where('name', 'like', '%' . $request->product_code . '%')
+                  ->orWhere('title', 'like', '%' . $request->product_code . '%');
+        }
+        
+        // Paginate results
+        $productCodes = $query->orderBy('id', 'desc')->paginate(10);
 
         return view('admin.productCode.list', compact('productCodes'));
     }

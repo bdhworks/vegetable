@@ -1960,271 +1960,271 @@
 
     <script>
         // Enhanced header interactions
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     Update time displays
-        //     function updateTimeDisplays() {
-        //         const now = new Date();
-        //         const timeString = now.toLocaleTimeString('vi-VN', {
-        //             hour: '2-digit',
-        //             minute: '2-digit'
-        //         });
+        document.addEventListener('DOMContentLoaded', function() {
+            Update time displays
+            function updateTimeDisplays() {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('vi-VN', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
                 
-        //         // Update header time
-        //         const headerTime = document.getElementById('header-time');
-        //         if (headerTime) {
-        //             headerTime.textContent = timeString;
-        //         }
-        //     }
+                // Update header time
+                const headerTime = document.getElementById('header-time');
+                if (headerTime) {
+                    headerTime.textContent = timeString;
+                }
+            }
             
-        //     setInterval(updateTimeDisplays, 1000);
-        //     updateTimeDisplays();
+            setInterval(updateTimeDisplays, 1000);
+            updateTimeDisplays();
 
-        //     Enhanced page title and breadcrumb management - FIXED
-        //     function updatePageInfo() {
-        //         const currentPath = window.location.pathname;
-        //         const titleElement = document.getElementById('page-title');
-        //         const breadcrumbElement = document.getElementById('page-breadcrumb');
-        //         const iconElement = document.getElementById('page-icon');
+            Enhanced page title and breadcrumb management - FIXED
+            function updatePageInfo() {
+                const currentPath = window.location.pathname;
+                const titleElement = document.getElementById('page-title');
+                const breadcrumbElement = document.getElementById('page-breadcrumb');
+                const iconElement = document.getElementById('page-icon');
                 
-        //         let pageInfo = {
-        //             title: 'Dashboard',
-        //             breadcrumb: 'Trang chủ / Quản lý hệ thống',
-        //             icon: 'fas fa-chart-pie'
-        //         };
+                let pageInfo = {
+                    title: 'Dashboard',
+                    breadcrumb: 'Trang chủ / Quản lý hệ thống',
+                    icon: 'fas fa-chart-pie'
+                };
                 
-        //         // Enhanced page mappings - More comprehensive
-        //         const pageMap = {
-        //             'dashboard': {
-        //                 title: 'Dashboard',
-        //                 breadcrumb: 'Trang chủ / Quản lý hệ thống',
-        //                 icon: 'fas fa-chart-pie'
-        //             },
-        //             'category-product': {
-        //                 title: 'Danh mục sản phẩm',
-        //                 breadcrumb: 'Quản lý sản phẩm / Danh mục',
-        //                 icon: 'fas fa-layer-group'
-        //             },
-        //             'origin': {
-        //                 title: 'Xuất xứ',
-        //                 breadcrumb: 'Quản lý sản phẩm / Xuất xứ',
-        //                 icon: 'fas fa-map-marker-alt'
-        //             },
-        //             'product-code': {
-        //                 title: 'Mã sản phẩm',
-        //                 breadcrumb: 'Quản lý sản phẩm / Mã sản phẩm',
-        //                 icon: 'fas fa-barcode'
-        //             },
-        //             'product': {
-        //                 title: 'Sản phẩm',
-        //                 breadcrumb: 'Quản lý sản phẩm / Sản phẩm',
-        //                 icon: 'fas fa-seedling'
-        //             },
-        //             'discount-code': {
-        //                 title: 'Mã giảm giá',
-        //                 breadcrumb: 'Quản lý sản phẩm / Mã code',
-        //                 icon: 'fas fa-tags'
-        //             },
-        //             'discount': {
-        //                 title: 'Khuyến mãi',
-        //                 breadcrumb: 'Quản lý sản phẩm / Khuyến mãi',
-        //                 icon: 'fas fa-percentage'
-        //             },
-        //             'order': {
-        //                 title: 'Đơn hàng',
-        //                 breadcrumb: 'Quản lý sản phẩm / Đơn hàng',
-        //                 icon: 'fas fa-shopping-cart'
-        //             },
-        //             'category-post': {
-        //                 title: 'Chuyên mục bài viết',
-        //                 breadcrumb: 'Quản lý nội dung / Chuyên mục',
-        //                 icon: 'fas fa-folder-open'
-        //             },
-        //             'post': {
-        //                 title: 'Bài viết',
-        //                 breadcrumb: 'Quản lý nội dung / Bài viết',
-        //                 icon: 'fas fa-newspaper'
-        //             },
-        //             'group': {
-        //                 title: 'Phân quyền',
-        //                 breadcrumb: 'Quản lý người dùng / Phân quyền',
-        //                 icon: 'fas fa-shield-alt'
-        //             },
-        //             'module': {
-        //                 title: 'Module',
-        //                 breadcrumb: 'Quản lý người dùng / Module',
-        //                 icon: 'fas fa-puzzle-piece'
-        //             },
-        //             'staff': {
-        //                 title: 'Nhân viên',
-        //                 breadcrumb: 'Quản lý người dùng / Nhân viên',
-        //                 icon: 'fas fa-user-tie'
-        //             },
-        //             'user': {
-        //                 title: 'Khách hàng',
-        //                 breadcrumb: 'Quản lý người dùng / Khách hàng',
-        //                 icon: 'fas fa-users'
-        //             }
-        //         };
+                // Enhanced page mappings - More comprehensive
+                const pageMap = {
+                    'dashboard': {
+                        title: 'Dashboard',
+                        breadcrumb: 'Trang chủ / Quản lý hệ thống',
+                        icon: 'fas fa-chart-pie'
+                    },
+                    'category-product': {
+                        title: 'Danh mục sản phẩm',
+                        breadcrumb: 'Quản lý sản phẩm / Danh mục',
+                        icon: 'fas fa-layer-group'
+                    },
+                    'origin': {
+                        title: 'Xuất xứ',
+                        breadcrumb: 'Quản lý sản phẩm / Xuất xứ',
+                        icon: 'fas fa-map-marker-alt'
+                    },
+                    'product-code': {
+                        title: 'Mã sản phẩm',
+                        breadcrumb: 'Quản lý sản phẩm / Mã sản phẩm',
+                        icon: 'fas fa-barcode'
+                    },
+                    'product': {
+                        title: 'Sản phẩm',
+                        breadcrumb: 'Quản lý sản phẩm / Sản phẩm',
+                        icon: 'fas fa-seedling'
+                    },
+                    'discount-code': {
+                        title: 'Mã giảm giá',
+                        breadcrumb: 'Quản lý sản phẩm / Mã code',
+                        icon: 'fas fa-tags'
+                    },
+                    'discount': {
+                        title: 'Khuyến mãi',
+                        breadcrumb: 'Quản lý sản phẩm / Khuyến mãi',
+                        icon: 'fas fa-percentage'
+                    },
+                    'order': {
+                        title: 'Đơn hàng',
+                        breadcrumb: 'Quản lý sản phẩm / Đơn hàng',
+                        icon: 'fas fa-shopping-cart'
+                    },
+                    'category-post': {
+                        title: 'Chuyên mục bài viết',
+                        breadcrumb: 'Quản lý nội dung / Chuyên mục',
+                        icon: 'fas fa-folder-open'
+                    },
+                    'post': {
+                        title: 'Bài viết',
+                        breadcrumb: 'Quản lý nội dung / Bài viết',
+                        icon: 'fas fa-newspaper'
+                    },
+                    'group': {
+                        title: 'Phân quyền',
+                        breadcrumb: 'Quản lý người dùng / Phân quyền',
+                        icon: 'fas fa-shield-alt'
+                    },
+                    'module': {
+                        title: 'Module',
+                        breadcrumb: 'Quản lý người dùng / Module',
+                        icon: 'fas fa-puzzle-piece'
+                    },
+                    'staff': {
+                        title: 'Nhân viên',
+                        breadcrumb: 'Quản lý người dùng / Nhân viên',
+                        icon: 'fas fa-user-tie'
+                    },
+                    'user': {
+                        title: 'Khách hàng',
+                        breadcrumb: 'Quản lý người dùng / Khách hàng',
+                        icon: 'fas fa-users'
+                    }
+                };
                 
-        //         // Find matching page based on URL segments
-        //         const pathSegments = currentPath.split('/').filter(segment => segment !== '' && segment !== 'admin');
+                // Find matching page based on URL segments
+                const pathSegments = currentPath.split('/').filter(segment => segment !== '' && segment !== 'admin');
                 
-        //         if (pathSegments.length === 0 || currentPath.includes('/admin/dashboard') || currentPath === '/admin') {
-        //             pageInfo = pageMap['dashboard'];
-        //         } else {
-        //             // Try to match the first segment
-        //             const mainSegment = pathSegments[0];
-        //             if (pageMap[mainSegment]) {
-        //                 pageInfo = pageMap[mainSegment];
-        //             } else {
-        //                 // Try to match with dashes converted
-        //                 const dashedSegment = mainSegment.replace(/([A-Z])/g, '-$1').toLowerCase();
-        //                 if (pageMap[dashedSegment]) {
-        //                     pageInfo = pageMap[dashedSegment];
-        //                 }
-        //             }
-        //         }
+                if (pathSegments.length === 0 || currentPath.includes('/admin/dashboard') || currentPath === '/admin') {
+                    pageInfo = pageMap['dashboard'];
+                } else {
+                    // Try to match the first segment
+                    const mainSegment = pathSegments[0];
+                    if (pageMap[mainSegment]) {
+                        pageInfo = pageMap[mainSegment];
+                    } else {
+                        // Try to match with dashes converted
+                        const dashedSegment = mainSegment.replace(/([A-Z])/g, '-$1').toLowerCase();
+                        if (pageMap[dashedSegment]) {
+                            pageInfo = pageMap[dashedSegment];
+                        }
+                    }
+                }
                 
-        //         // Update elements if they exist
-        //         if (titleElement) titleElement.textContent = pageInfo.title;
-        //         if (breadcrumbElement) breadcrumbElement.textContent = pageInfo.breadcrumb;
-        //         if (iconElement) iconElement.className = pageInfo.icon;
-        //     }
+                // Update elements if they exist
+                if (titleElement) titleElement.textContent = pageInfo.title;
+                if (breadcrumbElement) breadcrumbElement.textContent = pageInfo.breadcrumb;
+                if (iconElement) iconElement.className = pageInfo.icon;
+            }
             
-        //     // Call immediately and on page changes
-        //     updatePageInfo();
+            // Call immediately and on page changes
+            updatePageInfo();
             
-        //     // Update on popstate (back/forward navigation)
-        //     window.addEventListener('popstate', updatePageInfo);
+            // Update on popstate (back/forward navigation)
+            window.addEventListener('popstate', updatePageInfo);
             
-        //     // Update on hash changes
-        //     window.addEventListener('hashchange', updatePageInfo);
+            // Update on hash changes
+            window.addEventListener('hashchange', updatePageInfo);
 
-        //     // Enhanced search with keyboard shortcuts
-        //     const searchInput = document.querySelector('.enhanced-search-input');
-        //     if (searchInput) {
-        //         // Ctrl+K to focus search
-        //         document.addEventListener('keydown', function(e) {
-        //             if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        //                 e.preventDefault();
-        //                 searchInput.focus();
-        //             }
-        //         });
+            // Enhanced search with keyboard shortcuts
+            const searchInput = document.querySelector('.enhanced-search-input');
+            if (searchInput) {
+                // Ctrl+K to focus search
+                document.addEventListener('keydown', function(e) {
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                        e.preventDefault();
+                        searchInput.focus();
+                    }
+                });
 
-        //         // Enhanced search filtering
-        //         searchInput.addEventListener('input', function() {
-        //             const query = this.value.toLowerCase();
-        //             const suggestions = document.querySelectorAll('.suggestion-item-enhanced');
+                // Enhanced search filtering
+                searchInput.addEventListener('input', function() {
+                    const query = this.value.toLowerCase();
+                    const suggestions = document.querySelectorAll('.suggestion-item-enhanced');
                     
-        //             suggestions.forEach(item => {
-        //                 const title = item.querySelector('.suggestion-title')?.textContent.toLowerCase() || '';
-        //                 const desc = item.querySelector('.suggestion-desc')?.textContent.toLowerCase() || '';
+                    suggestions.forEach(item => {
+                        const title = item.querySelector('.suggestion-title')?.textContent.toLowerCase() || '';
+                        const desc = item.querySelector('.suggestion-desc')?.textContent.toLowerCase() || '';
                         
-        //                 if (query.length === 0 || title.includes(query) || desc.includes(query)) {
-        //                     item.style.display = 'flex';
-        //                 } else {
-        //                     item.style.display = 'none';
-        //                 }
-        //             });
-        //         });
+                        if (query.length === 0 || title.includes(query) || desc.includes(query)) {
+                            item.style.display = 'flex';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
 
-        //         // Handle Enter key
-        //         searchInput.addEventListener('keydown', function(e) {
-        //             if (e.key === 'Enter') {
-        //                 e.preventDefault();
-        //                 const visibleSuggestions = document.querySelectorAll('.suggestion-item-enhanced[style="display: flex"], .suggestion-item-enhanced:not([style*="none"])');
-        //                 if (visibleSuggestions.length > 0) {
-        //                     visibleSuggestions[0].click();
-        //                 }
-        //             }
-        //         });
-        //     }
+                // Handle Enter key
+                searchInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const visibleSuggestions = document.querySelectorAll('.suggestion-item-enhanced[style="display: flex"], .suggestion-item-enhanced:not([style*="none"])');
+                        if (visibleSuggestions.length > 0) {
+                            visibleSuggestions[0].click();
+                        }
+                    }
+                });
+            }
 
-        //     // Mobile menu toggle
-        //     const mobileToggle = document.getElementById('headerCollapse');
-        //     const sidebarCloseToggle = document.getElementById('sidebarCollapse');
-        //     const sidebar = document.querySelector('.left-sidebar');
+            // Mobile menu toggle
+            const mobileToggle = document.getElementById('headerCollapse');
+            const sidebarCloseToggle = document.getElementById('sidebarCollapse');
+            const sidebar = document.querySelector('.left-sidebar');
             
-        //     if (mobileToggle && sidebar) {
-        //         mobileToggle.addEventListener('click', function() {
-        //             sidebar.classList.toggle('show');
-        //         });
-        //     }
+            if (mobileToggle && sidebar) {
+                mobileToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('show');
+                });
+            }
 
-        //     if (sidebarCloseToggle && sidebar) {
-        //         sidebarCloseToggle.addEventListener('click', function() {
-        //             sidebar.classList.remove('show');
-        //         });
-        //     }
+            if (sidebarCloseToggle && sidebar) {
+                sidebarCloseToggle.addEventListener('click', function() {
+                    sidebar.classList.remove('show');
+                });
+            }
 
-        //     // Close sidebar when clicking outside on mobile
-        //     document.addEventListener('click', function(e) {
-        //         if (window.innerWidth <= 768 && sidebar) {
-        //             if (!sidebar.contains(e.target) && 
-        //                 !mobileToggle?.contains(e.target) && 
-        //                 sidebar.classList.contains('show')) {
-        //                 sidebar.classList.remove('show');
-        //             }
-        //         }
-        //     });
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768 && sidebar) {
+                    if (!sidebar.contains(e.target) && 
+                        !mobileToggle?.contains(e.target) && 
+                        sidebar.classList.contains('show')) {
+                        sidebar.classList.remove('show');
+                    }
+                }
+            });
 
-        //     // Active navigation highlighting - FIXED
-        //     const currentPath = window.location.pathname;
-        //     const navLinks = document.querySelectorAll('.nav-link');
+            // Active navigation highlighting - FIXED
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-link');
             
-        //     navLinks.forEach(link => {
-        //         link.classList.remove('active'); // Remove existing active classes first
-        //         const href = link.getAttribute('href');
-        //         if (href) {
-        //             // More precise path matching
-        //             if (currentPath === href || 
-        //                 (href.includes('/admin/') && currentPath.includes(href.replace('/admin/', '').split('/')[0]))) {
-        //                 link.classList.add('active');
-        //             }
-        //         }
-        //     });
+            navLinks.forEach(link => {
+                link.classList.remove('active'); // Remove existing active classes first
+                const href = link.getAttribute('href');
+                if (href) {
+                    // More precise path matching
+                    if (currentPath === href || 
+                        (href.includes('/admin/') && currentPath.includes(href.replace('/admin/', '').split('/')[0]))) {
+                        link.classList.add('active');
+                    }
+                }
+            });
 
-        //     // Update sidebar time
-        //     function updateSidebarTime() {
-        //         const sidebarTimeElement = document.getElementById('sidebarTime');
-        //         if (sidebarTimeElement) {
-        //             const now = new Date();
-        //             const timeString = now.toLocaleTimeString('vi-VN', {
-        //                 hour: '2-digit',
-        //                 minute: '2-digit'
-        //             });
-        //             sidebarTimeElement.textContent = timeString;
-        //         }
-        //     }
+            // Update sidebar time
+            function updateSidebarTime() {
+                const sidebarTimeElement = document.getElementById('sidebarTime');
+                if (sidebarTimeElement) {
+                    const now = new Date();
+                    const timeString = now.toLocaleTimeString('vi-VN', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    sidebarTimeElement.textContent = timeString;
+                }
+            }
             
-        //     setInterval(updateSidebarTime, 1000);
-        //     updateSidebarTime();
+            setInterval(updateSidebarTime, 1000);
+            updateSidebarTime();
 
-        //     // Initialize tooltips
-        //     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        //     tooltipTriggerList.map(function (tooltipTriggerEl) {
-        //         return new bootstrap.Tooltip(tooltipTriggerEl);
-        //     });
+            // Initialize tooltips
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
 
-        //     // Enhanced notification panel management
-        //     const notificationPanel = document.getElementById('notificationPanel');
-        //     const notificationToggle = document.querySelector('.notification-toggle');
+            // Enhanced notification panel management
+            const notificationPanel = document.getElementById('notificationPanel');
+            const notificationToggle = document.querySelector('.notification-toggle');
             
-        //     // Close notification panel when clicking outside
-        //     document.addEventListener('click', function(e) {
-        //         if (notificationPanel && !notificationPanel.contains(e.target) && 
-        //             !notificationToggle?.contains(e.target)) {
-        //             notificationPanel.classList.remove('show');
-        //         }
-        //     });
+            // Close notification panel when clicking outside
+            document.addEventListener('click', function(e) {
+                if (notificationPanel && !notificationPanel.contains(e.target) && 
+                    !notificationToggle?.contains(e.target)) {
+                    notificationPanel.classList.remove('show');
+                }
+            });
 
-        //     // Close notification panel on ESC key
-        //     document.addEventListener('keydown', function(e) {
-        //         if (e.key === 'Escape' && notificationPanel?.classList.contains('show')) {
-        //             notificationPanel.classList.remove('show');
-        //         }
-        //     });
-        // });
+            // Close notification panel on ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && notificationPanel?.classList.contains('show')) {
+                    notificationPanel.classList.remove('show');
+                }
+            });
+        });
 
         // Enhanced notification panel functions
         function toggleNotificationPanel() {

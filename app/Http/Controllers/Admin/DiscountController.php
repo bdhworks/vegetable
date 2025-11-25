@@ -13,8 +13,17 @@ use Throwable;
 
 class DiscountController extends Controller
 {
-    public function index(){
-        $discounts = Discount::all();
+    public function index(Request $request){
+        $query = Discount::query();
+        
+        // Search by name or code
+        if ($request->has('name') && $request->name != '') {
+            $query->where('name', 'like', '%' . $request->name . '%')
+                  ->orWhere('code', 'like', '%' . $request->name . '%');
+        }
+        
+        // Paginate results
+        $discounts = $query->orderBy('id', 'desc')->paginate(10);
 
         return view('admin.discount.list', compact('discounts'));
     }

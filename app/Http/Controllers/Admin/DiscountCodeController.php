@@ -8,8 +8,18 @@ use Illuminate\Http\Request;
 
 class DiscountCodeController extends Controller
 {
-    public function index(){
-        $discountCodes = DiscountCode::all();
+    public function index(Request $request){
+        $query = DiscountCode::query();
+        
+        // Search by name
+        if ($request->has('name') && $request->name != '') {
+            $query->where('name', 'like', '%' . $request->name . '%')
+                  ->orWhere('title', 'like', '%' . $request->name . '%');
+        }
+        
+        // Paginate results
+        $discountCodes = $query->orderBy('id', 'desc')->paginate(10);
+
         return view('admin.discountCode.list', compact('discountCodes'));
     }
 

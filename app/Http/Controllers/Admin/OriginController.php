@@ -14,11 +14,15 @@ class OriginController extends Controller
 {
     public function index(Request $request)
     {
-        $name = $request->input('name');
+        $query = Origin::query();
 
-        $origins = Origin::when($name, function($query, $name){
-            $query->where('name', 'LIKE', "%$name%");
-        })->orderByDesc('id')->paginate(8);
+        // Search by name
+        if ($request->has('name') && $request->name != '') {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        // Paginate results
+        $origins = $query->orderBy('id', 'desc')->paginate(10);
 
         return view('admin.origin.list', compact('origins'));
     }
