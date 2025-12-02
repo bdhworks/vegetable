@@ -1,73 +1,888 @@
 @extends('admin.layout.be')
 
+@section('title_one')
+Nhân viên
+@endsection
+@section('title_two')
+Quản lý người dùng / Chỉnh sửa Nhân Viên
+@endsection
+
 @section('content')
-    <div class="container-fluid">
-        <h1 class="mt-4">Cập nhật thông tin nhân viên</h1>
-        <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item"><a href="{{ route('staff.index') }}">Danh sách nhân viên</a></li>
-            <li class="breadcrumb-item active">Cập nhật thông tin nhân viên</li>
-        </ol>  
-
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title fw-semibold mb-4">Thông tin</h5>
-                <form action="{{ route('staff.update', $admin) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Họ tên</label>
-                        <input type="text" class="form-control" name="name" id="name" value="{{ $admin->name }}">
-                        @error('name')
-                            <p class="text-danger">{{$message}}</p>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" value="{{ $admin->email }}">
-                        @error('email')
-                            <p class="text-danger">{{$message}}</p>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="group_id" class="form-label">Chức vụ</label>
-                        <select name="group_id" id="group_id" class="form-select">
-                            <option value="" disabled selected>--- Chọn chức vụ ---</option>
-                            @foreach ($groups as $item)
-                                <option value="{{ $item->id }}" {{ $admin->group_id == $item->id ? 'selected':false }} >{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('group_id')
-                            <p class="text-danger">{{$message}}</p>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="phone" class="form-label">Số điện thoại</label>
-                        <input type="text" class="form-control" name="phone" id="phone">
-                        @error('phone')
-                            <p class="text-danger">{{$message}}</p>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Địa chỉ</label>
-                        <input type="text" class="form-control" name="address" id="address">
-                        @error('address')
-                            <p class="text-danger">{{$message}}</p>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="image" class="form-label">Ảnh đại diện</label>
-                        <input type="file" name="image" class="form-control" id="image" accept="image/*">
-                        @error('image')
-                            <p class="text-danger">{{$message}}</p>
-                        @enderror
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Lưu</button>
-                    <a href="{{ route('staff.index') }}" class="btn btn-danger mx-2">Quay lại</a>
-                </form>
+<div class="staff-edit-page">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="header-content">
+            <div class="header-left">
+                <h1 class="page-title">
+                    <i class="ti ti-user-edit"></i>
+                    Chỉnh sửa Nhân Viên
+                </h1>
+                <nav class="breadcrumb-modern">
+                    <ol>
+                        <li><a href="{{ route('admin.dashboard') }}"><i class="ti ti-home"></i>Dashboard</a></li>
+                        <li><i class="ti ti-chevron-right"></i></li>
+                        <li><a href="{{ route('staff.index') }}">Nhân viên</a></li>
+                        <li><i class="ti ti-chevron-right"></i></li>
+                        <li class="active">Chỉnh sửa #{{ $admin->id }}</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="header-right">
+                <a href="{{ route('staff.index') }}" class="btn-back">
+                    <i class="ti ti-arrow-left"></i>
+                    <span>Quay lại</span>
+                </a>
             </div>
         </div>
     </div>
 
+    <!-- Main Form Card -->
+    <div class="form-container">
+        <div class="content-card">
+            <div class="card-header-custom">
+                <div class="header-icon">
+                    <i class="ti ti-user"></i>
+                </div>
+                <div class="header-text">
+                    <h3 class="card-title-custom">Thông tin Nhân Viên</h3>
+                    <p class="card-subtitle">Cập nhật thông tin cho nhân viên #{{ $admin->id }}</p>
+                </div>
+                <div class="staff-badge">
+                    <i class="ti ti-user-circle"></i>
+                    ID: {{ $admin->id }}
+                </div>
+            </div>
+
+            <div class="card-body-custom">
+                <form action="{{ route('staff.update', $admin) }}" method="POST" enctype="multipart/form-data" id="staffForm">
+                    @csrf
+                    @method('PUT')
+                    
+                    <div class="form-grid">
+                        <!-- Full Name -->
+                        <div class="form-group full-width">
+                            <label for="name" class="form-label required">
+                                <i class="ti ti-user"></i>
+                                Họ và Tên
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="text" 
+                                       name="name" 
+                                       id="name" 
+                                       class="form-control @error('name') is-invalid @enderror" 
+                                       placeholder="Nhập họ và tên đầy đủ..."
+                                       value="{{ old('name', $admin->name) }}"
+                                       required>
+                                <span class="input-icon">
+                                    <i class="ti ti-user"></i>
+                                </span>
+                            </div>
+                            @error('name')
+                                <div class="error-message">
+                                    <i class="ti ti-alert-circle"></i>
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label for="email" class="form-label required">
+                                <i class="ti ti-mail"></i>
+                                Email
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="email" 
+                                       name="email" 
+                                       id="email" 
+                                       class="form-control @error('email') is-invalid @enderror" 
+                                       placeholder="email@example.com"
+                                       value="{{ old('email', $admin->email) }}"
+                                       required>
+                                <span class="input-icon">
+                                    <i class="ti ti-mail"></i>
+                                </span>
+                            </div>
+                            @error('email')
+                                <div class="error-message">
+                                    <i class="ti ti-alert-circle"></i>
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <!-- Group/Role -->
+                        <div class="form-group">
+                            <label for="group_id" class="form-label required">
+                                <i class="ti ti-shield"></i>
+                                Chức Vụ
+                            </label>
+                            <div class="input-wrapper">
+                                <select name="group_id" 
+                                        id="group_id" 
+                                        class="form-control @error('group_id') is-invalid @enderror"
+                                        required>
+                                    <option value="" disabled>--- Chọn chức vụ ---</option>
+                                    @foreach ($groups as $item)
+                                        <option value="{{ $item->id }}" {{ $admin->group_id == $item->id ? 'selected' : '' }}>
+                                            {{ $item->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <span class="input-icon">
+                                    <i class="ti ti-shield"></i>
+                                </span>
+                            </div>
+                            @error('group_id')
+                                <div class="error-message">
+                                    <i class="ti ti-alert-circle"></i>
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="form-group">
+                            <label for="phone" class="form-label">
+                                <i class="ti ti-phone"></i>
+                                Số Điện Thoại
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="text" 
+                                       name="phone" 
+                                       id="phone" 
+                                       class="form-control @error('phone') is-invalid @enderror" 
+                                       placeholder="0123456789"
+                                       value="{{ old('phone', $admin->phone) }}">
+                                <span class="input-icon">
+                                    <i class="ti ti-phone"></i>
+                                </span>
+                            </div>
+                            @error('phone')
+                                <div class="error-message">
+                                    <i class="ti ti-alert-circle"></i>
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <!-- Address -->
+                        <div class="form-group">
+                            <label for="address" class="form-label">
+                                <i class="ti ti-map-pin"></i>
+                                Địa Chỉ
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="text" 
+                                       name="address" 
+                                       id="address" 
+                                       class="form-control @error('address') is-invalid @enderror" 
+                                       placeholder="Nhập địa chỉ..."
+                                       value="{{ old('address', $admin->address) }}">
+                                <span class="input-icon">
+                                    <i class="ti ti-map-pin"></i>
+                                </span>
+                            </div>
+                            @error('address')
+                                <div class="error-message">
+                                    <i class="ti ti-alert-circle"></i>
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <!-- Avatar Image -->
+                        <div class="form-group full-width">
+                            <label for="image" class="form-label">
+                                <i class="ti ti-photo"></i>
+                                Ảnh Đại Diện
+                            </label>
+                            <div class="file-upload-wrapper">
+                                <input type="file" 
+                                       name="image" 
+                                       id="image" 
+                                       class="file-input @error('image') is-invalid @enderror" 
+                                       accept="image/*"
+                                       onchange="previewImage(this)">
+                                <label for="image" class="file-label">
+                                    <i class="ti ti-upload"></i>
+                                    <span class="file-text">Chọn ảnh đại diện</span>
+                                </label>
+                                @if($admin->image)
+                                    <div class="current-image">
+                                        <img src="{{ asset($admin->image) }}" alt="Current avatar" id="preview-current">
+                                        <span class="image-label">Ảnh hiện tại</span>
+                                    </div>
+                                @endif
+                                <div class="preview-container" id="preview-container" style="display: none;">
+                                    <img id="preview-image" alt="Preview">
+                                    <span class="image-label">Ảnh mới</span>
+                                </div>
+                            </div>
+                            @error('image')
+                                <div class="error-message">
+                                    <i class="ti ti-alert-circle"></i>
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                            <small class="form-hint">
+                                <i class="ti ti-info-circle"></i>
+                                Định dạng: JPG, PNG, JPEG. Kích thước tối đa: 2MB
+                            </small>
+                        </div>
+
+                        <!-- Info Display -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="ti ti-calendar"></i>
+                                Ngày tạo
+                            </label>
+                            <div class="info-display">
+                                <i class="ti ti-clock"></i>
+                                {{ $admin->created_at ? $admin->created_at->format('d/m/Y H:i') : 'N/A' }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="ti ti-calendar-event"></i>
+                                Cập nhật lần cuối
+                            </label>
+                            <div class="info-display">
+                                <i class="ti ti-clock"></i>
+                                {{ $admin->updated_at ? $admin->updated_at->format('d/m/Y H:i') : 'N/A' }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn-submit">
+                            <i class="ti ti-device-floppy"></i>
+                            <span>Cập nhật Nhân Viên</span>
+                        </button>
+                        <a href="{{ route('admin.password') }}" class="btn-password">
+                            <i class="ti ti-lock"></i>
+                            <span>Đổi mật khẩu</span>
+                        </a>
+                        <a href="{{ route('staff.index') }}" class="btn-cancel">
+                            <i class="ti ti-x"></i>
+                            <span>Hủy bỏ</span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Info Card -->
+        <div class="info-card">
+            <div class="info-header">
+                <i class="ti ti-info-circle"></i>
+                <h4>Thông tin Nhân Viên</h4>
+            </div>
+            <div class="info-body">
+                <div class="info-item">
+                    <div class="info-icon primary">
+                        <i class="ti ti-user-circle"></i>
+                    </div>
+                    <div class="info-content">
+                        <h5>Mã Nhân Viên</h5>
+                        <p class="info-value">{{ $admin->id }}</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon success">
+                        <i class="ti ti-user"></i>
+                    </div>
+                    <div class="info-content">
+                        <h5>Tên hiện tại</h5>
+                        <p class="info-value">{{ $admin->name }}</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon info">
+                        <i class="ti ti-mail"></i>
+                    </div>
+                    <div class="info-content">
+                        <h5>Email</h5>
+                        <p class="info-value">{{ $admin->email }}</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon warning">
+                        <i class="ti ti-shield"></i>
+                    </div>
+                    <div class="info-content">
+                        <h5>Chức vụ</h5>
+                        <p class="info-value">{{ $admin->group->name }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-footer">
+                <a href="{{ route('admin.password') }}" class="btn-password-full">
+                    <i class="ti ti-lock"></i>
+                    <span>Đổi mật khẩu</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Staff Edit Page Specific Styles */
+.staff-edit-page {
+    padding: 1.5rem;
+    background: #f5f7fa;
+    min-height: 100vh;
+}
+
+/* Back Button */
+.btn-back {
+    background: white;
+    color: #4b5563;
+    border: 2px solid #e5e7eb;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-back:hover {
+    border-color: #3b82f6;
+    color: #3b82f6;
+    transform: translateX(-4px);
+}
+
+/* Form Container */
+.form-container {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 1.5rem;
+    max-width: 1400px;
+}
+
+/* Card Header Custom */
+.card-header-custom {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    border-bottom: 2px solid #60a5fa;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.header-text {
+    flex: 1;
+}
+
+.card-title-custom {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e40af;
+    margin: 0;
+}
+
+.card-subtitle {
+    font-size: 0.875rem;
+    color: #3b82f6;
+    margin: 0.25rem 0 0 0;
+}
+
+.staff-badge {
+    background: white;
+    color: #1e40af;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 2px solid #60a5fa;
+}
+
+.card-body-custom {
+    padding: 2rem;
+}
+
+/* Form Grid */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-label {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #1f2937;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-label.required::after {
+    content: '*';
+    color: #ef4444;
+    margin-left: 0.25rem;
+}
+
+.form-label i {
+    color: #3b82f6;
+}
+
+/* Input Wrapper */
+.input-wrapper {
+    position: relative;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.875rem 1rem 0.875rem 3rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.5rem;
+    font-size: 0.9375rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.form-control.is-invalid {
+    border-color: #ef4444;
+}
+
+.form-control.is-invalid:focus {
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    font-size: 1.125rem;
+}
+
+.form-control:focus + .input-icon {
+    color: #3b82f6;
+}
+
+/* File Upload Styles */
+.file-upload-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.file-input {
+    display: none;
+}
+
+.file-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2rem;
+    background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+    border: 2px dashed #d1d5db;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #6b7280;
+    font-weight: 600;
+}
+
+.file-label:hover {
+    border-color: #3b82f6;
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    color: #3b82f6;
+}
+
+.file-label i {
+    font-size: 1.5rem;
+}
+
+.current-image,
+.preview-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.current-image img,
+.preview-container img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    border: 3px solid #e5e7eb;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.image-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #6b7280;
+}
+
+/* Info Display */
+.info-display {
+    padding: 0.875rem 1rem;
+    background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+    border: 2px solid #e5e7eb;
+    border-radius: 0.5rem;
+    color: #4b5563;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.info-display i {
+    color: #3b82f6;
+}
+
+/* Form Hint */
+.form-hint {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8125rem;
+    color: #6b7280;
+    margin-top: 0.25rem;
+}
+
+.form-hint i {
+    color: #3b82f6;
+}
+
+/* Error Message */
+.error-message {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+    color: #dc2626;
+    margin-top: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    background: #fef2f2;
+    border-radius: 0.375rem;
+    border-left: 3px solid #ef4444;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    padding-top: 2rem;
+    border-top: 2px solid #e5e7eb;
+    flex-wrap: wrap;
+}
+
+.btn-submit,
+.btn-password,
+.btn-cancel {
+    padding: 0.875rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-submit {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+}
+
+.btn-submit:hover {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+}
+
+.btn-password {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+}
+
+.btn-password:hover {
+    background: linear-gradient(135deg, #d97706, #b45309);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(245, 158, 11, 0.3);
+    color: white;
+}
+
+.btn-cancel {
+    background: white;
+    color: #6b7280;
+    border: 2px solid #e5e7eb;
+}
+
+.btn-cancel:hover {
+    border-color: #ef4444;
+    color: #ef4444;
+    transform: translateY(-2px);
+}
+
+/* Info Card */
+.info-card {
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    height: fit-content;
+    position: sticky;
+    top: 1.5rem;
+}
+
+.info-header {
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+    border-bottom: 2px solid #a78bfa;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.info-header i {
+    font-size: 1.5rem;
+    color: #6b21a8;
+}
+
+.info-header h4 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #6b21a8;
+}
+
+.info-body {
+    padding: 1.5rem;
+}
+
+.info-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.info-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.info-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+    font-size: 1.125rem;
+}
+
+.info-icon.primary {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.info-icon.success {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.info-icon.info {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.info-icon.warning {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+}
+
+.info-content h5 {
+    margin: 0 0 0.375rem 0;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.info-content .info-value {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: #1f2937;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+/* Info Footer */
+.info-footer {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #fed7aa, #fdba74);
+    border-top: 2px solid #fb923c;
+}
+
+.btn-password-full {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-password-full:hover {
+    background: linear-gradient(135deg, #d97706, #b45309);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .form-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .info-card {
+        position: relative;
+        top: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .staff-edit-page {
+        padding: 1rem;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .card-body-custom {
+        padding: 1.5rem;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .btn-submit,
+    .btn-password,
+    .btn-cancel {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .card-header-custom {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .staff-badge {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .current-image img,
+    .preview-container img {
+        width: 120px;
+        height: 120px;
+    }
+}
+</style>
+
+<script>
+// Preview image function
+function previewImage(input) {
+    const previewContainer = document.getElementById('preview-container');
+    const previewImage = document.getElementById('preview-image');
+    const fileLabel = input.nextElementSibling.querySelector('.file-text');
+    
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;
+            previewContainer.style.display = 'flex';
+            fileLabel.textContent = input.files[0].name;
+        };
+        
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('staffForm');
+    
+    // Form validation
+    form.addEventListener('submit', function(e) {
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const groupId = document.getElementById('group_id').value;
+        
+        if (!name || !email || !groupId) {
+            e.preventDefault();
+            SwalHelper.error('Lỗi!', 'Vui lòng điền đầy đủ thông tin bắt buộc');
+            return false;
+        }
+        
+        // Show loading
+        SwalHelper.loading('Đang cập nhật...', 'Vui lòng đợi trong giây lát');
+    });
+});
+</script>
 
 @endsection

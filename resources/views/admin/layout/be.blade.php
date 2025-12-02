@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/png" href="{{ asset('assets/frontend/img/icon_logo.png') }}">
     <title>Admin - Nông Sản Việt</title>
     <link rel="stylesheet" href="{{ asset('assets/admin/css/styles.min.css') }}" />
@@ -17,7 +18,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     
     <style>
         /* Modern Admin UI Variables */
@@ -409,7 +409,7 @@
         }
 
         .info-item span {
-            color: var(--sidebar-text) !important;
+            /* color: var(--sidebar-text) !important; */
         }
 
         #sidebarTime {
@@ -1402,6 +1402,677 @@
         .nav-link.active:active {
             transform: translateX(6px) scale(0.98);
         }
+
+        /* Common Admin Page Components - Add these */
+        .page-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 0 0 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .page-title i {
+            font-size: 2rem;
+            color: #8b5cf6;
+        }
+
+        .breadcrumb-modern {
+            margin: 0;
+        }
+
+        .breadcrumb-modern ol {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .breadcrumb-modern li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .breadcrumb-modern a {
+            color: #6b7280;
+            text-decoration: none;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .breadcrumb-modern a:hover {
+            color: #8b5cf6;
+        }
+
+        .breadcrumb-modern .active {
+            color: #1f2937;
+            font-weight: 500;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .stat-primary .stat-icon {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+
+        .stat-success .stat-icon {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .stat-warning .stat-icon {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .stat-info .stat-icon {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+        }
+
+        .stat-content {
+            flex: 1;
+        }
+
+        .stat-label {
+            display: block;
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .card-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .toolbar-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toolbar-badge {
+            background: #ede9fe;
+            color: #8b5cf6;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .toolbar-right {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .search-input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .search-input-group:focus-within {
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            color: #9ca3af;
+            font-size: 1.125rem;
+        }
+
+        .search-input {
+            padding: 0.75rem 1rem 0.75rem 2.75rem;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 0.9375rem;
+            width: 250px;
+        }
+
+        .btn-search {
+            background: #8b5cf6;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-search:hover {
+            background: #7c3aed;
+        }
+
+        .btn-clear {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .btn-clear:hover {
+            background: #dc2626;
+            color: white;
+        }
+
+        .filter-form {
+            min-width: 200px;
+        }
+
+        .form-select-modern {
+            padding: 0.75rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 0.9375rem;
+            transition: all 0.3s ease;
+            background: white;
+            width: 100%;
+        }
+
+        .form-select-modern:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table thead {
+            background: linear-gradient(to right, #f9fafb, #f3f4f6);
+        }
+
+        .data-table th {
+            padding: 1rem 1.25rem;
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .th-content {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .text-center .th-content {
+            justify-content: center;
+        }
+
+        .data-table tbody tr {
+            border-bottom: 1px solid #f3f4f6;
+            transition: all 0.2s ease;
+        }
+
+        .data-table tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        .data-table td {
+            padding: 1.25rem;
+            vertical-align: middle;
+        }
+
+        .status-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-confirm {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .btn-confirm:hover {
+            background: #10b981;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-delivered {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .btn-delivered:hover {
+            background: #3b82f6;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-return {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .btn-return:hover {
+            background: #ef4444;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-view {
+            background: #ede9fe;
+            color: #6b21a8;
+        }
+
+        .btn-view:hover {
+            background: #8b5cf6;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .empty-state {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .empty-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #9ca3af;
+            margin: 0 auto 1.5rem;
+        }
+
+        .empty-state h5 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+        }
+
+        .pagination-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .pagination-info {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        /* SweetAlert2 Global Custom Styles */
+        .swal-modern {
+            border-radius: 1.25rem !important;
+            font-family: var(--font-primary) !important;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+        }
+
+        .swal2-popup {
+            padding: 2rem !important;
+            min-width: 400px !important;
+        }
+
+        .swal2-title {
+            font-size: 1.75rem !important;
+            font-weight: 800 !important;
+            color: var(--text-primary) !important;
+            font-family: var(--font-heading) !important;
+            margin-bottom: 0.75rem !important;
+        }
+
+        .swal2-html-container {
+            font-size: 0.9375rem !important;
+            color: var(--text-secondary) !important;
+            line-height: 1.6 !important;
+            margin: 1rem 0 !important;
+        }
+
+        .swal2-icon {
+            border-width: 4px !important;
+            margin: 1.5rem auto !important;
+        }
+
+        .swal2-icon.swal2-success {
+            border-color: #22c55e !important;
+        }
+
+        .swal2-icon.swal2-success [class^='swal2-success-line'] {
+            background-color: #22c55e !important;
+        }
+
+        .swal2-icon.swal2-success .swal2-success-ring {
+            border-color: rgba(34, 197, 94, 0.3) !important;
+        }
+
+        .swal2-icon.swal2-error {
+            border-color: #ef4444 !important;
+        }
+
+        .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+            background-color: #ef4444 !important;
+        }
+
+        .swal2-icon.swal2-warning {
+            border-color: #f59e0b !important;
+            color: #f59e0b !important;
+        }
+
+        .swal2-icon.swal2-info {
+            border-color: #3b82f6 !important;
+            color: #3b82f6 !important;
+        }
+
+        .swal2-icon.swal2-question {
+            border-color: #8b5cf6 !important;
+            color: #8b5cf6 !important;
+        }
+
+        .swal2-actions {
+            gap: 0.75rem !important;
+            margin-top: 1.5rem !important;
+        }
+
+        .swal2-confirm,
+        .swal2-cancel {
+            padding: 0.875rem 2rem !important;
+            border-radius: 0.75rem !important;
+            font-weight: 700 !important;
+            font-size: 0.9375rem !important;
+            font-family: var(--font-body) !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.5rem !important;
+            border: none !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+            transition: all 0.3s ease !important;
+            letter-spacing: 0.025em !important;
+        }
+
+        .swal2-confirm:hover,
+        .swal2-cancel:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        .swal2-confirm:focus,
+        .swal2-cancel:focus {
+            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2) !important;
+        }
+
+        .swal2-cancel {
+            background-color: #6b7280 !important;
+        }
+
+        .swal2-cancel:hover {
+            background-color: #4b5563 !important;
+        }
+
+        .swal2-cancel:focus {
+            box-shadow: 0 0 0 4px rgba(107, 114, 128, 0.2) !important;
+        }
+
+        /* Loading state */
+        .swal2-loader {
+            border-color: var(--primary-color) transparent var(--primary-color) transparent !important;
+            border-width: 4px !important;
+            width: 3rem !important;
+            height: 3rem !important;
+        }
+
+        /* Timer progress bar */
+        .swal2-timer-progress-bar {
+            background: linear-gradient(90deg, 
+                var(--primary-color) 0%, 
+                var(--primary-dark) 100%) !important;
+            height: 4px !important;
+        }
+
+        /* Close button */
+        .swal2-close {
+            color: var(--text-secondary) !important;
+            font-size: 2rem !important;
+            font-weight: 300 !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .swal2-close:hover {
+            color: var(--text-primary) !important;
+            transform: rotate(90deg) !important;
+        }
+
+        /* Footer */
+        .swal2-footer {
+            border-top: 1px solid var(--border-color) !important;
+            padding-top: 1rem !important;
+            margin-top: 1rem !important;
+            color: var(--text-secondary) !important;
+            font-size: 0.875rem !important;
+        }
+
+        /* Input styling in SweetAlert */
+        .swal2-input,
+        .swal2-textarea,
+        .swal2-select {
+            border: 2px solid var(--border-color) !important;
+            border-radius: 0.75rem !important;
+            padding: 0.875rem 1rem !important;
+            font-size: 0.9375rem !important;
+            font-family: var(--font-body) !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .swal2-input:focus,
+        .swal2-textarea:focus,
+        .swal2-select:focus {
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1) !important;
+            outline: none !important;
+        }
+
+        /* Validation message */
+        .swal2-validation-message {
+            background-color: #fef2f2 !important;
+            color: #991b1b !important;
+            border-radius: 0.75rem !important;
+            padding: 0.75rem 1rem !important;
+            font-weight: 600 !important;
+            border-left: 4px solid #dc2626 !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .swal2-popup {
+                padding: 1.5rem !important;
+                min-width: 90% !important;
+                max-width: 90% !important;
+            }
+
+            .swal2-title {
+                font-size: 1.5rem !important;
+            }
+
+            .swal2-html-container {
+                font-size: 0.875rem !important;
+            }
+
+            .swal2-confirm,
+            .swal2-cancel {
+                padding: 0.75rem 1.5rem !important;
+                font-size: 0.875rem !important;
+            }
+
+            .swal2-actions {
+                flex-direction: column !important;
+                width: 100% !important;
+            }
+
+            .swal2-confirm,
+            .swal2-cancel {
+                width: 100% !important;
+                justify-content: center !important;
+            }
+        }
     </style>
 </head>
 
@@ -1948,20 +2619,19 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('assets/admin/libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/admin/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-    {{-- <script src="/assets/admin/libs/summernote/summernote-lite.min.js"></script> --}}
     <script src="{{ asset('assets/admin/js/sidebarmenu.js') }}"></script>
     <script src="{{ asset('assets/admin/js/app.min.js') }}"></script>
     <script src="{{ asset('assets/admin/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ asset('assets/admin/libs/simplebar/dist/simplebar.js') }}"></script>
     <script src="{{ asset('assets/admin/js/dashboard.js') }}"></script>
     <script src="{{ asset('assets/admin/js/my_script.js') }}"></script>
-    {{-- <script src="{{ asset('assets/admin/ckeditor/ckeditor.js') }}"></script> --}}
+    <script src="{{ asset('assets/admin/ckeditor/ckeditor.js') }}"></script>
     @stack('js')
 
     <script>
         // Enhanced header interactions
         document.addEventListener('DOMContentLoaded', function() {
-            Update time displays
+            // Update time displays
             function updateTimeDisplays() {
                 const now = new Date();
                 const timeString = now.toLocaleTimeString('vi-VN', {
@@ -1979,7 +2649,7 @@
             setInterval(updateTimeDisplays, 1000);
             updateTimeDisplays();
 
-            Enhanced page title and breadcrumb management - FIXED
+            // Enhanced page title and breadcrumb management - FIXED
             function updatePageInfo() {
                 const currentPath = window.location.pathname;
                 const titleElement = document.getElementById('page-title');
@@ -2091,14 +2761,16 @@
                 if (iconElement) iconElement.className = pageInfo.icon;
             }
             
-            // Call immediately and on page changes
-            updatePageInfo();
-            
-            // Update on popstate (back/forward navigation)
-            window.addEventListener('popstate', updatePageInfo);
-            
-            // Update on hash changes
-            window.addEventListener('hashchange', updatePageInfo);
+            setTimeout(() => {
+                // Call immediately and on page changes
+                updatePageInfo();
+                
+                // Update on popstate (back/forward navigation)
+                window.addEventListener('popstate', updatePageInfo);
+                
+                // Update on hash changes
+                window.addEventListener('hashchange', updatePageInfo);
+            }, 50);
 
             // Enhanced search with keyboard shortcuts
             const searchInput = document.querySelector('.enhanced-search-input');
@@ -2266,6 +2938,160 @@
                 updatePageOnNavigation();
             };
         }
+
+        // Global SweetAlert2 Helper Functions
+        window.SwalHelper = {
+            // Success alert
+            success: function(title, text, callback) {
+                Swal.fire({
+                    icon: 'success',
+                    title: title || 'Thành công!',
+                    text: text,
+                    confirmButtonColor: '#22c55e',
+                    confirmButtonText: '<i class="fas fa-check"></i> Đóng',
+                    timer: 3000,
+                    timerProgressBar: true,
+                    customClass: {
+                        popup: 'swal-modern'
+                    }
+                }).then((result) => {
+                    if (callback && typeof callback === 'function') {
+                        callback(result);
+                    }
+                });
+            },
+
+            // Error alert
+            error: function(title, text, callback) {
+                Swal.fire({
+                    icon: 'error',
+                    title: title || 'Lỗi!',
+                    text: text,
+                    confirmButtonColor: '#ef4444',
+                    confirmButtonText: '<i class="fas fa-times"></i> Đóng',
+                    customClass: {
+                        popup: 'swal-modern'
+                    }
+                }).then((result) => {
+                    if (callback && typeof callback === 'function') {
+                        callback(result);
+                    }
+                });
+            },
+
+            // Warning alert
+            warning: function(title, text, callback) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: title || 'Cảnh báo!',
+                    text: text,
+                    confirmButtonColor: '#f59e0b',
+                    confirmButtonText: '<i class="fas fa-exclamation"></i> Đồng ý',
+                    customClass: {
+                        popup: 'swal-modern'
+                    }
+                }).then((result) => {
+                    if (callback && typeof callback === 'function') {
+                        callback(result);
+                    }
+                });
+            },
+
+            // Confirm dialog
+            confirm: function(title, html, confirmCallback, cancelCallback) {
+                Swal.fire({
+                    title: title || 'Xác nhận?',
+                    html: html,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#22c55e',
+                    cancelButtonColor: '#6b7280',
+                    confirmButtonText: '<i class="fas fa-check"></i> Xác nhận',
+                    cancelButtonText: '<i class="fas fa-times"></i> Hủy',
+                    customClass: {
+                        popup: 'swal-modern'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed && confirmCallback) {
+                        confirmCallback(result);
+                    } else if (result.isDismissed && cancelCallback) {
+                        cancelCallback(result);
+                    }
+                });
+            },
+
+            // Delete confirmation
+            confirmDelete: function(message, confirmCallback) {
+                Swal.fire({
+                    title: 'Xác nhận xóa?',
+                    html: message || '<p style="margin-bottom: 1rem;">Bạn có chắc chắn muốn xóa?</p><p style="color: #dc2626; font-size: 0.875rem;">⚠️ Hành động này không thể hoàn tác!</p>',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#ef4444',
+                    cancelButtonColor: '#6b7280',
+                    confirmButtonText: '<i class="fas fa-trash"></i> Xóa',
+                    cancelButtonText: '<i class="fas fa-times"></i> Hủy',
+                    customClass: {
+                        popup: 'swal-modern'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed && confirmCallback) {
+                        confirmCallback(result);
+                    }
+                });
+            },
+
+            // Loading state
+            loading: function(title, text) {
+                Swal.fire({
+                    title: title || 'Đang xử lý...',
+                    text: text || 'Vui lòng đợi trong giây lát',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                    showConfirmButton: false,
+                    customClass: {
+                        popup: 'swal-modern'
+                    },
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+            },
+
+            // Close alert
+            close: function() {
+                Swal.close();
+            }
+        };
+
+        // Auto-show session messages
+        @if(session('success'))
+            SwalHelper.success('Thành công!', '{{ session('success') }}');
+        @endif
+
+        @if(session('error'))
+            SwalHelper.error('Lỗi!', '{{ session('error') }}');
+        @endif
+
+        @if(session('warning'))
+            SwalHelper.warning('Cảnh báo!', '{{ session('warning') }}');
+        @endif
+
+        @if(session('info'))
+            Swal.fire({
+                icon: 'info',
+                title: 'Thông báo!',
+                text: '{{ session('info') }}',
+                confirmButtonColor: '#3b82f6',
+                confirmButtonText: '<i class="fas fa-info-circle"></i> Đóng',
+                timer: 4000,
+                timerProgressBar: true,
+                customClass: {
+                    popup: 'swal-modern'
+                }
+            });
+        @endif
     </script>
 </body>
 

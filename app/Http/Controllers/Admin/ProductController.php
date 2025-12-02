@@ -19,21 +19,18 @@ use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
-    public function index()
-    {
-        $productCodes = ProductCode::all();
-        // $productName = $request->input('product_name');
-        $products = Product::OrderBy('created_at', 'desc')->paginate(8);
-
-        // json file search
-        $productList = Product::all();
-        $path = public_path().'/json/';
-        if(!is_dir($path)){
-            mkdir($path, 0777, true);
+    public function index(Request $request){
+        $query = Product::with(['productCode', 'category', 'origin', 'images']);
+        
+        // Search by product name
+        if ($request->has('product_name') && $request->product_name != '') {
+            $query->where('name', 'like', '%' . $request->product_name . '%');
         }
-        File::put($path.'products.json', json_encode($productList));
+        
+        // Paginate results
+        $products = $query->orderBy('id', 'desc')->paginate(10);
 
-        return view('admin.product.list', compact('products', 'productCodes'));
+        return view('admin.product.list', compact('products'));
     }
 
     public function create()

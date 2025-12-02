@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DiscountRequest;
 use App\Models\Discount;
+use App\Models\Product;
 use App\Models\DiscountCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\File;
 use Throwable;
 
 class DiscountController extends Controller
@@ -24,6 +26,14 @@ class DiscountController extends Controller
         
         // Paginate results
         $discounts = $query->orderBy('id', 'desc')->paginate(10);
+
+        // json file search
+        $productList = Product::all();
+        $path = public_path().'/json/';
+        if(!is_dir($path)){
+            mkdir($path, 0777, true);
+        }
+        File::put($path.'products.json', json_encode($productList));
 
         return view('admin.discount.list', compact('discounts'));
     }

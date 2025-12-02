@@ -16,7 +16,9 @@ class Group extends Model
         'permissions'
     ];
 
-    public function admins(){
-        return $this->hasMany(Admin::class);
+    // Relationship with users
+    public function admins()
+    {
+        return $this->hasMany(Admin::class, 'group_id');
     }
 }

@@ -13,8 +13,16 @@ use Illuminate\Support\Facades\Log;
 
 class GroupController extends Controller
 {
-    public function index(){
-        $groups = Group::all();
+    public function index(Request $request){
+        $query = Group::with('admins'); // Eager load users relationship
+        
+        // Search by name
+        if ($request->has('name') && $request->name != '') {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+        
+        // Paginate results
+        $groups = $query->orderBy('id', 'desc')->paginate(10);
 
         return view('admin.groups.list', compact('groups'));
     }
@@ -24,15 +32,22 @@ class GroupController extends Controller
     }
 
     public function store(GroupRequest $request){
-        $data = $request->all();
+        $request->validate([
+            'name' => 'required|string|max:255|unique:groups,name',
+        ], [
+            'name.required' => 'Tên nhóm không được để trống',
+            'name.unique' => 'Tên nhóm đã tồn tại',
+        ]);
+
         DB::beginTransaction();
         try {
-            Group::create($data);
+            Group::create($request->all());
             DB::commit();
-            return redirect()->route('group.index')->with('success', 'Thêm nhóm thành công !');
+            return redirect()->route('group.index')->with('success', 'Thêm nhóm thành công!');
         } catch (Throwable $e) {
             DB::rollback();
-            throw $e;
+            Log::error('Error creating group: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lỗi xảy ra khi thêm nhóm')->withInput();
         }
     }
 
@@ -41,31 +56,56 @@ class GroupController extends Controller
     }
 
     public function update(GroupRequest $request, Group $group){
-        $data = $request->all();
+        $request->validate([
+            'name' => 'required|string|max:255|unique:groups,name,' . $group->id,
+        ], [
+            'name.required' => 'Tên nhóm không được để trống',
+            'name.unique' => 'Tên nhóm đã tồn tại',
+        ]);
+
         DB::beginTransaction();
         try {
-            $group->update($data);
-
+            $group->update($request->all());
             DB::commit();
-            return redirect()->route('group.index')->with('success', 'Cập nhật thông tin nhóm thành công !');
+            return redirect()->route('group.index')->with('success', 'Cập nhật thông tin nhóm thành công!');
         } catch (Throwable $e) {
             DB::rollback();
-            throw $e;
+            Log::error('Error updating group: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Có lỗi xảy ra khi cập nhật nhóm')->withInput();
         }
     }
 
     public function destroy(Request $request){
         try {
             $group = Group::find($request->input('group_id'));
-            if ($group) {
-                $group->delete();
-                return response()->json(['success' => true]);
-            } else {
-                return response()->json(['error' => 'Không có dữ liệu nhóm'], 404);
+            
+            if (!$group) {
+                return response()->json([
+                    'success' => false,
+                    'error' => 'Không tìm thấy nhóm'
+                ], 404);
             }
+            
+            // Check if group has users
+            if ($group->users && $group->users->count() > 0) {
+                return response()->json([
+                    'success' => false,
+                    'error' => 'Không thể xóa nhóm đã có thành viên. Vui lòng chuyển thành viên sang nhóm khác trước.'
+                ], 400);
+            }
+            
+            $group->delete();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Xóa nhóm thành công!'
+            ]);
         } catch (\Exception $e) {
             Log::error('Error deleting group: ' . $e->getMessage());
-            return response()->json(['error' => 'An error occurred'], 500);
+            return response()->json([
+                'success' => false,
+                'error' => 'Có lỗi xảy ra khi xóa nhóm'
+            ], 500);
         }
     }
 

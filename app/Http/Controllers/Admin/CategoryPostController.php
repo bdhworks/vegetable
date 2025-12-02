@@ -23,7 +23,7 @@ class CategoryPostController extends Controller
         // Paginate results
         $categoryPosts = $query->orderBy('id', 'desc')->paginate(10);
         
-        // Get statistics - FIXED to get all records, not just current page
+        // Get statistics - All records regardless of filters
         $totalCategories = CategoryPost::count();
         $activeCategories = CategoryPost::where('status', 1)->count();
         $inactiveCategories = CategoryPost::where('status', 0)->count();
@@ -73,24 +73,33 @@ class CategoryPostController extends Controller
             
             if ($categoryPost) {
                 $categoryPost->delete();
-                return response()->json(['success' => true]);
-            } else {
-                return response()->json(['error' => 'Không có dữ liệu danh mục bài viết'], 404);
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Xóa danh mục bài viết thành công'
+                ]);
             }
+            
+            return response()->json([
+                'success' => false,
+                'error' => 'Không tìm thấy danh mục bài viết'
+            ], 404);
         } catch (\Exception $e) {
-            Log::error('Error deleting group: ' . $e->getMessage());
-            return response()->json(['error' => 'An error occurred'], 500);
+            Log::error('Error deleting category post: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'error' => 'Có lỗi xảy ra khi xóa'
+            ], 500);
         }
     }
 
     public function active($id){
-        CategoryPost::where('id', $id)->update(['status' => '0']);
-        return redirect()->route('categoryPost.index')->with('success', 'Ẩn danh mục bài viết thành công !');
+        CategoryPost::where('id', $id)->update(['status' => 0]);
+        return redirect()->route('categoryPost.index')->with('success', 'Đã ẩn danh mục bài viết thành công!');
     }
 
     public function hidden($id){
-        CategoryPost::where('id', $id)->update(['status' => '1']);
-        return redirect()->route('categoryPost.index')->with('success', 'Hiện danh mục bài viết thành công !');
+        CategoryPost::where('id', $id)->update(['status' => 1]);
+        return redirect()->route('categoryPost.index')->with('success', 'Đã hiển thị danh mục bài viết thành công!');
     }
 
 }

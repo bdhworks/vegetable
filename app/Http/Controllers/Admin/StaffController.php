@@ -97,6 +97,32 @@ class StaffController extends Controller
         return view('admin.staff.profile');
     }
 
+    public function updateProfile(Request $request){
+        $admin = auth()->guard('admin')->user();
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:admins,email,'.$admin->id,
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+
+        $admin->name = $request->name;
+        $admin->email = $request->email;
+
+        if($request->filled('password')){
+            $admin->password = Hash::make($request->password);
+        }
+
+        if($request->file('image')){
+            $image = $request->file('image');
+            $admin->image = $this->saveImage($image);
+        }
+
+        $admin->save();
+
+        return redirect()->route('staff.profile')->with('success', 'Cập nhật thông tin cá nhân thành công.');
+    }
+
 
     protected function saveImage($image){
         $imageName = $image->hashName();

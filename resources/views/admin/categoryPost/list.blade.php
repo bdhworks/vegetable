@@ -175,13 +175,15 @@ Quản lý nội dung / Chuyên mục
                             <td class="text-center">
                                 <div class="status-wrapper">
                                     @if ($categoryPost->status == 1)
-                                        <a href="{{ route('categoryPost.active', $categoryPost->id) }}" 
+                                        <a href="javascript:void(0)" 
+                                           onclick="toggleStatus({{ $categoryPost->id }}, 'hide')"
                                            class="status-badge status-active">
                                             <i class="ti ti-eye"></i>
                                             <span>Hiển thị</span>
                                         </a>
                                     @else
-                                        <a href="{{ route('categoryPost.hidden', $categoryPost->id) }}" 
+                                        <a href="javascript:void(0)" 
+                                           onclick="toggleStatus({{ $categoryPost->id }}, 'show')"
                                            class="status-badge status-inactive">
                                             <i class="ti ti-eye-off"></i>
                                             <span>Ẩn</span>
@@ -198,8 +200,8 @@ Quản lý nội dung / Chuyên mục
                                         <span>Sửa</span>
                                     </a>
                                     <button type="button" 
-                                            class="btn-action btn-delete delete-categoryPost" 
-                                            data-id_categoryPost="{{ $categoryPost->id }}"
+                                            class="btn-action btn-delete" 
+                                            onclick="deleteCategoryPost({{ $categoryPost->id }})"
                                             title="Xóa">
                                         <i class="ti ti-trash"></i>
                                         <span>Xóa</span>
@@ -753,6 +755,55 @@ Quản lý nội dung / Chuyên mục
     font-size: 0.875rem;
 }
 
+/* SweetAlert2 Custom Styles */
+.swal-modern {
+    border-radius: 1rem !important;
+    font-family: inherit !important;
+}
+
+.swal2-popup {
+    padding: 2rem !important;
+}
+
+.swal2-title {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: #1f2937 !important;
+}
+
+.swal2-html-container {
+    font-size: 0.9375rem !important;
+    color: #6b7280 !important;
+}
+
+.swal2-icon {
+    border-width: 3px !important;
+}
+
+.swal2-confirm:focus,
+.swal2-cancel:focus {
+    box-shadow: none !important;
+}
+
+.swal2-confirm,
+.swal2-cancel {
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 0.5rem !important;
+    font-weight: 600 !important;
+    font-size: 0.9375rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+}
+
+.swal2-loader {
+    border-color: #14b8a6 transparent #14b8a6 transparent !important;
+}
+
+.swal2-timer-progress-bar {
+    background: #14b8a6 !important;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .search-input {
@@ -795,24 +846,155 @@ Quản lý nội dung / Chuyên mục
 }
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-// Select all checkbox
-document.querySelector('.select-all')?.addEventListener('change', function() {
-    document.querySelectorAll('.row-checkbox').forEach(cb => {
-        cb.checked = this.checked;
-    });
-});
+// Delete Category Post
+function deleteCategoryPost(id) {
+    Swal.fire({
+        title: 'Xác nhận xóa?',
+        html: `
+            <p style="margin-bottom: 1rem;">Bạn có chắc chắn muốn xóa danh mục bài viết này?</p>
+            <p style="color: #dc2626; font-size: 0.875rem;">⚠️ Hành động này không thể hoàn tác!</p>
+        `,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: '<i class="ti ti-trash"></i> Xóa',
+        cancelButtonText: '<i class="ti ti-x"></i> Hủy',
+        customClass: {
+            popup: 'swal-modern'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Show loading
+            Swal.fire({
+                title: 'Đang xử lý...',
+                text: 'Vui lòng đợi trong giây lát',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
 
-// Delete confirmation
-document.querySelectorAll('.delete-categoryPost').forEach(btn => {
-    btn.addEventListener('click', function() {
-        if (confirm('Bạn có chắc chắn muốn xóa chuyên mục này?')) {
-            // Handle delete action
-            const id = this.getAttribute('data-id_categoryPost');
-            // Add your delete logic here
+            // Send AJAX request
+            fetch('/admin/categoryPost/destroy', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({
+                    categoryPost_id: id
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Đã xóa!',
+                        text: 'Danh mục bài viết đã được xóa thành công',
+                        confirmButtonColor: '#14b8a6',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        customClass: {
+                            popup: 'swal-modern'
+                        }
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: data.error || 'Có lỗi xảy ra khi xóa',
+                        confirmButtonColor: '#ef4444',
+                        customClass: {
+                            popup: 'swal-modern'
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Có lỗi xảy ra, vui lòng thử lại',
+                    confirmButtonColor: '#ef4444',
+                    customClass: {
+                        popup: 'swal-modern'
+                    }
+                });
+            });
         }
     });
-});
+}
+
+// Toggle Status (Show/Hide)
+function toggleStatus(id, action) {
+    const isHiding = action === 'hide';
+    
+    Swal.fire({
+        title: isHiding ? 'Ẩn danh mục?' : 'Hiển thị danh mục?',
+        html: `
+            <p style="margin-bottom: 1rem;">Bạn có chắc chắn muốn ${isHiding ? 'ẩn' : 'hiển thị'} danh mục bài viết này?</p>
+        `,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: isHiding ? '#f59e0b' : '#10b981',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: `<i class="ti ti-${isHiding ? 'eye-off' : 'eye'}"></i> ${isHiding ? 'Ẩn' : 'Hiển thị'}`,
+        cancelButtonText: '<i class="ti ti-x"></i> Hủy',
+        customClass: {
+            popup: 'swal-modern'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Đang xử lý...',
+                text: 'Vui lòng đợi trong giây lát',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            
+            const url = isHiding ? `/admin/categoryPost/active/${id}` : `/admin/categoryPost/hidden/${id}`;
+            window.location.href = url;
+        }
+    });
+}
+
+// Show success message if redirected back with success
+@if(session('success'))
+    Swal.fire({
+        icon: 'success',
+        title: 'Thành công!',
+        text: '{{ session('success') }}',
+        confirmButtonColor: '#14b8a6',
+        confirmButtonText: 'Đóng',
+        timer: 3000,
+        timerProgressBar: true,
+        customClass: {
+            popup: 'swal-modern'
+        }
+    });
+@endif
+
+// Show error message if exists
+@if(session('error'))
+    Swal.fire({
+        icon: 'error',
+        title: 'Lỗi!',
+        text: '{{ session('error') }}',
+        confirmButtonColor: '#ef4444',
+        confirmButtonText: 'Đóng',
+        customClass: {
+            popup: 'swal-modern'
+        }
+    });
+@endif
 </script>
 
 @endsection

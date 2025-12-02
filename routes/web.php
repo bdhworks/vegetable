@@ -202,10 +202,11 @@ Route::prefix('ad')->group(function () {
             Route::get('create', [StaffController::class, 'create'])->name('create');
             Route::post('create', [StaffController::class, 'store'])->name('store');
             Route::get('edit/{admin}', [StaffController::class, 'edit'])->name('edit');
-            Route::post('edit/{admin}', [StaffController::class, 'update'])->name('update');
+            Route::put('edit/{admin}', [StaffController::class, 'update'])->name('update');
             Route::post('destroy', [StaffController::class, 'destroy'])->name('destroy');
 
             Route::get('profile', [StaffController::class, 'profile'])->name('profile');
+            Route::post('profile', [StaffController::class, 'updateProfile'])->name('updateProfile');
         });
 
 
