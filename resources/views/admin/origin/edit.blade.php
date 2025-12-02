@@ -1,12 +1,5 @@
 @extends('admin.layout.be')
 
-@section('title_one')
-Xuất xứ
-@endsection
-@section('title_two')
-Quản lý sản phẩm / Xuất xứ
-@endsection
-
 @section('content')
 <div class="origin-edit-page">
     <!-- Page Header -->

@@ -1,12 +1,5 @@
 @extends('admin.layout.be')
 
-@section('title_one')
-Đổi mật khẩu
-@endsection
-@section('title_two')
-Tài khoản / Đổi mật khẩu
-@endsection
-
 @section('content')
 <div class="password-page">
     <!-- Page Header -->

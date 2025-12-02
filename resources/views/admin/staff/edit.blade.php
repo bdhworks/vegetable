@@ -1,12 +1,5 @@
 @extends('admin.layout.be')
 
-@section('title_one')
-Nhân viên
-@endsection
-@section('title_two')
-Quản lý người dùng / Chỉnh sửa Nhân Viên
-@endsection
-
 @section('content')
 <div class="staff-edit-page">
     <!-- Page Header -->

@@ -1,12 +1,5 @@
 @extends('admin.layout.be')
 
-@section('title_one')
-Mã giảm giá
-@endsection
-@section('title_two')
-Quản lý sản phẩm / Khuyến mãi
-@endsection
-
 @section('content')
 <div class="discount-code-page">
     <!-- Page Header -->

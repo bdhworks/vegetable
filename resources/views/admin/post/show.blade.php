@@ -1,12 +1,5 @@
 @extends('admin.layout.be')
 
-@section('title_one')
-Bài viết
-@endsection
-@section('title_two')
-Quản lý nội dung / Chi tiết Bài Viết
-@endsection
-
 @section('content')
 <div class="post-show-page">
     <!-- Page Header -->

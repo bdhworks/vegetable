@@ -1,12 +1,5 @@
 @extends('admin.layout.be')
 
-@section('title_one')
-Phân quyền
-@endsection
-@section('title_two')
-Quản lý người dùng / Thêm Nhóm
-@endsection
-
 @section('content')
 <div class="group-create-page">
     <!-- Page Header -->

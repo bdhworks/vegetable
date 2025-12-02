@@ -1,12 +1,5 @@
 @extends('admin.layout.be')
 
-@section('title_one')
-Đơn hàng
-@endsection
-@section('title_two')
-Quản lý đơn hàng / Chi tiết đơn hàng
-@endsection
-
 @section('content')
 <div class="order-detail-page">
     <!-- Page Header -->

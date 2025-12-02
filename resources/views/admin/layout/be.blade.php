@@ -122,7 +122,6 @@
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
-            padding-bottom: 20px;
         }
 
         /* Brand Logo Section - Enhanced */
@@ -371,7 +370,7 @@
 
         /* Sidebar Footer - Enhanced */
         .sidebar-footer {
-            padding: 1.5rem;
+            padding: 1rem;
             border-top: 1px solid var(--sidebar-border);
             background: linear-gradient(135deg, 
                 rgba(15, 23, 42, 0.9) 0%, 
@@ -389,7 +388,7 @@
         .system-info {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            /* gap: 8px; */
         }
 
         .info-item {
@@ -409,7 +408,7 @@
         }
 
         .info-item span {
-            /* color: var(--sidebar-text) !important; */
+            color: var(--sidebar-text) !important;
         }
 
         #sidebarTime {
@@ -539,60 +538,50 @@
             box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
         }
 
-        .breadcrumb-section {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .current-page-info {
+        .welcome-section {
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            /* border-bottom: 1px solid var(--border-color); */
+            /* margin-bottom: 1rem; */
         }
 
-        .page-icon {
-            width: 35px;
-            height: 35px;
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-color);
-            font-size: 16px;
-        }
-
-        .page-text {
+        .welcome-content {
             display: flex;
             flex-direction: column;
+            gap: 4px;
         }
 
-        .page-title {
-            font-size: 18px;
-            font-weight: 700;
+        .welcome-text {
+            font-size: 14px;
+            font-weight: 500;
             color: var(--text-primary);
             margin: 0;
-            line-height: 1.2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .page-breadcrumb {
+        .welcome-text i {
+            color: var(--primary-color);
+            font-size: 18px;
+        }
+
+        .quick-stats-inline {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .stat-pill {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--primary-color);
+            /* padding: 0.5rem 1rem; */
+            border-radius: 12px;
             font-size: 12px;
-            color: var(--text-secondary);
-            margin: 0;
-            font-weight: 500;
-        }
-
-        /* Header Center - Enhanced Search */
-        .header-center-section {
-            flex: 1;
-            max-width: 500px;
-            margin: 0 2rem;
-        }
-
-        .enhanced-search-container {
-            position: relative;
-            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .search-wrapper {
@@ -1151,20 +1140,24 @@
             color: white;
         }
 
-        /* Notification Panel */
+        /* Notification Panel - Fixed and Enhanced */
         .notification-panel {
             position: fixed;
             top: 80px;
             right: 20px;
-            width: 380px;
+            width: 420px;
+            max-width: calc(100vw - 40px);
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-            z-index: 1001;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            transform: translateX(450px);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1050;
             overflow: hidden;
-            max-height: 500px;
+            max-height: calc(100vh - 100px);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #e5e7eb;
         }
 
         .notification-panel.show {
@@ -1178,42 +1171,164 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .notification-header .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
         }
 
         .notification-header h5 {
             margin: 0;
             font-weight: 700;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .notification-header h5 i {
+            font-size: 20px;
+        }
+
+        .notification-count {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            backdrop-filter: blur(10px);
+        }
+
+        .notification-header .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mark-all-read {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .mark-all-read:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
         }
 
         .close-notification {
-            background: none;
-            border: none;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             color: white;
+            width: 32px;
+            height: 32px;
             cursor: pointer;
             font-size: 16px;
-            padding: 5px;
-            border-radius: 50%;
+            padding: 0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: all 0.3s ease;
+            flex-shrink: 0;
         }
 
         .close-notification:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.25);
+            transform: rotate(90deg);
+        }
+
+        /* Notification Tabs */
+        .notification-tabs {
+            display: flex;
+            background: #f9fafb;
+            padding: 8px;
+            gap: 6px;
+            border-bottom: 1px solid #e5e7eb;
+            flex-shrink: 0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--primary-color);
+        }
+
+        .tab-btn.active {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+        }
+
+        .tab-btn i {
+            font-size: 14px;
         }
 
         .notification-content {
-            max-height: 300px;
+            flex: 1;
             overflow-y: auto;
             padding: 0;
+        }
+
+        .notification-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .notification-content::-webkit-scrollbar-track {
+            background: #f9fafb;
+        }
+
+        .notification-content::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 3px;
+        }
+
+        .notification-content::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
         }
 
         .notification-item {
             display: flex;
             align-items: flex-start;
             gap: 15px;
-            padding: 15px 20px;
+            padding: 16px 20px;
             border-bottom: 1px solid #f1f5f9;
             transition: all 0.2s ease;
             cursor: pointer;
+            position: relative;
         }
 
         .notification-item:hover {
@@ -1225,23 +1340,76 @@
         }
 
         .notification-item.new {
-            background: rgba(34, 197, 94, 0.08);
+            background: linear-gradient(90deg, 
+                rgba(34, 197, 94, 0.08) 0%, 
+                rgba(34, 197, 94, 0.02) 100%);
             border-left: 4px solid var(--primary-color);
+            padding-left: 16px;
+        }
+
+        .notification-item.new::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--primary-color);
+            animation: pulse-border 2s infinite;
+        }
+
+        @keyframes pulse-border {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         .notification-icon {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, 
-                rgba(34, 197, 94, 0.1) 0%, 
-                rgba(34, 197, 94, 0.05) 100%);
+            width: 48px;
+            height: 48px;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary-color);
-            font-size: 16px;
+            font-size: 18px;
             flex-shrink: 0;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .notification-icon.orders {
+            background: linear-gradient(135deg, 
+                rgba(59, 130, 246, 0.15) 0%, 
+                rgba(59, 130, 246, 0.08) 100%);
+            color: #3b82f6;
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+
+        .notification-icon.success {
+            background: linear-gradient(135deg, 
+                rgba(34, 197, 94, 0.15) 0%, 
+                rgba(34, 197, 94, 0.08) 100%);
+            color: #22c55e;
+            border-color: rgba(34, 197, 94, 0.2);
+        }
+
+        .notification-icon.warning {
+            background: linear-gradient(135deg, 
+                rgba(245, 158, 11, 0.15) 0%, 
+                rgba(245, 158, 11, 0.08) 100%);
+            color: #f59e0b;
+            border-color: rgba(245, 158, 11, 0.2);
+        }
+
+        .notification-icon.info {
+            background: linear-gradient(135deg, 
+                rgba(139, 92, 246, 0.15) 0%, 
+                rgba(139, 92, 246, 0.08) 100%);
+            color: #8b5cf6;
+            border-color: rgba(139, 92, 246, 0.2);
+        }
+
+        .notification-item:hover .notification-icon {
+            transform: scale(1.05);
         }
 
         .notification-details {
@@ -1250,827 +1418,257 @@
         }
 
         .notification-details h6 {
-            margin: 0 0 5px 0;
-            font-weight: 600;
+            margin: 0 0 6px 0;
+            font-weight: 700;
             font-size: 14px;
-            color: var(--text-primary);
+            color: #1f2937;
+            line-height: 1.3;
         }
 
         .notification-details p {
-            margin: 0 0 5px 0;
+            margin: 0 0 8px 0;
             font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.4;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        .notification-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .notification-time {
             font-size: 11px;
-            color: var(--text-secondary);
+            color: #9ca3af;
             font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .notification-time i {
+            font-size: 10px;
+        }
+
+        .notification-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 8px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .new-badge {
+            background: linear-gradient(135deg, 
+                rgba(34, 197, 94, 0.2) 0%, 
+                rgba(34, 197, 94, 0.15) 100%);
+            color: #16a34a;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .warning-badge {
+            background: linear-gradient(135deg, 
+                rgba(245, 158, 11, 0.2) 0%, 
+                rgba(245, 158, 11, 0.15) 100%);
+            color: #d97706;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .notification-action {
+            background: none;
+            border: none;
+            color: #9ca3af;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .notification-action:hover {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--primary-color);
+            transform: translateX(3px);
         }
 
         .notification-footer {
-            padding: 15px 20px;
+            padding: 16px 20px;
             background: rgba(248, 250, 252, 0.8);
             border-top: 1px solid #f1f5f9;
+            flex-shrink: 0;
         }
 
         .view-all-notifications {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
             width: 100%;
-            padding: 8px 12px;
+            padding: 10px 16px;
             background: transparent;
             color: var(--primary-color);
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
+            border-radius: 10px;
+            font-weight: 700;
             font-size: 13px;
             transition: all 0.3s ease;
+            border: 2px solid transparent;
         }
 
         .view-all-notifications:hover {
             background: rgba(34, 197, 94, 0.1);
             color: var(--primary-color);
-            transform: translateY(-1px);
+            border-color: rgba(34, 197, 94, 0.2);
+            transform: translateY(-2px);
         }
 
-        /* Responsive Design */
+        .view-all-notifications i:last-child {
+            transition: transform 0.3s ease;
+        }
+
+        .view-all-notifications:hover i:last-child {
+            transform: translateX(4px);
+        }
+
+        /* Clear Search Button */
+        .suggestions-footer {
+            padding: 12px 16px;
+            background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .clear-search {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            padding: 8px 12px;
+            background: transparent;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            color: #6b7280;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .clear-search:hover {
+            background: #ef4444;
+            border-color: #ef4444;
+            color: white;
+        }
+
+        /* System Status Widget */
+        .system-status-widget {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            border-radius: 12px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .status-online {
+            color: var(--primary-color);
+            animation: pulse-status 2s infinite;
+        }
+
+        @keyframes pulse-status {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Responsive - Notification Panel */
         @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            h2 { font-size: 1.75rem; }
-            h3 { font-size: 1.5rem; }
-            h4 { font-size: 1.25rem; }
-            h5 { font-size: 1.125rem; }
-            h6 { font-size: 1rem; }
+            .notification-panel {
+                top: 70px;
+                right: 10px;
+                width: calc(100vw - 20px);
+                max-height: calc(100vh - 80px);
+            }
+
+            .notification-header {
+                padding: 15px;
+            }
+
+            .notification-header .header-left,
+            .notification-header .header-right {
+                width: 100%;
+            }
+
+            .mark-all-read {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+
+            .notification-tabs {
+                overflow-x: auto;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .tab-btn {
+                font-size: 11px;
+                padding: 8px 10px;
+                min-width: fit-content;
+            }
+
+            .notification-item {
+                padding: 12px 15px;
+            }
+
+            .notification-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .notification-details h6 {
+                font-size: 13px;
+            }
+
+            .notification-details p {
+                font-size: 12px;
+            }
         }
 
         @media (max-width: 576px) {
-            h1 { font-size: 1.75rem; }
-            h2 { font-size: 1.5rem; }
-            h3 { font-size: 1.25rem; }
-        }
-
-        @media (max-width: 1200px) {
-            .left-sidebar {
-                width: 260px !important;
-            }
-            
-            .body-wrapper {
-                margin-left: 260px !important;
-            }
-            
-            .app-header {
-                left: 260px !important;
-                width: calc(100% - 260px) !important;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .left-sidebar {
-                position: fixed !important;
-                left: -280px !important;
-                z-index: 1002 !important;
-                transition: left 0.3s ease !important;
-                box-shadow: 8px 0 40px rgba(0, 0, 0, 0.6) !important;
-            }
-            
-            .left-sidebar.show {
-                left: 0 !important;
-            }
-            
-            .body-wrapper {
-                margin-left: 0 !important;
-            }
-            
-            .app-header {
-                left: 0 !important;
-                width: 100% !important;
+            .notification-header h5 {
+                font-size: 16px;
             }
 
-            .brand-logo-container {
-                flex-direction: column;
-                gap: 1.2rem;
-                text-align: center;
+            .notification-count {
+                font-size: 11px;
+                padding: 3px 10px;
             }
 
-            .logo-wrapper {
-                justify-content: center;
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .brand-image {
-                width: 90px;
-            }
-
-            .brand-title {
-                font-size: 18px;
-            }
-
-            .mobile-menu-toggle {
-                display: flex;
-            }
-            
-            .header-center-section {
+            .mark-all-read span {
                 display: none;
             }
-            
-            .user-info-section {
-                display: none;
-            }
-            
-            .quick-actions-menu {
-                margin-right: 0.5rem;
-                gap: 4px;
-            }
-            
-            .quick-action-item {
-                width: 38px;
-                height: 38px;
-                font-size: 14px;
-            }
-        }
 
-        /* Enhanced visual feedback */
-        .nav-link:active {
-            transform: translateX(6px) scale(0.98);
-        }
-
-        .nav-link.active:active {
-            transform: translateX(6px) scale(0.98);
-        }
-
-        /* Common Admin Page Components - Add these */
-        .page-header {
-            margin-bottom: 1.5rem;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .header-left {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .page-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 0 0 0.5rem 0;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .page-title i {
-            font-size: 2rem;
-            color: #8b5cf6;
-        }
-
-        .breadcrumb-modern {
-            margin: 0;
-        }
-
-        .breadcrumb-modern ol {
-            display: flex;
-            align-items: center;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            font-size: 0.875rem;
-            color: #6b7280;
-        }
-
-        .breadcrumb-modern li {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .breadcrumb-modern a {
-            color: #6b7280;
-            text-decoration: none;
-            transition: color 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 0.375rem;
-        }
-
-        .breadcrumb-modern a:hover {
-            color: #8b5cf6;
-        }
-
-        .breadcrumb-modern .active {
-            color: #1f2937;
-            font-weight: 500;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.25rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .stat-card {
-            background: white;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .stat-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.75rem;
-            color: white;
-            flex-shrink: 0;
-        }
-
-        .stat-primary .stat-icon {
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-        }
-
-        .stat-success .stat-icon {
-            background: linear-gradient(135deg, #10b981, #059669);
-        }
-
-        .stat-warning .stat-icon {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-        }
-
-        .stat-info .stat-icon {
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
-        }
-
-        .stat-content {
-            flex: 1;
-        }
-
-        .stat-label {
-            display: block;
-            font-size: 0.875rem;
-            color: #6b7280;
-            margin-bottom: 0.25rem;
-            font-weight: 500;
-        }
-
-        .stat-value {
-            font-size: 1.875rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 0;
-            line-height: 1;
-        }
-
-        .content-card {
-            background: white;
-            border-radius: 0.75rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .card-toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem;
-            border-bottom: 1px solid #e5e7eb;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .toolbar-left {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .toolbar-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .toolbar-badge {
-            background: #ede9fe;
-            color: #8b5cf6;
-            padding: 0.375rem 0.75rem;
-            border-radius: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-
-        .toolbar-right {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .search-form {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .search-input-group {
-            position: relative;
-            display: flex;
-            align-items: center;
-            background: #f9fafb;
-            border: 2px solid #e5e7eb;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .search-input-group:focus-within {
-            border-color: #8b5cf6;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            color: #9ca3af;
-            font-size: 1.125rem;
-        }
-
-        .search-input {
-            padding: 0.75rem 1rem 0.75rem 2.75rem;
-            border: none;
-            background: transparent;
-            outline: none;
-            font-size: 0.9375rem;
-            width: 250px;
-        }
-
-        .btn-search {
-            background: #8b5cf6;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-search:hover {
-            background: #7c3aed;
-        }
-
-        .btn-clear {
-            background: #ef4444;
-            color: white;
-            border: none;
-            padding: 0.5rem 0.75rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-
-        .btn-clear:hover {
-            background: #dc2626;
-            color: white;
-        }
-
-        .filter-form {
-            min-width: 200px;
-        }
-
-        .form-select-modern {
-            padding: 0.75rem 1rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 0.5rem;
-            font-size: 0.9375rem;
-            transition: all 0.3s ease;
-            background: white;
-            width: 100%;
-        }
-
-        .form-select-modern:focus {
-            outline: none;
-            border-color: #8b5cf6;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
-        }
-
-        .table-container {
-            overflow-x: auto;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .data-table thead {
-            background: linear-gradient(to right, #f9fafb, #f3f4f6);
-        }
-
-        .data-table th {
-            padding: 1rem 1.25rem;
-            text-align: left;
-            font-weight: 600;
-            color: #374151;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-bottom: 2px solid #e5e7eb;
-        }
-
-        .th-content {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .text-center {
-            text-align: center !important;
-        }
-
-        .text-center .th-content {
-            justify-content: center;
-        }
-
-        .data-table tbody tr {
-            border-bottom: 1px solid #f3f4f6;
-            transition: all 0.2s ease;
-        }
-
-        .data-table tbody tr:hover {
-            background: #f9fafb;
-        }
-
-        .data-table td {
-            padding: 1.25rem;
-            vertical-align: middle;
-        }
-
-        .status-wrapper {
-            display: flex;
-            justify-content: center;
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.375rem;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            font-size: 0.875rem;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn-action {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.375rem;
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
-            font-weight: 600;
-            font-size: 0.875rem;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .btn-confirm {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .btn-confirm:hover {
-            background: #10b981;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .btn-delivered {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-
-        .btn-delivered:hover {
-            background: #3b82f6;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .btn-return {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .btn-return:hover {
-            background: #ef4444;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .btn-view {
-            background: #ede9fe;
-            color: #6b21a8;
-        }
-
-        .btn-view:hover {
-            background: #8b5cf6;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .empty-state {
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-
-        .empty-icon {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: #9ca3af;
-            margin: 0 auto 1.5rem;
-        }
-
-        .empty-state h5 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        .empty-state p {
-            color: #6b7280;
-            margin-bottom: 1.5rem;
-        }
-
-        .pagination-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem;
-            border-top: 1px solid #e5e7eb;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .pagination-info {
-            color: #6b7280;
-            font-size: 0.875rem;
-        }
-
-        /* SweetAlert2 Global Custom Styles */
-        .swal-modern {
-            border-radius: 1.25rem !important;
-            font-family: var(--font-primary) !important;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
-        }
-
-        .swal2-popup {
-            padding: 2rem !important;
-            min-width: 400px !important;
-        }
-
-        .swal2-title {
-            font-size: 1.75rem !important;
-            font-weight: 800 !important;
-            color: var(--text-primary) !important;
-            font-family: var(--font-heading) !important;
-            margin-bottom: 0.75rem !important;
-        }
-
-        .swal2-html-container {
-            font-size: 0.9375rem !important;
-            color: var(--text-secondary) !important;
-            line-height: 1.6 !important;
-            margin: 1rem 0 !important;
-        }
-
-        .swal2-icon {
-            border-width: 4px !important;
-            margin: 1.5rem auto !important;
-        }
-
-        .swal2-icon.swal2-success {
-            border-color: #22c55e !important;
-        }
-
-        .swal2-icon.swal2-success [class^='swal2-success-line'] {
-            background-color: #22c55e !important;
-        }
-
-        .swal2-icon.swal2-success .swal2-success-ring {
-            border-color: rgba(34, 197, 94, 0.3) !important;
-        }
-
-        .swal2-icon.swal2-error {
-            border-color: #ef4444 !important;
-        }
-
-        .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
-            background-color: #ef4444 !important;
-        }
-
-        .swal2-icon.swal2-warning {
-            border-color: #f59e0b !important;
-            color: #f59e0b !important;
-        }
-
-        .swal2-icon.swal2-info {
-            border-color: #3b82f6 !important;
-            color: #3b82f6 !important;
-        }
-
-        .swal2-icon.swal2-question {
-            border-color: #8b5cf6 !important;
-            color: #8b5cf6 !important;
-        }
-
-        .swal2-actions {
-            gap: 0.75rem !important;
-            margin-top: 1.5rem !important;
-        }
-
-        .swal2-confirm,
-        .swal2-cancel {
-            padding: 0.875rem 2rem !important;
-            border-radius: 0.75rem !important;
-            font-weight: 700 !important;
-            font-size: 0.9375rem !important;
-            font-family: var(--font-body) !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            gap: 0.5rem !important;
-            border: none !important;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
-            transition: all 0.3s ease !important;
-            letter-spacing: 0.025em !important;
-        }
-
-        .swal2-confirm:hover,
-        .swal2-cancel:hover {
-            transform: translateY(-2px) !important;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2) !important;
-        }
-
-        .swal2-confirm:focus,
-        .swal2-cancel:focus {
-            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2) !important;
-        }
-
-        .swal2-cancel {
-            background-color: #6b7280 !important;
-        }
-
-        .swal2-cancel:hover {
-            background-color: #4b5563 !important;
-        }
-
-        .swal2-cancel:focus {
-            box-shadow: 0 0 0 4px rgba(107, 114, 128, 0.2) !important;
-        }
-
-        /* Loading state */
-        .swal2-loader {
-            border-color: var(--primary-color) transparent var(--primary-color) transparent !important;
-            border-width: 4px !important;
-            width: 3rem !important;
-            height: 3rem !important;
-        }
-
-        /* Timer progress bar */
-        .swal2-timer-progress-bar {
-            background: linear-gradient(90deg, 
-                var(--primary-color) 0%, 
-                var(--primary-dark) 100%) !important;
-            height: 4px !important;
-        }
-
-        /* Close button */
-        .swal2-close {
-            color: var(--text-secondary) !important;
-            font-size: 2rem !important;
-            font-weight: 300 !important;
-            transition: all 0.3s ease !important;
-        }
-
-        .swal2-close:hover {
-            color: var(--text-primary) !important;
-            transform: rotate(90deg) !important;
-        }
-
-        /* Footer */
-        .swal2-footer {
-            border-top: 1px solid var(--border-color) !important;
-            padding-top: 1rem !important;
-            margin-top: 1rem !important;
-            color: var(--text-secondary) !important;
-            font-size: 0.875rem !important;
-        }
-
-        /* Input styling in SweetAlert */
-        .swal2-input,
-        .swal2-textarea,
-        .swal2-select {
-            border: 2px solid var(--border-color) !important;
-            border-radius: 0.75rem !important;
-            padding: 0.875rem 1rem !important;
-            font-size: 0.9375rem !important;
-            font-family: var(--font-body) !important;
-            transition: all 0.3s ease !important;
-        }
-
-        .swal2-input:focus,
-        .swal2-textarea:focus,
-        .swal2-select:focus {
-            border-color: var(--primary-color) !important;
-            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1) !important;
-            outline: none !important;
-        }
-
-        /* Validation message */
-        .swal2-validation-message {
-            background-color: #fef2f2 !important;
-            color: #991b1b !important;
-            border-radius: 0.75rem !important;
-            padding: 0.75rem 1rem !important;
-            font-weight: 600 !important;
-            border-left: 4px solid #dc2626 !important;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .swal2-popup {
-                padding: 1.5rem !important;
-                min-width: 90% !important;
-                max-width: 90% !important;
-            }
-
-            .swal2-title {
-                font-size: 1.5rem !important;
-            }
-
-            .swal2-html-container {
-                font-size: 0.875rem !important;
-            }
-
-            .swal2-confirm,
-            .swal2-cancel {
-                padding: 0.75rem 1.5rem !important;
-                font-size: 0.875rem !important;
-            }
-
-            .swal2-actions {
-                flex-direction: column !important;
-                width: 100% !important;
-            }
-
-            .swal2-confirm,
-            .swal2-cancel {
-                width: 100% !important;
-                justify-content: center !important;
+            .mark-all-read {
+                padding: 6px 10px;
             }
         }
     </style>
@@ -2303,15 +1901,22 @@
                             <i class="fas fa-bars"></i>
                         </button>
 
-                        <!-- Page Info & Breadcrumb -->
-                        <div class="breadcrumb-section d-none d-lg-block">
-                            <div class="current-page-info">
-                                <div class="page-icon">
-                                    <i class="fas fa-chart-pie" id="page-icon"></i>
-                                </div>
-                                <div class="page-text">
-                                    <h6 class="page-title" id="page-title">@yield('title_one') </h6>
-                                    <p class="page-breadcrumb" id="page-breadcrumb">@yield('title_two')</p>
+                        <!-- Welcome Message & Quick Stats -->
+                        <div class="welcome-section d-none d-lg-block">
+                            <div class="welcome-content">
+                                <h5 class="welcome-text">
+                                    <i class="fas fa-hand-sparkles"></i>
+                                    Xin chào, <strong>{{ Auth::user()->name }}</strong>
+                                </h5>
+                                <div class="quick-stats-inline">
+                                    <span class="stat-pill">
+                                        <i class="fas fa-calendar-day"></i>
+                                        {{ date('l, d/m/Y', strtotime('now')) }}
+                                    </span>
+                                    <span class="stat-pill">
+                                        <i class="fas fa-clock"></i>
+                                        <span id="welcome-time">{{ date('H:i:s') }}</span>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -2328,83 +1933,132 @@
                                     <input type="text" 
                                            class="enhanced-search-input" 
                                            placeholder="Tìm kiếm sản phẩm, đơn hàng, khách hàng..." 
-                                           autocomplete="off" />
+                                           autocomplete="off"
+                                           id="globalSearch" />
                                     <div class="search-shortcut">
-                                        <i class="fas fa-keyboard"></i>
-                                        Ctrl K
+                                        <kbd>Ctrl</kbd> + <kbd>K</kbd>
                                     </div>
                                 </div>
                                 
                                 <!-- Enhanced Search Suggestions -->
                                 <div class="search-suggestions-panel">
                                     <div class="suggestions-header">
-                                        <h6 class="suggestions-title">Tìm kiếm nhanh</h6>
+                                        <h6 class="suggestions-title">
+                                            <i class="fas fa-bolt"></i>
+                                            Tìm kiếm nhanh
+                                        </h6>
+                                        <span class="results-count" id="resultsCount">8 kết quả</span>
                                     </div>
                                     <div class="suggestions-content">
                                         <div class="suggestion-group">
                                             <h6 class="group-title">
-                                                <i class="fas fa-bolt"></i>
+                                                <i class="fas fa-star"></i>
                                                 Chức năng chính
                                             </h6>
                                             <a href="{{route('product.index')}}" class="suggestion-item-enhanced">
-                                                <div class="suggestion-icon">
+                                                <div class="suggestion-icon product">
                                                     <i class="fas fa-seedling"></i>
                                                 </div>
                                                 <div class="suggestion-content">
                                                     <p class="suggestion-title">Quản lý sản phẩm</p>
-                                                    <p class="suggestion-desc">Thêm, sửa, xóa sản phẩm</p>
+                                                    <p class="suggestion-desc">Thêm, sửa, xóa sản phẩm nông sản</p>
                                                 </div>
-                                                <span class="suggestion-shortcut">Ctrl+P</span>
+                                                <span class="suggestion-shortcut">
+                                                    <kbd>Ctrl</kbd><kbd>P</kbd>
+                                                </span>
                                             </a>
                                             
                                             <a href="{{route('order.index')}}" class="suggestion-item-enhanced">
-                                                <div class="suggestion-icon">
+                                                <div class="suggestion-icon order">
                                                     <i class="fas fa-shopping-cart"></i>
                                                 </div>
                                                 <div class="suggestion-content">
                                                     <p class="suggestion-title">Quản lý đơn hàng</p>
-                                                    <p class="suggestion-desc">Xem và xử lý đơn hàng</p>
+                                                    <p class="suggestion-desc">Xem và xử lý đơn hàng mới</p>
                                                 </div>
-                                                <span class="suggestion-shortcut">Ctrl+O</span>
+                                                <span class="suggestion-shortcut">
+                                                    <kbd>Ctrl</kbd><kbd>O</kbd>
+                                                </span>
                                             </a>
                                             
                                             <a href="{{route('user.index')}}" class="suggestion-item-enhanced">
-                                                <div class="suggestion-icon">
+                                                <div class="suggestion-icon user">
                                                     <i class="fas fa-users"></i>
                                                 </div>
                                                 <div class="suggestion-content">
                                                     <p class="suggestion-title">Quản lý khách hàng</p>
-                                                    <p class="suggestion-desc">Thông tin khách hàng</p>
+                                                    <p class="suggestion-desc">Thông tin và lịch sử mua hàng</p>
                                                 </div>
-                                                <span class="suggestion-shortcut">Ctrl+U</span>
+                                                <span class="suggestion-shortcut">
+                                                    <kbd>Ctrl</kbd><kbd>U</kbd>
+                                                </span>
+                                            </a>
+
+                                            <a href="{{route('post.index')}}" class="suggestion-item-enhanced">
+                                                <div class="suggestion-icon post">
+                                                    <i class="fas fa-newspaper"></i>
+                                                </div>
+                                                <div class="suggestion-content">
+                                                    <p class="suggestion-title">Quản lý bài viết</p>
+                                                    <p class="suggestion-desc">Tin tức và blog về nông sản</p>
+                                                </div>
+                                                <span class="suggestion-shortcut">
+                                                    <kbd>Ctrl</kbd><kbd>B</kbd>
+                                                </span>
                                             </a>
                                         </div>
 
                                         <div class="suggestion-group">
                                             <h6 class="group-title">
                                                 <i class="fas fa-cog"></i>
-                                                Cấu hình
+                                                Cấu hình hệ thống
                                             </h6>
                                             <a href="{{route('categoryProduct.index')}}" class="suggestion-item-enhanced">
-                                                <div class="suggestion-icon">
+                                                <div class="suggestion-icon category">
                                                     <i class="fas fa-layer-group"></i>
                                                 </div>
                                                 <div class="suggestion-content">
                                                     <p class="suggestion-title">Danh mục sản phẩm</p>
-                                                    <p class="suggestion-desc">Quản lý phân loại</p>
+                                                    <p class="suggestion-desc">Quản lý phân loại sản phẩm</p>
                                                 </div>
                                             </a>
                                             
-                                            <a href="{{route('post.index')}}" class="suggestion-item-enhanced">
-                                                <div class="suggestion-icon">
-                                                    <i class="fas fa-newspaper"></i>
+                                            <a href="{{route('discount.index')}}" class="suggestion-item-enhanced">
+                                                <div class="suggestion-icon discount">
+                                                    <i class="fas fa-percentage"></i>
                                                 </div>
                                                 <div class="suggestion-content">
-                                                    <p class="suggestion-title">Quản lý bài viết</p>
-                                                    <p class="suggestion-desc">Tin tức và blog</p>
+                                                    <p class="suggestion-title">Chương trình khuyến mãi</p>
+                                                    <p class="suggestion-desc">Giảm giá và ưu đãi</p>
+                                                </div>
+                                            </a>
+
+                                            <a href="{{route('group.index')}}" class="suggestion-item-enhanced">
+                                                <div class="suggestion-icon permission">
+                                                    <i class="fas fa-shield-alt"></i>
+                                                </div>
+                                                <div class="suggestion-content">
+                                                    <p class="suggestion-title">Phân quyền nhóm</p>
+                                                    <p class="suggestion-desc">Cấu hình quyền truy cập</p>
+                                                </div>
+                                            </a>
+
+                                            <a href="{{route('staff.index')}}" class="suggestion-item-enhanced">
+                                                <div class="suggestion-icon staff">
+                                                    <i class="fas fa-user-tie"></i>
+                                                </div>
+                                                <div class="suggestion-content">
+                                                    <p class="suggestion-title">Quản lý nhân viên</p>
+                                                    <p class="suggestion-desc">Tài khoản và vai trò nhân viên</p>
                                                 </div>
                                             </a>
                                         </div>
+                                    </div>
+                                    <div class="suggestions-footer">
+                                        <button class="clear-search" onclick="clearSearch()">
+                                            <i class="fas fa-times"></i>
+                                            Xóa tìm kiếm
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -2417,33 +2071,47 @@
                         <div class="quick-actions-menu">
                             <a href="{{ route('home') }}" 
                                target="_blank" 
-                               class="quick-action-item" 
+                               class="quick-action-item website" 
                                title="Xem website" 
-                               data-bs-toggle="tooltip">
-                                <i class="fas fa-external-link-alt"></i>
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="bottom">
+                                <i class="fas fa-globe"></i>
                             </a>
                             
                             <a href="{{ route('order.index') }}" 
-                               class="quick-action-item has-notification" 
+                               class="quick-action-item has-notification orders" 
                                title="Đơn hàng mới" 
-                               data-bs-toggle="tooltip">
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="bottom">
                                 <i class="fas fa-shopping-bag"></i>
-                                <span class="notification-badge">3</span>
+                                <span class="notification-badge pulse">3</span>
                             </a>
                             
-                            <button class="quick-action-item has-notification notification-toggle" 
+                            {{-- <button class="quick-action-item has-notification notification" 
                                     title="Thông báo" 
                                     data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom"
                                     onclick="toggleNotificationPanel()">
                                 <i class="fas fa-bell"></i>
-                                <span class="notification-badge">5</span>
-                            </button>
+                                <span class="notification-badge pulse">5</span>
+                            </button> --}}
+
+                            <a href="#" 
+                               class="quick-action-item messages"
+                               title="Tin nhắn"
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="bottom">
+                                <i class="fas fa-envelope"></i>
+                                <span class="notification-badge">2</span>
+                            </a>
                         </div>
 
-                        <!-- Time Display Widget -->
-                        <div class="time-display-widget d-none d-xl-flex">
-                            <div class="current-time-display" id="header-time">{{ date('H:i') }}</div>
-                            <div class="current-date-display">{{ date('d/m/Y') }}</div>
+                        <!-- System Status Widget -->
+                        <div class="system-status-widget d-none d-xxl-flex">
+                            <div class="status-item">
+                                <i class="fas fa-server status-online"></i>
+                                <span>Online</span>
+                            </div>
                         </div>
 
                         <!-- User Profile Section -->
@@ -2456,13 +2124,13 @@
                                     <img src="/assets/admin/images/profile/avatar.jpg" 
                                          alt="User Avatar" 
                                          class="user-avatar-image">
-                                    <div class="user-status-indicator"></div>
+                                    <div class="user-status-indicator online"></div>
                                 </div>
                                 <div class="user-info-section d-none d-md-block">
                                     <h6 class="user-display-name">{{ Auth::user()->name }}</h6>
                                     <span class="user-role-badge">
                                         <i class="fas fa-crown"></i>
-                                        Admin
+                                        {{ Auth::user()->group->name }}
                                     </span>
                                 </div>
                                 <i class="fas fa-chevron-down dropdown-toggle-icon"></i>
@@ -2488,50 +2156,71 @@
                                 <div class="dropdown-divider"></div>
                                 
                                 <div class="dropdown-section">
-                                    <h6 class="section-title">Tài khoản</h6>
+                                    <h6 class="section-title">
+                                        <i class="fas fa-user"></i>
+                                        Tài khoản
+                                    </h6>
                                     <a href="{{ route('staff.profile') }}" class="dropdown-item">
-                                        <div class="dropdown-icon">
+                                        <div class="dropdown-icon profile">
                                             <i class="fas fa-user-circle"></i>
                                         </div>
                                         <div class="dropdown-content">
                                             <span class="item-title">Hồ sơ cá nhân</span>
                                             <span class="item-desc">Quản lý thông tin tài khoản</span>
                                         </div>
+                                        <i class="fas fa-chevron-right item-arrow"></i>
                                     </a>
                                     
                                     <a href="{{ route('admin.password') }}" class="dropdown-item">
-                                        <div class="dropdown-icon">
+                                        <div class="dropdown-icon security">
                                             <i class="fas fa-key"></i>
                                         </div>
                                         <div class="dropdown-content">
                                             <span class="item-title">Đổi mật khẩu</span>
                                             <span class="item-desc">Cập nhật mật khẩu bảo mật</span>
                                         </div>
+                                        <i class="fas fa-chevron-right item-arrow"></i>
                                     </a>
                                 </div>
 
                                 <div class="dropdown-divider"></div>
 
                                 <div class="dropdown-section">
-                                    <h6 class="section-title">Hệ thống</h6>
-                                    <a href="javascript:void(0)" class="dropdown-item">
-                                        <div class="dropdown-icon">
-                                            <i class="fas fa-cog"></i>
+                                    <h6 class="section-title">
+                                        <i class="fas fa-cog"></i>
+                                        Hệ thống
+                                    </h6>
+                                    <a href="{{ route('admin.dashboard') }}" class="dropdown-item">
+                                        <div class="dropdown-icon dashboard">
+                                            <i class="fas fa-chart-pie"></i>
                                         </div>
                                         <div class="dropdown-content">
-                                            <span class="item-title">Cài đặt</span>
-                                            <span class="item-desc">Cấu hình hệ thống</span>
+                                            <span class="item-title">Dashboard</span>
+                                            <span class="item-desc">Tổng quan hệ thống</span>
                                         </div>
+                                        <i class="fas fa-chevron-right item-arrow"></i>
                                     </a>
                                     
-                                    <a href="javascript:void(0)" class="dropdown-item">
-                                        <div class="dropdown-icon">
+                                    <a href="#" class="dropdown-item">
+                                        <div class="dropdown-icon stats">
                                             <i class="fas fa-chart-bar"></i>
                                         </div>
                                         <div class="dropdown-content">
                                             <span class="item-title">Thống kê</span>
                                             <span class="item-desc">Báo cáo chi tiết</span>
                                         </div>
+                                        <i class="fas fa-chevron-right item-arrow"></i>
+                                    </a>
+
+                                    <a href="{{ route('home') }}" target="_blank" class="dropdown-item">
+                                        <div class="dropdown-icon website">
+                                            <i class="fas fa-globe"></i>
+                                        </div>
+                                        <div class="dropdown-content">
+                                            <span class="item-title">Xem website</span>
+                                            <span class="item-desc">Mở trang chủ</span>
+                                        </div>
+                                        <i class="fas fa-external-link-alt item-arrow"></i>
                                     </a>
                                 </div>
 
@@ -2551,60 +2240,132 @@
                 <!-- Enhanced Notification Panel -->
                 <div class="notification-panel" id="notificationPanel">
                     <div class="notification-header">
-                        <h5><i class="fas fa-bell me-2"></i>Thông báo</h5>
-                        <button class="close-notification" onclick="closeNotificationPanel()">
-                            <i class="fas fa-times"></i>
+                        <div class="header-left">
+                            <h5><i class="fas fa-bell"></i>Thông báo</h5>
+                            <span class="notification-count">5 mới</span>
+                        </div>
+                        <div class="header-right">
+                            <button class="mark-all-read" onclick="markAllAsRead()">
+                                <i class="fas fa-check-double"></i>
+                                Đánh dấu đã đọc
+                            </button>
+                            <button class="close-notification" onclick="closeNotificationPanel()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="notification-tabs">
+                        <button class="tab-btn active" data-tab="all">
+                            <i class="fas fa-inbox"></i>
+                            Tất cả (5)
+                        </button>
+                        <button class="tab-btn" data-tab="orders">
+                            <i class="fas fa-shopping-cart"></i>
+                            Đơn hàng (3)
+                        </button>
+                        <button class="tab-btn" data-tab="system">
+                            <i class="fas fa-cog"></i>
+                            Hệ thống (2)
                         </button>
                     </div>
                     <div class="notification-content">
-                        <div class="notification-item new">
-                            <div class="notification-icon">
+                        <div class="notification-item new" data-category="orders">
+                            <div class="notification-icon orders">
                                 <i class="fas fa-shopping-bag"></i>
                             </div>
                             <div class="notification-details">
-                                <h6>Đơn hàng mới</h6>
-                                <p>Có 3 đơn hàng mới cần xử lý từ khách hàng</p>
-                                <span class="notification-time">2 phút trước</span>
+                                <h6>Đơn hàng mới #DH2024001</h6>
+                                <p>Khách hàng Nguyễn Văn A đã đặt đơn hàng mới trị giá 580.000đ</p>
+                                <div class="notification-meta">
+                                    <span class="notification-time">
+                                        <i class="fas fa-clock"></i>
+                                        2 phút trước
+                                    </span>
+                                    <span class="notification-badge new-badge">Mới</span>
+                                </div>
                             </div>
+                            <button class="notification-action" title="Xem chi tiết">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
                         </div>
                         
-                        <div class="notification-item">
-                            <div class="notification-icon">
-                                <i class="fas fa-user-plus"></i>
+                        <div class="notification-item new" data-category="orders">
+                            <div class="notification-icon orders">
+                                <i class="fas fa-shopping-bag"></i>
                             </div>
                             <div class="notification-details">
-                                <h6>Khách hàng mới</h6>
-                                <p>5 khách hàng mới đăng ký tài khoản hôm nay</p>
-                                <span class="notification-time">15 phút trước</span>
+                                <h6>Đơn hàng #DH2024002 đã thanh toán</h6>
+                                <p>Thanh toán thành công qua ví điện tử, chờ xác nhận giao hàng</p>
+                                <div class="notification-meta">
+                                    <span class="notification-time">
+                                        <i class="fas fa-clock"></i>
+                                        10 phút trước
+                                    </span>
+                                    <span class="notification-badge new-badge">Mới</span>
+                                </div>
                             </div>
+                            <button class="notification-action" title="Xem chi tiết">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
                         </div>
                         
-                        <div class="notification-item">
-                            <div class="notification-icon">
-                                <i class="fas fa-chart-line"></i>
+                        <div class="notification-item" data-category="orders">
+                            <div class="notification-icon success">
+                                <i class="fas fa-check-circle"></i>
                             </div>
                             <div class="notification-details">
-                                <h6>Báo cáo doanh thu</h6>
-                                <p>Doanh thu hôm nay tăng 15% so với hôm qua</p>
-                                <span class="notification-time">1 giờ trước</span>
+                                <h6>Giao hàng thành công</h6>
+                                <p>Đơn hàng #DH2024000 đã được giao thành công, khách hàng đã xác nhận</p>
+                                <div class="notification-meta">
+                                    <span class="notification-time">
+                                        <i class="fas fa-clock"></i>
+                                        1 giờ trước
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="notification-item">
-                            <div class="notification-icon">
+                        <div class="notification-item new" data-category="system">
+                            <div class="notification-icon warning">
                                 <i class="fas fa-exclamation-triangle"></i>
                             </div>
                             <div class="notification-details">
-                                <h6>Cảnh báo hết hàng</h6>
-                                <p>2 sản phẩm sắp hết hàng trong kho</p>
-                                <span class="notification-time">2 giờ trước</span>
+                                <h6>Cảnh báo tồn kho</h6>
+                                <p>2 sản phẩm sắp hết hàng: Cà chua Đà Lạt, Xoài Cát Hòa Lộc</p>
+                                <div class="notification-meta">
+                                    <span class="notification-time">
+                                        <i class="fas fa-clock"></i>
+                                        2 giờ trước
+                                    </span>
+                                    <span class="notification-badge warning-badge">Cảnh báo</span>
+                                </div>
+                            </div>
+                            <button class="notification-action" title="Xem chi tiết">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+
+                        <div class="notification-item" data-category="system">
+                            <div class="notification-icon info">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="notification-details">
+                                <h6>Báo cáo doanh thu tuần</h6>
+                                <p>Doanh thu tuần này tăng 25% so với tuần trước, đạt 45.5 triệu đồng</p>
+                                <div class="notification-meta">
+                                    <span class="notification-time">
+                                        <i class="fas fa-clock"></i>
+                                        3 giờ trước
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="notification-footer">
                         <a href="#" class="view-all-notifications">
-                            <i class="fas fa-arrow-right me-1"></i>
+                            <i class="fas fa-list"></i>
                             Xem tất cả thông báo
+                            <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
@@ -2631,162 +2392,28 @@
     <script>
         // Enhanced header interactions
         document.addEventListener('DOMContentLoaded', function() {
-            // Update time displays
-            function updateTimeDisplays() {
-                const now = new Date();
-                const timeString = now.toLocaleTimeString('vi-VN', {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-                
-                // Update header time
-                const headerTime = document.getElementById('header-time');
-                if (headerTime) {
-                    headerTime.textContent = timeString;
+            // Update welcome time
+            function updateWelcomeTime() {
+                const welcomeTime = document.getElementById('welcome-time');
+                const sidebarTime = document.getElementById('sidebarTime');
+                if (welcomeTime || sidebarTime) {
+                    const now = new Date();
+                    const timeString = now.toLocaleTimeString('vi-VN');
+                    if (welcomeTime) welcomeTime.textContent = timeString;
+                    if (sidebarTime) sidebarTime.textContent = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
                 }
             }
             
-            setInterval(updateTimeDisplays, 1000);
-            updateTimeDisplays();
+            setInterval(updateWelcomeTime, 1000);
+            updateWelcomeTime();
 
-            // Enhanced page title and breadcrumb management - FIXED
-            function updatePageInfo() {
-                const currentPath = window.location.pathname;
-                const titleElement = document.getElementById('page-title');
-                const breadcrumbElement = document.getElementById('page-breadcrumb');
-                const iconElement = document.getElementById('page-icon');
-                
-                let pageInfo = {
-                    title: 'Dashboard',
-                    breadcrumb: 'Trang chủ / Quản lý hệ thống',
-                    icon: 'fas fa-chart-pie'
-                };
-                
-                // Enhanced page mappings - More comprehensive
-                const pageMap = {
-                    'dashboard': {
-                        title: 'Dashboard',
-                        breadcrumb: 'Trang chủ / Quản lý hệ thống',
-                        icon: 'fas fa-chart-pie'
-                    },
-                    'category-product': {
-                        title: 'Danh mục sản phẩm',
-                        breadcrumb: 'Quản lý sản phẩm / Danh mục',
-                        icon: 'fas fa-layer-group'
-                    },
-                    'origin': {
-                        title: 'Xuất xứ',
-                        breadcrumb: 'Quản lý sản phẩm / Xuất xứ',
-                        icon: 'fas fa-map-marker-alt'
-                    },
-                    'product-code': {
-                        title: 'Mã sản phẩm',
-                        breadcrumb: 'Quản lý sản phẩm / Mã sản phẩm',
-                        icon: 'fas fa-barcode'
-                    },
-                    'product': {
-                        title: 'Sản phẩm',
-                        breadcrumb: 'Quản lý sản phẩm / Sản phẩm',
-                        icon: 'fas fa-seedling'
-                    },
-                    'discount-code': {
-                        title: 'Mã giảm giá',
-                        breadcrumb: 'Quản lý sản phẩm / Mã code',
-                        icon: 'fas fa-tags'
-                    },
-                    'discount': {
-                        title: 'Khuyến mãi',
-                        breadcrumb: 'Quản lý sản phẩm / Khuyến mãi',
-                        icon: 'fas fa-percentage'
-                    },
-                    'order': {
-                        title: 'Đơn hàng',
-                        breadcrumb: 'Quản lý sản phẩm / Đơn hàng',
-                        icon: 'fas fa-shopping-cart'
-                    },
-                    'category-post': {
-                        title: 'Chuyên mục bài viết',
-                        breadcrumb: 'Quản lý nội dung / Chuyên mục',
-                        icon: 'fas fa-folder-open'
-                    },
-                    'post': {
-                        title: 'Bài viết',
-                        breadcrumb: 'Quản lý nội dung / Bài viết',
-                        icon: 'fas fa-newspaper'
-                    },
-                    'group': {
-                        title: 'Phân quyền',
-                        breadcrumb: 'Quản lý người dùng / Phân quyền',
-                        icon: 'fas fa-shield-alt'
-                    },
-                    'module': {
-                        title: 'Module',
-                        breadcrumb: 'Quản lý người dùng / Module',
-                        icon: 'fas fa-puzzle-piece'
-                    },
-                    'staff': {
-                        title: 'Nhân viên',
-                        breadcrumb: 'Quản lý người dùng / Nhân viên',
-                        icon: 'fas fa-user-tie'
-                    },
-                    'user': {
-                        title: 'Khách hàng',
-                        breadcrumb: 'Quản lý người dùng / Khách hàng',
-                        icon: 'fas fa-users'
-                    }
-                };
-                
-                // Find matching page based on URL segments
-                const pathSegments = currentPath.split('/').filter(segment => segment !== '' && segment !== 'admin');
-                
-                if (pathSegments.length === 0 || currentPath.includes('/admin/dashboard') || currentPath === '/admin') {
-                    pageInfo = pageMap['dashboard'];
-                } else {
-                    // Try to match the first segment
-                    const mainSegment = pathSegments[0];
-                    if (pageMap[mainSegment]) {
-                        pageInfo = pageMap[mainSegment];
-                    } else {
-                        // Try to match with dashes converted
-                        const dashedSegment = mainSegment.replace(/([A-Z])/g, '-$1').toLowerCase();
-                        if (pageMap[dashedSegment]) {
-                            pageInfo = pageMap[dashedSegment];
-                        }
-                    }
-                }
-                
-                // Update elements if they exist
-                if (titleElement) titleElement.textContent = pageInfo.title;
-                if (breadcrumbElement) breadcrumbElement.textContent = pageInfo.breadcrumb;
-                if (iconElement) iconElement.className = pageInfo.icon;
-            }
-            
-            setTimeout(() => {
-                // Call immediately and on page changes
-                updatePageInfo();
-                
-                // Update on popstate (back/forward navigation)
-                window.addEventListener('popstate', updatePageInfo);
-                
-                // Update on hash changes
-                window.addEventListener('hashchange', updatePageInfo);
-            }, 50);
-
-            // Enhanced search with keyboard shortcuts
-            const searchInput = document.querySelector('.enhanced-search-input');
-            if (searchInput) {
-                // Ctrl+K to focus search
-                document.addEventListener('keydown', function(e) {
-                    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-                        e.preventDefault();
-                        searchInput.focus();
-                    }
-                });
-
-                // Enhanced search filtering
-                searchInput.addEventListener('input', function() {
+            // Enhanced search with real-time filtering
+            const globalSearch = document.getElementById('globalSearch');
+            if (globalSearch) {
+                globalSearch.addEventListener('input', function() {
                     const query = this.value.toLowerCase();
                     const suggestions = document.querySelectorAll('.suggestion-item-enhanced');
+                    let visibleCount = 0;
                     
                     suggestions.forEach(item => {
                         const title = item.querySelector('.suggestion-title')?.textContent.toLowerCase() || '';
@@ -2794,98 +2421,99 @@
                         
                         if (query.length === 0 || title.includes(query) || desc.includes(query)) {
                             item.style.display = 'flex';
+                            visibleCount++;
                         } else {
                             item.style.display = 'none';
                         }
                     });
+
+                    const resultsCount = document.getElementById('resultsCount');
+                    if (resultsCount) {
+                        resultsCount.textContent = visibleCount + ' kết quả';
+                    }
                 });
 
-                // Handle Enter key
-                searchInput.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter') {
+                // Keyboard shortcuts
+                document.addEventListener('keydown', function(e) {
+                    // Ctrl+K to focus search
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
                         e.preventDefault();
-                        const visibleSuggestions = document.querySelectorAll('.suggestion-item-enhanced[style="display: flex"], .suggestion-item-enhanced:not([style*="none"])');
-                        if (visibleSuggestions.length > 0) {
-                            visibleSuggestions[0].click();
-                        }
+                        globalSearch.focus();
+                    }
+                    
+                    // Esc to blur search
+                    if (e.key === 'Escape') {
+                        globalSearch.blur();
                     }
                 });
             }
 
             // Mobile menu toggle
             const mobileToggle = document.getElementById('headerCollapse');
-            const sidebarCloseToggle = document.getElementById('sidebarCollapse');
             const sidebar = document.querySelector('.left-sidebar');
+            const overlay = document.createElement('div');
+            overlay.className = 'sidebar-overlay';
             
             if (mobileToggle && sidebar) {
                 mobileToggle.addEventListener('click', function() {
                     sidebar.classList.toggle('show');
-                });
-            }
-
-            if (sidebarCloseToggle && sidebar) {
-                sidebarCloseToggle.addEventListener('click', function() {
-                    sidebar.classList.remove('show');
-                });
-            }
-
-            // Close sidebar when clicking outside on mobile
-            document.addEventListener('click', function(e) {
-                if (window.innerWidth <= 768 && sidebar) {
-                    if (!sidebar.contains(e.target) && 
-                        !mobileToggle?.contains(e.target) && 
-                        sidebar.classList.contains('show')) {
-                        sidebar.classList.remove('show');
+                    if (sidebar.classList.contains('show')) {
+                        document.body.appendChild(overlay);
+                        overlay.style.cssText = `
+                            position: fixed;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background: rgba(0, 0, 0, 0.5);
+                            z-index: 1001;
+                            backdrop-filter: blur(4px);
+                        `;
+                        overlay.addEventListener('click', function() {
+                            sidebar.classList.remove('show');
+                            document.body.removeChild(overlay);
+                        });
+                    } else {
+                        if (document.body.contains(overlay)) {
+                            document.body.removeChild(overlay);
+                        }
                     }
-                }
-            });
+                });
+            }
 
-            // Active navigation highlighting - FIXED
-            const currentPath = window.location.pathname;
-            const navLinks = document.querySelectorAll('.nav-link');
+            // Notification tabs functionality
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const notificationItems = document.querySelectorAll('.notification-item');
             
-            navLinks.forEach(link => {
-                link.classList.remove('active'); // Remove existing active classes first
-                const href = link.getAttribute('href');
-                if (href) {
-                    // More precise path matching
-                    if (currentPath === href || 
-                        (href.includes('/admin/') && currentPath.includes(href.replace('/admin/', '').split('/')[0]))) {
-                        link.classList.add('active');
-                    }
-                }
-            });
-
-            // Update sidebar time
-            function updateSidebarTime() {
-                const sidebarTimeElement = document.getElementById('sidebarTime');
-                if (sidebarTimeElement) {
-                    const now = new Date();
-                    const timeString = now.toLocaleTimeString('vi-VN', {
-                        hour: '2-digit',
-                        minute: '2-digit'
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tab = this.dataset.tab;
+                    
+                    // Update active tab
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter notifications
+                    notificationItems.forEach(item => {
+                        if (tab === 'all') {
+                            item.style.display = 'flex';
+                        } else {
+                            const category = item.dataset.category;
+                            item.style.display = category === tab ? 'flex' : 'none';
+                        }
                     });
-                    sidebarTimeElement.textContent = timeString;
-                }
-            }
-            
-            setInterval(updateSidebarTime, 1000);
-            updateSidebarTime();
-
-            // Initialize tooltips
-            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            tooltipTriggerList.map(function (tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl);
+                });
             });
 
             // Enhanced notification panel management
             const notificationPanel = document.getElementById('notificationPanel');
-            const notificationToggle = document.querySelector('.notification-toggle');
             
             // Close notification panel when clicking outside
             document.addEventListener('click', function(e) {
-                if (notificationPanel && !notificationPanel.contains(e.target) && 
-                    !notificationToggle?.contains(e.target)) {
+                const notificationBtn = document.querySelector('.quick-action-item.notification');
+                if (notificationPanel && 
+                    !notificationPanel.contains(e.target) && 
+                    !notificationBtn?.contains(e.target)) {
                     notificationPanel.classList.remove('show');
                 }
             });
@@ -2896,24 +2524,23 @@
                     notificationPanel.classList.remove('show');
                 }
             });
+
+            // Initialize tooltips
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
         });
 
-        // Enhanced notification panel functions
+        // Toggle notification panel
         function toggleNotificationPanel() {
             const panel = document.getElementById('notificationPanel');
             if (panel) {
                 panel.classList.toggle('show');
-                
-                // Add focus trap for accessibility
-                if (panel.classList.contains('show')) {
-                    const firstFocusable = panel.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-                    if (firstFocusable) {
-                        setTimeout(() => firstFocusable.focus(), 100);
-                    }
-                }
             }
         }
 
+        // Close notification panel
         function closeNotificationPanel() {
             const panel = document.getElementById('notificationPanel');
             if (panel) {
@@ -2921,177 +2548,37 @@
             }
         }
 
-        // Update page info when navigating (for SPA-like behavior)
-        function updatePageOnNavigation() {
-            // Re-run the page info update
-            setTimeout(() => {
-                const event = new Event('DOMContentLoaded');
-                document.dispatchEvent(event);
-            }, 100);
-        }
-
-        // Listen for navigation events if using AJAX navigation
-        if (window.history && window.history.pushState) {
-            const originalPushState = window.history.pushState;
-            window.history.pushState = function() {
-                originalPushState.apply(window.history, arguments);
-                updatePageOnNavigation();
-            };
-        }
-
-        // Global SweetAlert2 Helper Functions
-        window.SwalHelper = {
-            // Success alert
-            success: function(title, text, callback) {
-                Swal.fire({
-                    icon: 'success',
-                    title: title || 'Thành công!',
-                    text: text,
-                    confirmButtonColor: '#22c55e',
-                    confirmButtonText: '<i class="fas fa-check"></i> Đóng',
-                    timer: 3000,
-                    timerProgressBar: true,
-                    customClass: {
-                        popup: 'swal-modern'
-                    }
-                }).then((result) => {
-                    if (callback && typeof callback === 'function') {
-                        callback(result);
-                    }
-                });
-            },
-
-            // Error alert
-            error: function(title, text, callback) {
-                Swal.fire({
-                    icon: 'error',
-                    title: title || 'Lỗi!',
-                    text: text,
-                    confirmButtonColor: '#ef4444',
-                    confirmButtonText: '<i class="fas fa-times"></i> Đóng',
-                    customClass: {
-                        popup: 'swal-modern'
-                    }
-                }).then((result) => {
-                    if (callback && typeof callback === 'function') {
-                        callback(result);
-                    }
-                });
-            },
-
-            // Warning alert
-            warning: function(title, text, callback) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: title || 'Cảnh báo!',
-                    text: text,
-                    confirmButtonColor: '#f59e0b',
-                    confirmButtonText: '<i class="fas fa-exclamation"></i> Đồng ý',
-                    customClass: {
-                        popup: 'swal-modern'
-                    }
-                }).then((result) => {
-                    if (callback && typeof callback === 'function') {
-                        callback(result);
-                    }
-                });
-            },
-
-            // Confirm dialog
-            confirm: function(title, html, confirmCallback, cancelCallback) {
-                Swal.fire({
-                    title: title || 'Xác nhận?',
-                    html: html,
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonColor: '#22c55e',
-                    cancelButtonColor: '#6b7280',
-                    confirmButtonText: '<i class="fas fa-check"></i> Xác nhận',
-                    cancelButtonText: '<i class="fas fa-times"></i> Hủy',
-                    customClass: {
-                        popup: 'swal-modern'
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed && confirmCallback) {
-                        confirmCallback(result);
-                    } else if (result.isDismissed && cancelCallback) {
-                        cancelCallback(result);
-                    }
-                });
-            },
-
-            // Delete confirmation
-            confirmDelete: function(message, confirmCallback) {
-                Swal.fire({
-                    title: 'Xác nhận xóa?',
-                    html: message || '<p style="margin-bottom: 1rem;">Bạn có chắc chắn muốn xóa?</p><p style="color: #dc2626; font-size: 0.875rem;">⚠️ Hành động này không thể hoàn tác!</p>',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#ef4444',
-                    cancelButtonColor: '#6b7280',
-                    confirmButtonText: '<i class="fas fa-trash"></i> Xóa',
-                    cancelButtonText: '<i class="fas fa-times"></i> Hủy',
-                    customClass: {
-                        popup: 'swal-modern'
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed && confirmCallback) {
-                        confirmCallback(result);
-                    }
-                });
-            },
-
-            // Loading state
-            loading: function(title, text) {
-                Swal.fire({
-                    title: title || 'Đang xử lý...',
-                    text: text || 'Vui lòng đợi trong giây lát',
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    allowEnterKey: false,
-                    showConfirmButton: false,
-                    customClass: {
-                        popup: 'swal-modern'
-                    },
-                    didOpen: () => {
-                        Swal.showLoading();
-                    }
-                });
-            },
-
-            // Close alert
-            close: function() {
-                Swal.close();
+        // Clear search function
+        function clearSearch() {
+            const searchInput = document.getElementById('globalSearch');
+            if (searchInput) {
+                searchInput.value = '';
+                searchInput.dispatchEvent(new Event('input'));
+                searchInput.focus();
             }
-        };
+        }
 
-        // Auto-show session messages
-        @if(session('success'))
-            SwalHelper.success('Thành công!', '{{ session('success') }}');
-        @endif
-
-        @if(session('error'))
-            SwalHelper.error('Lỗi!', '{{ session('error') }}');
-        @endif
-
-        @if(session('warning'))
-            SwalHelper.warning('Cảnh báo!', '{{ session('warning') }}');
-        @endif
-
-        @if(session('info'))
-            Swal.fire({
-                icon: 'info',
-                title: 'Thông báo!',
-                text: '{{ session('info') }}',
-                confirmButtonColor: '#3b82f6',
-                confirmButtonText: '<i class="fas fa-info-circle"></i> Đóng',
-                timer: 4000,
-                timerProgressBar: true,
-                customClass: {
-                    popup: 'swal-modern'
-                }
+        // Mark all as read function
+        function markAllAsRead() {
+            const newItems = document.querySelectorAll('.notification-item.new');
+            newItems.forEach(item => {
+                item.classList.remove('new');
             });
-        @endif
+            
+            const badges = document.querySelectorAll('.new-badge');
+            badges.forEach(badge => {
+                badge.remove();
+            });
+            
+            // Update notification count
+            const notificationCount = document.querySelector('.notification-count');
+            if (notificationCount) {
+                const remainingNew = document.querySelectorAll('.notification-item.new').length;
+                notificationCount.textContent = remainingNew + ' mới';
+            }
+            
+            SwalHelper.success('Thành công', 'Đã đánh dấu tất cả thông báo là đã đọc');
+        }
     </script>
 </body>
 

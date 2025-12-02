@@ -1,12 +1,5 @@
 @extends('admin.layout.be')
 
-@section('title_one')
-Mã sản phẩm
-@endsection
-@section('title_two')
-Quản lý sản phẩm / Mã sản phẩm
-@endsection
-
 @section('content')
 <div class="product-code-create-page">
     <!-- Page Header -->

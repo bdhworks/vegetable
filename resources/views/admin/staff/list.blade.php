@@ -1,12 +1,5 @@
 @extends('admin.layout.be')
 
-@section('title_one')
-Nhân viên
-@endsection
-@section('title_two')
-Quản lý người dùng / Nhân viên
-@endsection
-
 @section('content')
 <div class="staff-page">
     <!-- Page Header -->

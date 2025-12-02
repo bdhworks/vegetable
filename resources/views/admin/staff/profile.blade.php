@@ -1,12 +1,5 @@
 @extends('admin.layout.be')
 
-@section('title_one')
-Hồ sơ cá nhân
-@endsection
-@section('title_two')
-Tài khoản / Hồ sơ cá nhân
-@endsection
-
 @section('content')
 <div class="profile-page">
     <!-- Page Header -->

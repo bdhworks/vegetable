@@ -1,12 +1,5 @@
 @extends('admin.layout.be')
 
-@section('title_one')
-Module
-@endsection
-@section('title_two')
-Quản lý người dùng / Thêm Module
-@endsection
-
 @section('content')
 <div class="module-create-page">
     <!-- Page Header -->

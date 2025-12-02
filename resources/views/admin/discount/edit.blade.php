@@ -1,12 +1,5 @@
 @extends('admin.layout.be')
 
-@section('title_one')
-Khuyến mãi
-@endsection
-@section('title_two')
-Quản lý sản phẩm / Khuyến mãi
-@endsection
-
 @section('content')
 <div class="discount-edit-page">
     <!-- Page Header -->

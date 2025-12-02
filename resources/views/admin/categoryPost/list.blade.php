@@ -1,12 +1,5 @@
 @extends('admin.layout.be')
 
-@section('title_one')
-Chuyên mục bài viết
-@endsection
-@section('title_two')
-Quản lý nội dung / Chuyên mục
-@endsection
-
 @section('content')
 <div class="category-post-page">
     <!-- Page Header -->
