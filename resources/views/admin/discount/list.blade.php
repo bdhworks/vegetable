@@ -888,13 +888,80 @@ document.querySelector('.select-all')?.addEventListener('change', function() {
     });
 });
 
-// Delete confirmation
-document.querySelectorAll('.delete-discount').forEach(btn => {
-    btn.addEventListener('click', function() {
-        if (confirm('Bạn có chắc chắn muốn xóa khuyến mãi này?')) {
-            const id = this.getAttribute('data-id_discount');
-            // Add your delete logic here
+// Delete discount with SweetAlert2
+$(document).ready(function() {
+    $(document).on('click', '.delete-discount', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const discountId = $(this).data('id_discount');
+        
+        if (!discountId) {
+            SwalHelper.error('Lỗi!', 'Không tìm thấy ID khuyến mãi');
+            return;
         }
+        
+        Swal.fire({
+            title: 'Xác nhận xóa?',
+            html: '<p style="margin-bottom: 1rem;">Bạn có chắc chắn muốn xóa chương trình khuyến mãi này?</p><p style="color: #dc2626; font-size: 0.875rem;"><i class="ti ti-alert-triangle"></i> Hành động này không thể hoàn tác!</p>',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#6b7280',
+            confirmButtonText: '<i class="ti ti-trash"></i> Xóa khuyến mãi',
+            cancelButtonText: '<i class="ti ti-x"></i> Hủy bỏ',
+            reverseButtons: true,
+            customClass: {
+                confirmButton: 'swal-btn-danger',
+                cancelButton: 'swal-btn-secondary'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                SwalHelper.loading('Đang xóa khuyến mãi...', 'Vui lòng đợi trong giây lát');
+                
+                $.ajax({
+                    url: '{{ route("discount.destroy") }}',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        discount_id: discountId
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Đã xóa!',
+                                text: response.message || 'Khuyến mãi đã được xóa thành công',
+                                confirmButtonColor: '#22c55e',
+                                confirmButtonText: 'OK',
+                                timer: 3000,
+                                timerProgressBar: true
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            SwalHelper.error('Lỗi!', response.error || 'Có lỗi xảy ra khi xóa khuyến mãi');
+                        }
+                    },
+                    error: function(xhr) {
+                        console.error('AJAX Error:', xhr);
+                        let errorMsg = 'Có lỗi xảy ra khi xóa khuyến mãi';
+                        
+                        if (xhr.status === 403) {
+                            errorMsg = 'Bạn không có quyền xóa khuyến mãi này';
+                        } else if (xhr.status === 404) {
+                            errorMsg = 'Không tìm thấy khuyến mãi';
+                        } else if (xhr.status === 409) {
+                            errorMsg = 'Không thể xóa khuyến mãi vì đang được sử dụng trong đơn hàng';
+                        } else if (xhr.responseJSON?.message) {
+                            errorMsg = xhr.responseJSON.message;
+                        }
+                        
+                        SwalHelper.error('Lỗi!', errorMsg);
+                    }
+                });
+            }
+        });
     });
 });
 </script>

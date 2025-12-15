@@ -888,14 +888,82 @@ document.querySelector('.select-all')?.addEventListener('change', function() {
     document.querySelectorAll('.row-checkbox').forEach(cb => {
         cb.checked = this.checked;
     });
+});
 
-// Delete confirmation
-document.querySelectorAll('.delete-category-product').forEach(btn => {
-    btn.addEventListener('click', function() {
-        if (confirm('Bạn có chắc chắn muốn xóa danh mục này?')) {
-            const id = this.getAttribute('data-id_category');
-            // Add your delete logic here
+// Delete category product with SweetAlert
+$(document).ready(function() {
+    $(document).on('click', '.delete-category-product', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const categoryId = $(this).data('id_category');
+        
+        if (!categoryId) {
+            SwalHelper.error('Lỗi!', 'Không tìm thấy ID danh mục');
+            return;
         }
+        
+        Swal.fire({
+            title: 'Xác nhận xóa?',
+            html: '<p style="margin-bottom: 1rem;">Bạn có chắc chắn muốn xóa danh mục sản phẩm này?</p><p style="color: #dc2626; font-size: 0.875rem;"><i class="ti ti-alert-triangle"></i> Hành động này không thể hoàn tác!</p>',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#6b7280',
+            confirmButtonText: '<i class="ti ti-trash"></i> Xóa danh mục',
+            cancelButtonText: '<i class="ti ti-x"></i> Hủy bỏ',
+            reverseButtons: true,
+            customClass: {
+                confirmButton: 'swal-btn-danger',
+                cancelButton: 'swal-btn-secondary'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                SwalHelper.loading('Đang xóa danh mục...', 'Vui lòng đợi trong giây lát');
+                
+                $.ajax({
+                    url: '{{ route("categoryProduct.destroy") }}',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        category_id: categoryId
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Đã xóa!',
+                                text: response.message || 'Danh mục đã được xóa thành công',
+                                confirmButtonColor: '#22c55e',
+                                confirmButtonText: 'OK',
+                                timer: 3000,
+                                timerProgressBar: true
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            SwalHelper.error('Lỗi!', response.error || 'Có lỗi xảy ra khi xóa danh mục');
+                        }
+                    },
+                    error: function(xhr) {
+                        console.error('AJAX Error:', xhr);
+                        let errorMsg = 'Có lỗi xảy ra khi xóa danh mục';
+                        
+                        if (xhr.status === 403) {
+                            errorMsg = 'Bạn không có quyền xóa danh mục này';
+                        } else if (xhr.status === 404) {
+                            errorMsg = 'Không tìm thấy danh mục';
+                        } else if (xhr.status === 409) {
+                            errorMsg = 'Không thể xóa danh mục vì đang có sản phẩm liên kết';
+                        } else if (xhr.responseJSON?.message) {
+                            errorMsg = xhr.responseJSON.message;
+                        }
+                        
+                        SwalHelper.error('Lỗi!', errorMsg);
+                    }
+                });
+            }
+        });
     });
 });
 

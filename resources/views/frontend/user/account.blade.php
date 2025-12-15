@@ -119,6 +119,13 @@
                                 <span class="nav-text">Tổng quan</span>
                                 <i class="fa fa-chevron-right nav-arrow"></i>
                             </a>
+                            <a class="account-nav-link" href="{{ route('account.info') }}">
+                                <span class="nav-icon">
+                                    <i class="fa fa-user-circle"></i>
+                                </span>
+                                <span class="nav-text">Thông tin</span>
+                                <i class="fa fa-chevron-right nav-arrow"></i>
+                            </a>
                             <a class="account-nav-link" href="{{ route('account.orderHistory') }}">
                                 <span class="nav-icon">
                                     <i class="fa fa-shopping-bag"></i>
@@ -127,11 +134,19 @@
                                 <span class="nav-badge">{{ $orders->total() }}</span>
                                 <i class="fa fa-chevron-right nav-arrow"></i>
                             </a>
-                            <a class="account-nav-link" href="{{ route('account.info') }}">
+                            <a class="account-nav-link" href="{{ route('account.favorite') }}">
                                 <span class="nav-icon">
-                                    <i class="fa fa-user"></i>
+                                    <i class="fa fa-heart"></i>
                                 </span>
-                                <span class="nav-text">Thông tin tài khoản</span>
+                                <span class="nav-text">Yêu thích</span>
+                                <span class="nav-badge">0</span>
+                                <i class="fa fa-chevron-right nav-arrow"></i>
+                            </a>
+                            <a class="account-nav-link" href="{{ route('account.change-password') }}">
+                                <span class="nav-icon">
+                                    <i class="fa fa-key"></i>
+                                </span>
+                                <span class="nav-text">Đổi mật khẩu</span>
                                 <i class="fa fa-chevron-right nav-arrow"></i>
                             </a>
                             <div class="nav-divider"></div>

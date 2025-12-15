@@ -81,12 +81,19 @@
                             <span class="nav-text">Tổng quan</span>
                             <i class="fa fa-chevron-right nav-arrow"></i>
                         </a>
+                        <a class="account-nav-link" href="{{ route('account.info') }}">
+                            <span class="nav-icon">
+                                <i class="fa fa-user-circle"></i>
+                            </span>
+                            <span class="nav-text">Thông tin</span>
+                            <i class="fa fa-chevron-right nav-arrow"></i>
+                        </a>
                         <a class="account-nav-link" href="{{ route('account.orderHistory') }}">
                             <span class="nav-icon">
                                 <i class="fa fa-shopping-bag"></i>
                             </span>
                             <span class="nav-text">Đơn hàng</span>
-                            <span class="nav-badge">0</span>
+                            <span class="nav-badge">{{ $orders->total() }}</span>
                             <i class="fa fa-chevron-right nav-arrow"></i>
                         </a>
                         <a class="account-nav-link active" href="{{ route('account.favorite') }}">

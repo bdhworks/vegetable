@@ -67,7 +67,8 @@ class AccountController extends Controller
     }
 
     public function changePassword(){
-        return view('frontend.user.change-password');
+        $orders = Order::where('user_id', Auth::guard('web')->id())->orderByDesc('id')->paginate(10);
+        return view('frontend.user.change-password', compact('orders'));
     }
 
     public function updatePassword(Request $request){
@@ -103,11 +104,13 @@ class AccountController extends Controller
     }
 
     public function favorite(){
-        return view('frontend.user.favorite');
+        $orders = Order::where('user_id', Auth::guard('web')->id())->orderByDesc('id')->paginate(10);
+        return view('frontend.user.favorite', compact('orders'));
     }
 
     public function info(){
-        return view('frontend.user.info');
+        $orders = Order::where('user_id', Auth::guard('web')->id())->orderByDesc('id')->paginate(10);
+        return view('frontend.user.info', compact('orders'));
     }
 
 }

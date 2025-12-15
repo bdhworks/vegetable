@@ -1204,11 +1204,40 @@ setTimeout(() => {
     });
 }, 5000);
 
-// Delete confirmation
+// Delete confirmation with SweetAlert2
 function confirmDelete() {
-    if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này? Hành động này không thể hoàn tác!')) {
-        document.getElementById('deleteForm').submit();
-    }
+    Swal.fire({
+        title: 'Xác nhận xóa?',
+        html: '<p style="margin-bottom: 1rem;">Bạn có chắc chắn muốn xóa sản phẩm này?</p><p style="color: #dc2626; font-size: 0.875rem;"><i class="ti ti-alert-triangle"></i> Hành động này không thể hoàn tác!</p>',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: '<i class="ti ti-trash"></i> Xóa sản phẩm',
+        cancelButtonText: '<i class="ti ti-x"></i> Hủy bỏ',
+        reverseButtons: true,
+        customClass: {
+            confirmButton: 'swal-btn-danger',
+            cancelButton: 'swal-btn-secondary'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Show loading
+            Swal.fire({
+                title: 'Đang xóa...',
+                html: 'Vui lòng đợi trong giây lát',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            
+            // Submit the form
+            document.getElementById('deleteForm').submit();
+        }
+    });
 }
 </script>
 
