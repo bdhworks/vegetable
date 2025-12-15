@@ -408,7 +408,7 @@
         }
 
         .info-item span {
-            color: var(--sidebar-text) !important;
+            /* color: var(--sidebar-text) !important; */
         }
 
         #sidebarTime {
@@ -2178,7 +2178,7 @@
                                         <div class="dropdown-content">
                                             <span class="item-title">Đổi mật khẩu</span>
                                             <span class="item-desc">Cập nhật mật khẩu bảo mật</span>
-                                        </div>
+                                                                               </div>
                                         <i class="fas fa-chevron-right item-arrow"></i>
                                     </a>
                                 </div>
@@ -2380,6 +2380,106 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('assets/admin/libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/admin/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    
+    <script>
+        // SwalHelper utility
+        const SwalHelper = {
+            success: function(title, message, callback) {
+                Swal.fire({
+                    icon: 'success',
+                    title: title || 'Thành công!',
+                    text: message || '',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#22c55e',
+                    timer: 3000,
+                    timerProgressBar: true
+                }).then((result) => {
+                    if (callback && typeof callback === 'function') {
+                        callback();
+                    }
+                });
+            },
+            
+            error: function(title, message, callback) {
+                Swal.fire({
+                    icon: 'error',
+                    title: title || 'Lỗi!',
+                    text: message || 'Có lỗi xảy ra',
+                    confirmButtonText: 'Đóng',
+                    confirmButtonColor: '#ef4444'
+                }).then((result) => {
+                    if (callback && typeof callback === 'function') {
+                        callback();
+                    }
+                });
+            },
+            
+            warning: function(title, message, callback) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: title || 'Cảnh báo!',
+                    text: message || '',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#f59e0b'
+                }).then((result) => {
+                    if (callback && typeof callback === 'function') {
+                        callback();
+                    }
+                });
+            },
+            
+            info: function(title, message, callback) {
+                Swal.fire({
+                    icon: 'info',
+                    title: title || 'Thông báo!',
+                    text: message || '',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#3b82f6'
+                }).then((result) => {
+                    if (callback && typeof callback === 'function') {
+                        callback();
+                    }
+                });
+            },
+            
+            confirmDelete: function(message, callback) {
+                Swal.fire({
+                    title: 'Xác nhận xóa?',
+                    html: message || 'Bạn có chắc chắn muốn xóa? Hành động này không thể hoàn tác!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#ef4444',
+                    cancelButtonColor: '#6b7280',
+                    confirmButtonText: '<i class="fas fa-trash"></i> Xóa',
+                    cancelButtonText: '<i class="fas fa-times"></i> Hủy',
+                    reverseButtons: true,
+                    focusCancel: true
+                }).then((result) => {
+                    if (result.isConfirmed && callback && typeof callback === 'function') {
+                        callback();
+                    }
+                });
+            },
+            
+            loading: function(title, message) {
+                Swal.fire({
+                    title: title || 'Đang xử lý...',
+                    text: message || 'Vui lòng đợi trong giây lát',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+            },
+            
+            close: function() {
+                Swal.close();
+            }
+        };
+    </script>
+    
     <script src="{{ asset('assets/admin/js/sidebarmenu.js') }}"></script>
     <script src="{{ asset('assets/admin/js/app.min.js') }}"></script>
     <script src="{{ asset('assets/admin/libs/apexcharts/dist/apexcharts.min.js') }}"></script>

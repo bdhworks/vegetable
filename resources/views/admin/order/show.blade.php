@@ -273,26 +273,96 @@
 </div>
 
 <style>
-/* Order Detail Page Specific Styles Only - No Duplicates */
+/* Order Detail Page - No Duplicates from Layout */
 .order-detail-page {
     padding: 1.5rem;
-    background: #f5f7fa;
     min-height: 100vh;
 }
 
-/* Back Button */
+/* Page Header */
+.page-header {
+    margin-bottom: 1.5rem;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.page-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.page-title i {
+    font-size: 2rem;
+    color: #8b5cf6;
+}
+
+.breadcrumb-modern {
+    margin: 0;
+}
+
+.breadcrumb-modern ol {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.breadcrumb-modern li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.breadcrumb-modern a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.breadcrumb-modern a:hover {
+    color: var(--primary-color);
+}
+
+.breadcrumb-modern .active {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.header-right {
+    display: flex;
+    gap: 0.75rem;
+}
+
 .btn-back {
     background: white;
-    color: #4b5563;
-    border: 2px solid #e5e7eb;
+    color: var(--text-secondary);
+    border: 2px solid var(--border-color);
     padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-sm);
     font-weight: 600;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     transition: all 0.3s ease;
     text-decoration: none;
+    font-size: 0.9375rem;
 }
 
 .btn-back:hover {
@@ -301,7 +371,14 @@
     transform: translateX(-4px);
 }
 
-/* Card Header Custom */
+/* Content Card */
+.content-card {
+    background: white;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
 .card-header-custom {
     padding: 1.5rem;
     border-bottom: 2px solid #ede9fe;
@@ -309,6 +386,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .card-title-custom {
@@ -329,7 +408,7 @@
     background: linear-gradient(135deg, #8b5cf6, #7c3aed);
     color: white;
     padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-sm);
     font-size: 0.875rem;
     font-weight: 600;
 }
@@ -351,22 +430,23 @@
     gap: 1rem;
     padding: 1rem;
     background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-    border-radius: 0.75rem;
+    border-radius: var(--radius-md);
     border: 2px solid #ede9fe;
     transition: all 0.3s ease;
 }
 
 .product-item:hover {
     border-color: #8b5cf6;
-    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.1);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
 }
 
 .product-image {
     width: 80px;
     height: 80px;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-sm);
     overflow: hidden;
-    border: 2px solid #e5e7eb;
+    border: 2px solid var(--border-color);
     flex-shrink: 0;
 }
 
@@ -383,7 +463,7 @@
 .product-name {
     font-size: 1rem;
     font-weight: 600;
-    color: #1f2937;
+    color: var(--text-primary);
     margin: 0 0 0.5rem 0;
 }
 
@@ -397,7 +477,7 @@
     display: flex;
     align-items: center;
     gap: 0.375rem;
-    color: #6b7280;
+    color: var(--text-secondary);
 }
 
 .quantity i, .price i {
@@ -407,10 +487,10 @@
 .product-total {
     font-size: 1.125rem;
     font-weight: 700;
-    color: #1e293b;
+    color: var(--text-primary);
     background: linear-gradient(135deg, #fef3c7, #fde68a);
     padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-sm);
 }
 
 /* Order Summary */
@@ -426,7 +506,7 @@
     align-items: center;
     padding: 0.75rem 1rem;
     background: #f8fafc;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-sm);
     margin-bottom: 0.5rem;
 }
 
@@ -439,8 +519,15 @@
 
 .summary-label {
     font-size: 0.9375rem;
-    color: #64748b;
+    color: var(--text-secondary);
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.summary-label i {
+    color: #8b5cf6;
 }
 
 .summary-row.total .summary-label {
@@ -451,7 +538,7 @@
 .summary-value {
     font-size: 1rem;
     font-weight: 700;
-    color: #1e293b;
+    color: var(--text-primary);
 }
 
 .summary-value.discount {
@@ -475,8 +562,15 @@
     flex-direction: column;
     gap: 0.5rem;
     padding: 1rem;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-sm);
     border: 2px solid #ede9fe;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    transition: all 0.3s ease;
+}
+
+.info-item:hover {
+    border-color: #8b5cf6;
+    box-shadow: var(--shadow-sm);
 }
 
 .info-item.full-width {
@@ -485,7 +579,7 @@
 
 .info-label {
     font-size: 0.875rem;
-    color: #64748b;
+    color: var(--text-secondary);
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -501,13 +595,13 @@
 .info-value {
     font-size: 0.9375rem;
     font-weight: 600;
-    color: #1e293b;
+    color: var(--text-primary);
 }
 
 /* Sidebar Status */
 .sticky-sidebar {
     position: sticky;
-    top: 1.5rem;
+    top: 90px;
 }
 
 .status-section, .payment-section, .order-details-section {
@@ -516,11 +610,19 @@
     border-bottom: 1px solid #ede9fe;
 }
 
+.status-section:last-child,
+.payment-section:last-child,
+.order-details-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
 .section-label {
     display: block;
     font-size: 0.875rem;
     font-weight: 600;
-    color: #64748b;
+    color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.025em;
     margin-bottom: 0.75rem;
@@ -536,7 +638,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 1rem 1.5rem;
-    border-radius: 0.75rem;
+    border-radius: var(--radius-md);
     font-weight: 700;
     font-size: 1rem;
     border: 2px solid;
@@ -577,7 +679,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.875rem 1.25rem;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-sm);
     font-weight: 700;
     font-size: 0.9375rem;
     border: 2px solid;
@@ -604,7 +706,7 @@
 
 .detail-label {
     font-size: 0.875rem;
-    color: #64748b;
+    color: var(--text-secondary);
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -618,7 +720,7 @@
 .detail-value {
     font-size: 0.875rem;
     font-weight: 600;
-    color: #1e293b;
+    color: var(--text-primary);
 }
 
 /* Action Buttons */
@@ -627,6 +729,8 @@
     flex-direction: column;
     gap: 0.75rem;
     margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #ede9fe;
 }
 
 .btn-confirm-full,
@@ -634,7 +738,7 @@
 .btn-return-full {
     width: 100%;
     padding: 1rem 1.5rem;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-sm);
     font-weight: 600;
     font-size: 0.9375rem;
     display: flex;
@@ -644,16 +748,19 @@
     transition: all 0.3s ease;
     text-decoration: none;
     border: none;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-confirm-full {
-    background: linear-gradient(135deg, #10b981, #059669);
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
     color: white;
 }
 
 .btn-confirm-full:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 8px 16px rgba(34, 197, 94, 0.3);
+    color: white;
 }
 
 .btn-delivered-full {
@@ -664,6 +771,7 @@
 .btn-delivered-full:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+    color: white;
 }
 
 .btn-return-full {
@@ -673,16 +781,18 @@
 }
 
 .btn-return-full:hover {
-    background: #ef4444;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
     color: white;
     border-color: #ef4444;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 /* Feedback */
 .feedback-content {
     background: linear-gradient(135deg, #fef3c7, #fde68a);
     padding: 1.25rem;
-    border-radius: 0.75rem;
+    border-radius: var(--radius-md);
     border-left: 4px solid #f59e0b;
 }
 
@@ -706,6 +816,10 @@
         padding: 1rem;
     }
     
+    .page-title {
+        font-size: 1.5rem;
+    }
+    
     .product-item {
         flex-direction: column;
         text-align: center;
@@ -719,21 +833,39 @@
     .info-grid {
         grid-template-columns: 1fr;
     }
+    
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .btn-back {
+        width: 100%;
+        justify-content: center;
+    }
 }
 </style>
 
 <script>
 // Use SwalHelper from layout file
 function confirmOrder(orderId) {
-    SwalHelper.confirm(
-        'Xác nhận đơn hàng?',
-        `<p style="margin-bottom: 1rem;">Bạn có chắc chắn muốn xác nhận đơn hàng <strong>#${orderId}</strong>?</p>
-         <p style="color: #6b7280; font-size: 0.875rem;">Đơn hàng sẽ chuyển sang trạng thái "Đang giao hàng"</p>`,
-        function() {
-            SwalHelper.loading();
+    Swal.fire({
+        title: 'Xác nhận đơn hàng?',
+        html: `<p style="margin-bottom: 1rem;">Bạn có chắc chắn muốn xác nhận đơn hàng <strong>#${orderId}</strong>?</p>
+               <p style="color: #6b7280; font-size: 0.875rem;">Đơn hàng sẽ chuyển sang trạng thái "Đang giao hàng"</p>`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#22c55e',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: '<i class="ti ti-check"></i> Xác nhận',
+        cancelButtonText: '<i class="ti ti-x"></i> Hủy',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            SwalHelper.loading('Đang xử lý...', 'Vui lòng đợi');
             window.location.href = `/admin/order/confirm/${orderId}`;
         }
-    );
+    });
 }
 
 function markAsDelivered(orderId) {
@@ -747,12 +879,10 @@ function markAsDelivered(orderId) {
         cancelButtonColor: '#6b7280',
         confirmButtonText: '<i class="ti ti-package"></i> Đã giao',
         cancelButtonText: '<i class="ti ti-x"></i> Hủy',
-        customClass: {
-            popup: 'swal-modern'
-        }
+        reverseButtons: true
     }).then((result) => {
         if (result.isConfirmed) {
-            SwalHelper.loading();
+            SwalHelper.loading('Đang xử lý...', 'Vui lòng đợi');
             window.location.href = `/admin/order/delivered/${orderId}`;
         }
     });
@@ -769,12 +899,10 @@ function returnOrder(orderId) {
         cancelButtonColor: '#6b7280',
         confirmButtonText: '<i class="ti ti-arrow-back"></i> Trả hàng',
         cancelButtonText: '<i class="ti ti-x"></i> Hủy',
-        customClass: {
-            popup: 'swal-modern'
-        }
+        reverseButtons: true
     }).then((result) => {
         if (result.isConfirmed) {
-            SwalHelper.loading();
+            SwalHelper.loading('Đang xử lý...', 'Vui lòng đợi');
             window.location.href = `/admin/order/back/${orderId}`;
         }
     });

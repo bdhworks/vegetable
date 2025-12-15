@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Admin',
         //     'email' => 'admin@admin.com',
         //     'password' => Hash::make('password'),
-        //     'group_id' => 1
+        //     'group_id' => 3
         // ]);
 
         // DB::table('groups')->insert([

@@ -160,51 +160,121 @@
 </div>
 
 <style>
-/* Permission Page Specific Styles */
+/* Permission Page - No Duplicates from Layout */
 .permission-page {
     padding: 1.5rem;
-    background: #f5f7fa;
     min-height: 100vh;
 }
 
-/* Back Button */
+/* Page Header */
+.page-header {
+    margin-bottom: 1.5rem;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.page-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.page-title i {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.breadcrumb-modern {
+    margin: 0;
+}
+
+.breadcrumb-modern ol {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.breadcrumb-modern li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.breadcrumb-modern a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.breadcrumb-modern a:hover {
+    color: var(--primary-color);
+}
+
+.breadcrumb-modern .active {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.header-right {
+    display: flex;
+    gap: 0.75rem;
+}
+
 .btn-back {
     background: white;
-    color: #4b5563;
-    border: 2px solid #e5e7eb;
+    color: var(--text-secondary);
+    border: 2px solid var(--border-color);
     padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-sm);
     font-weight: 600;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     transition: all 0.3s ease;
     text-decoration: none;
+    font-size: 0.9375rem;
 }
 
 .btn-back:hover {
-    border-color: #8b5cf6;
-    color: #8b5cf6;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
     transform: translateX(-4px);
 }
 
 /* Info Banner */
 .info-banner {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    border-radius: 1rem;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    border-radius: var(--radius-lg);
     padding: 1.5rem 2rem;
     margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+    box-shadow: var(--shadow-lg);
 }
 
 .banner-icon {
     width: 60px;
     height: 60px;
     background: rgba(255, 255, 255, 0.2);
-    border-radius: 1rem;
+    border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -246,7 +316,7 @@
     gap: 0.5rem;
     background: rgba(255, 255, 255, 0.2);
     padding: 0.75rem 1.25rem;
-    border-radius: 0.75rem;
+    border-radius: var(--radius-md);
     color: white;
     font-weight: 600;
     font-size: 0.9375rem;
@@ -254,6 +324,14 @@
 
 .stat-item i {
     font-size: 1.25rem;
+}
+
+/* Content Card */
+.content-card {
+    background: white;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
 }
 
 /* Card Header Custom */
@@ -264,18 +342,20 @@
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    flex-wrap: wrap;
 }
 
 .header-icon {
     width: 50px;
     height: 50px;
     background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-    border-radius: 0.75rem;
+    border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
     font-size: 1.5rem;
+    flex-shrink: 0;
 }
 
 .header-text {
@@ -327,8 +407,8 @@
 }
 
 .checkbox-modern input:checked + .checkmark {
-    background: linear-gradient(135deg, #10b981, #059669);
-    border-color: #10b981;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    border-color: var(--primary-color);
 }
 
 .checkbox-modern input:checked + .checkmark::after {
@@ -345,7 +425,7 @@
 .checkbox-modern .label-text {
     font-size: 0.9375rem;
     font-weight: 600;
-    color: #1f2937;
+    color: var(--text-primary);
 }
 
 /* Modules Grid */
@@ -359,21 +439,21 @@
 /* Module Card */
 .module-card {
     background: white;
-    border: 2px solid #e5e7eb;
-    border-radius: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
     overflow: hidden;
     transition: all 0.3s ease;
 }
 
 .module-card:hover {
     border-color: #8b5cf6;
-    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+    box-shadow: var(--shadow-md);
 }
 
 .module-header {
     padding: 1.25rem 1.5rem;
     background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
-    border-bottom: 2px solid #e5e7eb;
+    border-bottom: 2px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -389,7 +469,7 @@
     width: 45px;
     height: 45px;
     background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-    border-radius: 0.75rem;
+    border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -401,12 +481,12 @@
     margin: 0 0 0.25rem 0;
     font-size: 1rem;
     font-weight: 700;
-    color: #1f2937;
+    color: var(--text-primary);
 }
 
 .module-name {
     font-size: 0.8125rem;
-    color: #6b7280;
+    color: var(--text-secondary);
     font-family: 'Courier New', monospace;
     background: #f3f4f6;
     padding: 0.125rem 0.5rem;
@@ -441,8 +521,8 @@
     gap: 0.5rem;
     padding: 1rem 0.75rem;
     background: #f9fafb;
-    border: 2px solid #e5e7eb;
-    border-radius: 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
     transition: all 0.3s ease;
     position: relative;
 }
@@ -461,12 +541,12 @@
     width: 40px;
     height: 40px;
     background: white;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.25rem;
-    color: #6b7280;
+    color: var(--text-secondary);
     transition: all 0.3s ease;
 }
 
@@ -478,7 +558,7 @@
 .permission-label {
     font-size: 0.8125rem;
     font-weight: 600;
-    color: #4b5563;
+    color: var(--text-secondary);
     text-align: center;
 }
 
@@ -492,7 +572,7 @@
     right: 0.5rem;
     width: 20px;
     height: 20px;
-    background: #10b981;
+    background: var(--primary-color);
     border-radius: 50%;
     display: none;
     align-items: center;
@@ -510,7 +590,7 @@
     display: flex;
     gap: 1rem;
     padding-top: 2rem;
-    border-top: 2px solid #e5e7eb;
+    border-top: 2px solid var(--border-color);
     flex-wrap: wrap;
 }
 
@@ -518,7 +598,7 @@
 .btn-reset,
 .btn-cancel {
     padding: 0.875rem 2rem;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-sm);
     font-weight: 600;
     font-size: 0.9375rem;
     display: flex;
@@ -531,31 +611,37 @@
 }
 
 .btn-submit {
-    background: linear-gradient(135deg, #10b981, #059669);
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
     color: white;
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-submit:hover {
-    background: linear-gradient(135deg, #059669, #047857);
+    background: linear-gradient(135deg, var(--primary-dark), #15803d);
     transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
 }
 
 .btn-reset {
     background: linear-gradient(135deg, #3b82f6, #2563eb);
     color: white;
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-reset:hover {
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
     transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+    box-shadow: var(--shadow-md);
 }
 
 .btn-cancel {
     background: white;
-    color: #6b7280;
-    border: 2px solid #e5e7eb;
+    color: var(--text-secondary);
+    border: 2px solid var(--border-color);
 }
 
 .btn-cancel:hover {
@@ -586,6 +672,10 @@
         padding: 1rem;
     }
     
+    .page-title {
+        font-size: 1.5rem;
+    }
+    
     .info-banner {
         padding: 1.25rem 1.5rem;
     }
@@ -601,11 +691,12 @@
     
     .card-header-custom {
         flex-direction: column;
-        text-align: center;
+        align-items: flex-start;
     }
     
     .select-all-section {
         margin-left: 0;
+        width: 100%;
     }
     
     .permissions-grid {
@@ -623,6 +714,16 @@
         width: 100%;
         justify-content: center;
     }
+    
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .btn-back {
+        width: 100%;
+        justify-content: center;
+    }
 }
 </style>
 
@@ -636,6 +737,11 @@ document.addEventListener('DOMContentLoaded', function() {
         selectAllCheckbox.addEventListener('change', function() {
             allPermissionCheckboxes.forEach(checkbox => {
                 checkbox.checked = this.checked;
+            });
+            // Update module checkboxes
+            document.querySelectorAll('.module-checkbox').forEach(cb => {
+                cb.checked = this.checked;
+                cb.indeterminate = false;
             });
         });
     }
@@ -665,6 +771,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 moduleCheckbox.checked = allChecked;
                 moduleCheckbox.indeterminate = someChecked && !allChecked;
             }
+            
+            // Update select all checkbox
+            updateSelectAllCheckbox();
         });
     });
     
@@ -679,18 +788,42 @@ document.addEventListener('DOMContentLoaded', function() {
         moduleCheckbox.indeterminate = someChecked && !allChecked;
     });
     
+    // Initialize select all checkbox
+    updateSelectAllCheckbox();
+    
     // Form submission
     document.getElementById('permissionForm').addEventListener('submit', function(e) {
         SwalHelper.loading('Đang lưu phân quyền...', 'Vui lòng đợi trong giây lát');
     });
 });
 
+// Update select all checkbox state
+function updateSelectAllCheckbox() {
+    const selectAllCheckbox = document.getElementById('selectAll');
+    if (selectAllCheckbox) {
+        const allPermissionCheckboxes = document.querySelectorAll('.permission-checkbox');
+        const allChecked = Array.from(allPermissionCheckboxes).every(cb => cb.checked);
+        const someChecked = Array.from(allPermissionCheckboxes).some(cb => cb.checked);
+        
+        selectAllCheckbox.checked = allChecked;
+        selectAllCheckbox.indeterminate = someChecked && !allChecked;
+    }
+}
+
 // Reset form function
 function resetForm() {
-    SwalHelper.confirm(
-        'Đặt lại phân quyền?',
-        '<p style="margin-bottom: 1rem;">Bạn có chắc chắn muốn bỏ chọn tất cả các quyền?</p>',
-        function() {
+    Swal.fire({
+        title: 'Đặt lại phân quyền?',
+        html: '<p style="margin-bottom: 1rem;">Bạn có chắc chắn muốn bỏ chọn tất cả các quyền?</p>',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#22c55e',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: '<i class="ti ti-check"></i> Đặt lại',
+        cancelButtonText: '<i class="ti ti-x"></i> Hủy',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
             document.querySelectorAll('.permission-checkbox').forEach(checkbox => {
                 checkbox.checked = false;
             });
@@ -698,9 +831,12 @@ function resetForm() {
                 checkbox.checked = false;
                 checkbox.indeterminate = false;
             });
+            document.getElementById('selectAll').checked = false;
+            document.getElementById('selectAll').indeterminate = false;
+            
             SwalHelper.success('Đã đặt lại!', 'Tất cả quyền đã được bỏ chọn');
         }
-    );
+    });
 }
 </script>
 
