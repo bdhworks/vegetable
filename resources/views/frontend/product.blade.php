@@ -288,7 +288,7 @@
                         Phương thức vận chuyển
                     </h4>
                     <div class="delivery-methods">
-                        <div class="delivery-method-card active">
+                        <div class="delivery-method-card active" data-shipping-fee="0" onclick="selectDeliveryMethod(this)">
                             <div class="method-icon">
                                 <i class="fa fa-rocket"></i>
                             </div>
@@ -302,7 +302,7 @@
                             </div>
                         </div>
                         
-                        <div class="delivery-method-card">
+                        <div class="delivery-method-card" data-shipping-fee="20000" onclick="selectDeliveryMethod(this)">
                             <div class="method-icon">
                                 <i class="fa fa-truck"></i>
                             </div>
@@ -314,6 +314,23 @@
                             <div class="method-check">
                                 <i class="fa fa-circle-o"></i>
                             </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Shipping Summary -->
+                    <div class="shipping-summary">
+                        <div class="summary-row">
+                            <span class="summary-label">Giá sản phẩm:</span>
+                            <span class="summary-value" id="productPrice">{{ convertPrice($product->price_sale) }}</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Phí vận chuyển:</span>
+                            <span class="summary-value shipping-fee" id="shippingFee">Miễn phí</span>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-row total">
+                            <span class="summary-label">Tổng cộng:</span>
+                            <span class="summary-value" id="totalPrice">{{ convertPrice($product->price_sale) }}</span>
                         </div>
                     </div>
                 </div>
@@ -489,12 +506,12 @@
                         <img src="{{$relatedProduct->images->first()->image}}" alt="{{$relatedProduct->name}}">
                         
                         <div class="card-actions-overlay">
-                            <button class="card-action-btn" onclick="quickView({{$relatedProduct->id}})" title="Xem nhanh">
+                            <a class="card-action-btn" href="{{route('product', [$product, Str::slug($product->name)])}}">
                                 <i class="fa fa-eye"></i>
-                            </button>
-                            <button class="card-action-btn" onclick="addToWishlist({{$relatedProduct->id}})" title="Yêu thích">
+                            </a>
+                            <a class="card-action-btn" href="{{route('cart.addToFavorite', $relatedProduct->id)}}" title="Yêu thích">
                                 <i class="fa fa-heart-o"></i>
-                            </button>
+                            </a>
                             <button class="card-action-btn" onclick="compareProduct({{$relatedProduct->id}})" title="So sánh">
                                 <i class="fa fa-exchange"></i>
                             </button>
@@ -1433,6 +1450,7 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    margin-bottom: 24px;
 }
 
 .delivery-method-card {
@@ -1445,12 +1463,33 @@
     border-radius: var(--radius-lg);
     cursor: pointer;
     transition: var(--transition);
+    position: relative;
+}
+
+.delivery-method-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(5, 150, 105, 0.02));
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.delivery-method-card:hover::before {
+    opacity: 0.5;
 }
 
 .delivery-method-card:hover,
 .delivery-method-card.active {
     border-color: var(--primary-color);
     background: rgba(16, 185, 129, 0.05);
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+}
+
+.delivery-method-card.active::before {
+    opacity: 1;
 }
 
 .method-icon {
@@ -1464,6 +1503,12 @@
     color: white;
     font-size: 20px;
     flex-shrink: 0;
+    transition: var(--transition);
+}
+
+.delivery-method-card.active .method-icon {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
 .method-icon i {
@@ -1502,6 +1547,7 @@
 .method-check {
     font-size: 20px;
     color: var(--text-light);
+    transition: var(--transition);
 }
 
 .method-check i {
@@ -1510,77 +1556,65 @@
 
 .delivery-method-card.active .method-check {
     color: var(--primary-color);
+    transform: scale(1.2);
 }
 
-/* Social Share Modern - BALANCED */
-.social-share-modern {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 20px 0;
-    border-top: 2px solid var(--border-color);
+.delivery-method-card.active .method-check i::before {
+    content: "\f058"; /* fa-check-circle */
 }
 
-.share-text {
+/* Shipping Summary */
+.shipping-summary {
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.summary-row {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 8px;
+    padding: 10px 0;
+}
+
+.summary-label {
+    font-size: 14px;
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+.summary-value {
+    font-size: 15px;
+    color: var(--dark-color);
+    font-weight: 600;
+}
+
+.summary-value.shipping-fee {
+    color: var(--success-color);
+}
+
+.summary-divider {
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--border-color), transparent);
+    margin: 8px 0;
+}
+
+.summary-row.total {
+    padding-top: 15px;
+}
+
+.summary-row.total .summary-label {
+    font-size: 16px;
     font-weight: 700;
     color: var(--dark-color);
-    font-size: 15px;
 }
 
-.share-text i {
-    font-size: 16px;
-}
-
-.social-buttons-modern {
-    display: flex;
-    gap: 10px;
-}
-
-.social-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    text-decoration: none;
-    transition: var(--transition);
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-.social-btn i {
-    font-size: 18px;
-}
-
-.social-btn:hover {
-    transform: translateY(-3px) scale(1.1);
-    box-shadow: var(--shadow-lg);
-}
-
-.social-btn.facebook {
-    background: #3b5998;
-}
-
-.social-btn.messenger {
-    background: #0084ff;
-}
-
-.social-btn.zalo {
-    background: #0180c7;
-}
-
-.social-btn.twitter {
-    background: #1da1f2;
-}
-
-.social-btn.copy-link {
-    background: var(--text-dark);
+.summary-row.total .summary-value {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--primary-color);
 }
 
 /* Product Tabs */
@@ -2109,11 +2143,6 @@
     transition: width 0.3s ease;
 }
 
-.stock-text {
-    font-size: 12px;
-    color: var(--text-light);
-}
-
 /* Image Modal */
 .image-modal {
     display: none;
@@ -2533,12 +2562,80 @@ function updateMainImage() {
     });
 }
 
+const baseProductPrice = {{ $product->price_sale }};
+let currentShippingFee = 0;
+let currentQuantity = 1;
+
+// Delivery method selection
+function selectDeliveryMethod(element) {
+    // Remove active class from all cards
+    document.querySelectorAll('.delivery-method-card').forEach(card => {
+        card.classList.remove('active');
+        // Reset check icons
+        const checkIcon = card.querySelector('.method-check i');
+        if (checkIcon) {
+            checkIcon.className = 'fa fa-circle-o';
+        }
+    });
+    
+    // Add active class to selected card
+    element.classList.add('active');
+    
+    // Update check icon for active card
+    const activeCheckIcon = element.querySelector('.method-check i');
+    if (activeCheckIcon) {
+        activeCheckIcon.className = 'fa fa-check-circle';
+    }
+    
+    // Get shipping fee
+    const shippingFee = parseInt(element.getAttribute('data-shipping-fee'));
+    currentShippingFee = shippingFee;
+    
+    // Update shipping fee display
+    const shippingFeeElement = document.getElementById('shippingFee');
+    if (shippingFee === 0) {
+        shippingFeeElement.textContent = 'Miễn phí';
+        shippingFeeElement.classList.add('shipping-fee');
+    } else {
+        shippingFeeElement.textContent = formatPrice(shippingFee);
+        shippingFeeElement.classList.remove('shipping-fee');
+    }
+    
+    // Update total price
+    updateTotalPrice();
+}
+
+// Update total price calculation
+function updateTotalPrice() {
+    const quantity = parseInt(document.getElementById('quantity').value) || 1;
+    currentQuantity = quantity;
+    
+    const productTotal = baseProductPrice * quantity;
+    const totalPrice = productTotal + currentShippingFee;
+    
+    // Update product price
+    document.getElementById('productPrice').textContent = formatPrice(productTotal);
+    
+    // Update total price
+    document.getElementById('totalPrice').textContent = formatPrice(totalPrice);
+}
+
+// Format price with thousand separator
+function formatPrice(price) {
+    return new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND'
+    }).format(price);
+}
+
+// Override quantity functions to update price
 function increaseQuantity() {
     const quantityInput = document.getElementById('quantity');
     const max = parseInt(quantityInput.max);
     const current = parseInt(quantityInput.value);
     if (current < max) {
         quantityInput.value = current + 1;
+        updateTotalPrice();
     }
 }
 
@@ -2547,6 +2644,7 @@ function decreaseQuantity() {
     const current = parseInt(quantityInput.value);
     if (current > 1) {
         quantityInput.value = current - 1;
+        updateTotalPrice();
     }
 }
 
@@ -2606,7 +2704,6 @@ function copyProductLink() {
                 position: 'top-end'
             });
         } else {
-           
             alert('Đã sao chép link sản phẩm!');
         }
     });
@@ -2656,6 +2753,26 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+    
+    // Initialize price calculation
+    updateTotalPrice();
+    
+    // Listen for quantity input changes
+    const quantityInput = document.getElementById('quantity');
+    if (quantityInput) {
+        quantityInput.addEventListener('change', function() {
+            updateTotalPrice();
+        });
+        
+        quantityInput.addEventListener('input', function() {
+            updateTotalPrice();
+        });
+    }
+    
+    // Update total when page loads
+    setTimeout(() => {
+        updateTotalPrice();
+    }, 100);
 });
 
 function scrollCarousel(direction) {
@@ -2710,6 +2827,16 @@ function addToWishlist(productId) {
 
 function compareProduct(productId) {
     console.log('Compare product:', productId);
+}
+
+function selectDeliveryMethod() {
+    const methods = document.querySelectorAll('.delivery-method-card');
+    methods.forEach(method => {
+        method.addEventListener('click', function() {
+            methods.forEach(m => m.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
 }
 </script>
 

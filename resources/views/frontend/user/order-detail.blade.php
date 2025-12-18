@@ -175,7 +175,7 @@
                             @foreach ($order->products as $product)
                             <div class="product-item">
                                 <div class="product-image">
-                                    <img src="{{ $product->image ?? asset('assets/frontend/img/no-image.png') }}" alt="{{ $product->pivot->name }}">
+                                    <img id="mainProductImage" src="{{$product->images->first()->image}}" alt="{{$product->name}}">
                                 </div>
                                 <div class="product-info">
                                     <h6>{{ $product->pivot->name }}</h6>

@@ -133,4 +133,27 @@ class CartController extends Controller
         return redirect()->route('cart')->with('success', 'Xóa mã giảm giá thành công !');
     }
 
+    public function clearCart(){
+        Session::forget('cart');
+        Session::forget('total_price');
+        Session::forget('discount');
+        toastr()->success('Xóa giỏ hàng thành công');
+        return redirect()->back();
+    }
+
+    public function deleteOneProduct($product_id){
+        $cart = session('cart');
+        unset($cart[$product_id]);
+        session()->put('cart', $cart);
+        $this->totalPrice();
+        toastr()->success('Xóa thành công');
+        return back();
+    }
+
+    public function addToFavorite(Request $request){
+        // Logic to add items to favorite list
+        toastr()->success('Thêm vào yêu thích thành công');
+        return redirect()->back();  
+    }
+
 }

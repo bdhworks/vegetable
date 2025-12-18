@@ -273,6 +273,9 @@ Route::get('/gio-hang/giam/{product_id}', [CartController::class, 'decrease'])->
 Route::get('/gio-hang/xoa/{product_id}', [CartController::class, 'delete'])->name('cart.delete');
 Route::post('/ma-giam-gia', [CartController::class, 'discount'])->name('discount');
 Route::get('/xoa-ma-giam-gia', [CartController::class, 'deleteDiscount'])->name('deleteDiscount');
+Route::get('/gio-hang/xoa-tat-ca-san-pham', [CartController::class, 'clearCart'])->name('cart.clear');
+Route::get('/gio-hang/xoa-mot-san-pham/{product_id}', [CartController::class, 'deleteOneProduct'])->name('cart.deleteOneProduct');
+Route::get('/gio-hang/them-yeu-thich', [CartController::class, 'addToFavorite'])->name('cart.addToFavorite');
 
 Route::middleware(['guest:web'])->group(function () {
     Route::get('/dang-nhap', [AuthUserController::class, 'login'])->name('login');

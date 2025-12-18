@@ -15,7 +15,7 @@
                                 </div>
                                 <h1 class="hero-title">Hồ sơ của tôi</h1>
                                 <p class="hero-subtitle">
-                                    <i class="fa fa-info-circle me-2"></i>
+                                    <i class="fa fa-info-circle me-2 mr-1"></i>
                                     Quản lý thông tin để bảo mật tài khoản
                                 </p>
                             </div>
@@ -200,7 +200,7 @@
                                         </div>
                                         <div class="info-item">
                                             <div class="info-icon">
-                                                <i class="fa fa-map-marker-alt"></i>
+                                                <i class="fa fa-map"></i>
                                             </div>
                                             <div class="info-details">
                                                 <span class="info-label">Địa chỉ</span>
@@ -225,7 +225,7 @@
                                     <div class="activity-timeline">
                                         <div class="activity-item">
                                             <div class="activity-icon">
-                                                <i class="fa fa-user-check"></i>
+                                                <i class="fa fa-user"></i>
                                             </div>
                                             <div class="activity-content">
                                                 <p class="activity-text">Bạn đã đăng nhập vào hệ thống</p>
@@ -292,7 +292,7 @@
                                 <div class="security-item">
                                     <div class="security-info">
                                         <div class="security-icon">
-                                            <i class="fa fa-mobile-alt"></i>
+                                            <i class="fa fa-mobile"></i>
                                         </div>
                                         <div>
                                             <h5>Xác thực hai yếu tố</h5>

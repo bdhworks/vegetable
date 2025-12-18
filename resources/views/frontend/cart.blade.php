@@ -39,10 +39,10 @@
                     <i class="fa fa-check"></i>
                     <span>Chọn tất cả</span>
                 </button>
-                <button class="btn-clear-cart" onclick="clearCart()">
+                <a class="btn-clear-cart" href="{{route('cart.clear')}}">
                     <i class="fa fa-trash"></i>
                     <span>Xóa tất cả</span>
-                </button>
+                </a>
             </div>
         </div>
 
@@ -126,12 +126,12 @@
                             </div>
 
                             <div class="item-actions">
-                                <button class="action-btn favorite-btn" title="Thêm vào yêu thích">
+                                <a class="action-btn favorite-btn" href="{{route('cart.addToFavorite')}}" title="Thêm vào yêu thích">
                                     <i class="fa fa-heart-o"></i>
-                                </button>
-                                <button class="action-btn delete-btn" onclick="confirmDelete({{$item['product_id']}})" title="Xóa khỏi giỏ hàng">
+                                </a>
+                                <a class="action-btn delete-btn" href="{{route('cart.deleteOneProduct', $item['product_id'])}}" title="Xóa khỏi giỏ hàng">
                                     <i class="fa fa-trash"></i>
-                                </button>
+                                </a>
                             </div>
                         </div>
                         @endforeach

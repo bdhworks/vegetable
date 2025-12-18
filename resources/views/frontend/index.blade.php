@@ -226,26 +226,38 @@
     <div class="container">
         <div class="section-header-flash">
             <div class="section-title-group">
-                <h2 class="section-title-main">
-                    <i class="fa fa-bolt"></i>
-                    Flash Sale Hôm Nay
-                </h2>
-                <p class="section-subtitle-main">Giảm giá sốc chỉ trong hôm nay</p>
+                <div class="flash-badge-wrapper">
+                    <div class="flash-icon-box">
+                        <i class="fa fa-bolt"></i>
+                    </div>
+                    <div class="flash-text-group">
+                        <h2 class="section-title-main">
+                            Flash Sale Hôm Nay
+                        </h2>
+                        <p class="section-subtitle-main">
+                            <i class="fa fa-fire"></i>
+                            Giảm giá sốc - Số lượng có hạn
+                        </p>
+                    </div>
+                </div>
             </div>
             <div class="countdown-timer">
-                <div class="timer-box">
-                    <span class="timer-number">02</span>
-                    <span class="timer-label">Giờ</span>
-                </div>
-                <span class="timer-colon">:</span>
-                <div class="timer-box">
-                    <span class="timer-number">30</span>
-                    <span class="timer-label">Phút</span>
-                </div>
-                <span class="timer-colon">:</span>
-                <div class="timer-box">
-                    <span class="timer-number">45</span>
-                    <span class="timer-label">Giây</span>
+                <div class="timer-label-main">Kết thúc trong:</div>
+                <div class="timer-boxes">
+                    <div class="timer-box">
+                        <span class="timer-number">02</span>
+                        <span class="timer-label">Giờ</span>
+                    </div>
+                    <span class="timer-colon">:</span>
+                    <div class="timer-box">
+                        <span class="timer-number">30</span>
+                        <span class="timer-label">Phút</span>
+                    </div>
+                    <span class="timer-colon">:</span>
+                    <div class="timer-box">
+                        <span class="timer-number">45</span>
+                        <span class="timer-label">Giây</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -253,45 +265,88 @@
         <div class="flash-deals-grid">
             @foreach ($topSellingProducts->take(4) as $product)
             <div class="deal-card">
-                <div class="deal-badge">
-                    <span>-35%</span>
+                <div class="deal-badge-group">
+                    <div class="deal-badge discount-badge">
+                        <i class="fa fa-bolt"></i>
+                        <span>-35%</span>
+                    </div>
+                    <div class="deal-badge hot-badge">
+                        <i class="fa fa-fire"></i>
+                    </div>
                 </div>
+                
                 <div class="deal-image">
                     @if($product->images->count() > 0)
                         <img src="{{$product->images->first()->image}}" alt="{{$product->name}}">
                     @else
                         <div class="deal-placeholder">
                             <i class="fa fa-image"></i>
+                            <p>No Image</p>
                         </div>
                     @endif
+                    <div class="deal-overlay">
+                        <a class="deal-quick-view" href="{{route('product', [$product, Str::slug($product->name)])}}">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                    </div>
                 </div>
+                
                 <div class="deal-info">
-                    <h3 class="deal-title">{{$product->name}}</h3>
+                    <div class="deal-category">
+                        <i class="fa fa-leaf"></i>
+                        {{ $product->category->name ?? 'Nông Sản' }}
+                    </div>
+                    
+                    <h3 class="deal-title" title="{{$product->name}}">{{$product->name}}</h3>
+                    
                     <div class="deal-rating">
                         <div class="stars">
                             @for($i = 1; $i <= 5; $i++)
                             <i class="fa fa-star{{$i <= 4 ? '' : '-o'}}"></i>
                             @endfor
                         </div>
-                        <span class="sold-count">Đã bán {{rand(100, 500)}}</span>
+                        <span class="rating-number">(4.0)</span>
+                        <span class="sold-count">• {{rand(100, 500)}} đã bán</span>
                     </div>
-                    <div class="deal-price">
-                        <span class="price-sale">{{number_format($product->price_sale)}}₫</span>
-                        <span class="price-original">{{number_format($product->price_sale * 1.35)}}₫</span>
+                    
+                    <div class="deal-price-wrapper">
+                        <div class="deal-price">
+                            <span class="price-sale">{{number_format($product->price_sale)}}₫</span>
+                            <span class="price-original">{{number_format($product->price_sale * 1.35)}}₫</span>
+                        </div>
+                        <div class="save-amount">
+                            <i class="fa fa-gift"></i>
+                            Tiết kiệm {{number_format($product->price_sale * 0.35)}}₫
+                        </div>
                     </div>
+                    
                     <div class="deal-progress">
+                        <div class="progress-header">
+                            <span class="progress-label">
+                                <i class="fa fa-fire"></i>
+                                Đang bán chạy
+                            </span>
+                            <span class="progress-text">Đã bán 70%</span>
+                        </div>
                         <div class="progress-bar">
                             <div class="progress-fill" style="width: 70%"></div>
                         </div>
-                        <span class="progress-text">Đã bán 70%</span>
                     </div>
+                    
                     <a href="{{route('cart.add', $product)}}" class="btn-add-deal">
                         <i class="fa fa-shopping-cart"></i>
-                        Thêm Vào Giỏ
+                        <span>Thêm Vào Giỏ</span>
                     </a>
                 </div>
             </div>
             @endforeach
+        </div>
+        
+        <div class="flash-deals-footer">
+            <a href="{{route('shop')}}" class="btn-view-all-deals">
+                Xem Tất Cả Flash Sale
+                <i class="fa fa-arrow-right"></i>
+            </a>
         </div>
     </div>
 </section>
@@ -346,9 +401,9 @@
                         <button class="action-icon-btn" title="Yêu thích">
                             <i class="fa fa-heart-o"></i>
                         </button>
-                        <button class="action-icon-btn" title="Xem nhanh">
+                        <a class="action-icon-btn" href="{{route('product', [$product, Str::slug($product->name)])}}">
                             <i class="fa fa-eye"></i>
-                        </button>
+                        </a>
                         <button class="action-icon-btn" title="So sánh">
                             <i class="fa fa-exchange"></i>
                         </button>
@@ -1404,222 +1459,652 @@
     color: var(--color-text-light);
 }
 
-/* Flash Deals */
+/* Flash Deals - Enhanced Beautiful Design */
 .flash-deals-section {
     padding: 80px 0;
-    background: var(--color-light);
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fbbf24 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.flash-deals-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(249, 115, 22, 0.1) 0%, transparent 50%);
+    pointer-events: none;
 }
 
 .section-header-flash {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     flex-wrap: wrap;
+    gap: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.flash-badge-wrapper {
+    display: flex;
+    align-items: center;
     gap: 20px;
 }
 
-.section-title-main {
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--color-dark);
-    margin-bottom: 8px;
+.flash-icon-box {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    border-radius: 20px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4);
+    animation: flashPulse 2s ease-in-out infinite;
 }
 
-.section-title-main i {
-    color: var(--color-secondary);
+@keyframes flashPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(239, 68, 68, 0.6);
+    }
+}
+
+.flash-icon-box i {
+    font-size: 2.5rem;
+    color: white;
+    animation: flashBolt 1.5s ease-in-out infinite;
+}
+
+@keyframes flashBolt {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-10deg);
+    }
+    75% {
+        transform: rotate(10deg);
+    }
+}
+
+.flash-text-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.section-title-main {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #1f2937;
+    margin: 0;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .section-subtitle-main {
     font-size: 1rem;
-    color: var(--color-text-light);
+    color: #78350f;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+
+.section-subtitle-main i {
+    color: #ea580c;
+    animation: fireFlicker 1s ease-in-out infinite;
+}
+
+@keyframes fireFlicker {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.1);
+    }
 }
 
 .countdown-timer {
     display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: white;
+    padding: 20px 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.timer-label-main {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #78350f;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.timer-boxes {
+    display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 
 .timer-box {
-    background: var(--color-danger);
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
     color: white;
-    padding: 12px 16px;
-    border-radius: var(--radius-md);
+    padding: 15px 18px;
+    border-radius: 12px;
     text-align: center;
+    min-width: 70px;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.timer-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: timerShine 3s infinite;
+}
+
+@keyframes timerShine {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
 }
 
 .timer-number {
     display: block;
-    font-size: 1.5rem;
-    font-weight: 800;
+    font-size: 2rem;
+    font-weight: 900;
     line-height: 1;
+    margin-bottom: 4px;
 }
 
 .timer-label {
     display: block;
-    font-size: 11px;
-    opacity: 0.9;
+    font-size: 0.75rem;
+    opacity: 0.95;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .timer-colon {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: var(--color-dark);
+    font-size: 2rem;
+    font-weight: 900;
+    color: #dc2626;
+    animation: colonBlink 1s infinite;
+}
+
+@keyframes colonBlink {
+    0%, 49%, 100% {
+        opacity: 1;
+    }
+    50%, 99% {
+        opacity: 0.3;
+    }
 }
 
 .flash-deals-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    gap: 30px;
+    position: relative;
+    z-index: 1;
 }
 
 .deal-card {
     background: white;
-    border-radius: var(--radius-lg);
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: var(--shadow-md);
-    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
+    border: 3px solid transparent;
+}
+
+.deal-card::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 20px;
+    padding: 3px;
+    background: linear-gradient(135deg, #ef4444, #f97316, #fbbf24);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.deal-card:hover::before {
+    opacity: 1;
 }
 
 .deal-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-xl);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 50px rgba(239, 68, 68, 0.3);
 }
 
-.deal-badge {
+.deal-badge-group {
     position: absolute;
-    top: 12px;
-    left: 12px;
-    background: var(--color-danger);
-    color: white;
-    padding: 6px 12px;
-    border-radius: var(--radius-md);
-    font-size: 13px;
-    font-weight: 700;
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     z-index: 10;
 }
 
-.deal-image {
-    height: 200px;
-    background: var(--color-light);
+.deal-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 800;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: badgeBounce 2s ease-in-out infinite;
+}
+
+@keyframes badgeBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.discount-badge {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+}
+
+.hot-badge {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    color: white;
+    width: 45px;
+    height: 45px;
+    padding: 0;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.hot-badge i {
+    font-size: 1.2rem;
+    animation: fireFlicker 1s ease-in-out infinite;
+}
+
+.deal-image {
+    height: 240px;
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
 }
 
 .deal-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.deal-card:hover .deal-image img {
+    transform: scale(1.15) rotate(2deg);
 }
 
 .deal-placeholder {
     text-align: center;
-    color: var(--color-text-light);
+    color: #9ca3af;
 }
 
 .deal-placeholder i {
-    font-size: 60px;
-    margin-bottom: 8px;
+    font-size: 4rem;
+    margin-bottom: 12px;
+    opacity: 0.5;
+}
+
+.deal-placeholder p {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.deal-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.deal-card:hover .deal-overlay {
+    opacity: 1;
+}
+
+.deal-quick-view {
+    background: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    color: var(--color-primary);
+}
+
+.deal-quick-view:hover {
+    transform: scale(1.1);
+    background: var(--color-primary);
+    color: white;
+}
+
+.deal-quick-view i {
+    font-size: 1.25rem;
 }
 
 .deal-info {
-    padding: 20px;
+    padding: 24px;
+}
+
+.deal-category {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+    color: #166534;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .deal-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--color-dark);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1f2937;
     margin-bottom: 12px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.4;
+    min-height: 2.8em;
 }
 
 .deal-rating {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.stars {
+    display: flex;
+    gap: 2px;
 }
 
 .stars i {
     color: #fbbf24;
-    font-size: 14px;
+    font-size: 0.875rem;
+}
+
+.rating-number {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #4b5563;
 }
 
 .sold-count {
-    font-size: 12px;
-    color: var(--color-text-light);
+    font-size: 0.75rem;
+    color: #9ca3af;
+    font-weight: 500;
 }
 
-.deal-price {
-    margin-bottom: 12px;
-}
-
-.price-sale {
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: var(--color-primary);
-    margin-right: 8px;
-}
-
-.price-original {
-    font-size: 14px;
-    color: var(--color-text-light);
-    text-decoration: line-through;
-}
-
-.deal-progress {
+.deal-price-wrapper {
     margin-bottom: 16px;
 }
 
+.deal-price {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.price-sale {
+    font-size: 1.75rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.price-original {
+    font-size: 1rem;
+    color: #9ca3af;
+    text-decoration: line-through;
+    font-weight: 500;
+}
+
+.save-amount {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    color: #92400e;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.save-amount i {
+    color: #f59e0b;
+}
+
+.deal-progress {
+    margin-bottom: 20px;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.progress-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #dc2626;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.progress-label i {
+    animation: fireFlicker 1s ease-in-out infinite;
+}
+
+.progress-text {
+    font-size: 0.75rem;
+    color: #6b7280;
+    font-weight: 600;
+}
+
 .progress-bar {
-    height: 8px;
-    background: var(--color-border);
-    border-radius: var(--radius-full);
+    height: 10px;
+    background: #e5e7eb;
+    border-radius: 10px;
     overflow: hidden;
-    margin-bottom: 6px;
+    position: relative;
 }
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
-    border-radius: var(--radius-full);
-    transition: width 0.3s ease;
+    background: linear-gradient(90deg, #ef4444 0%, #f97316 50%, #fbbf24 100%);
+    border-radius: 10px;
+    position: relative;
+    transition: width 0.5s ease;
 }
 
-.progress-text {
-    font-size: 12px;
-    color: var(--color-text-light);
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    animation: progressShine 2s infinite;
+}
+
+@keyframes progressShine {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 .btn-add-deal {
     width: 100%;
-    background: var(--color-primary);
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
     border: none;
-    padding: 12px;
-    border-radius: var(--radius-md);
-    font-weight: 600;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
     text-decoration: none;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-add-deal::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.5s ease, height 0.5s ease;
+}
+
+.btn-add-deal:hover::before {
+    width: 300px;
+    height: 300px;
 }
 
 .btn-add-deal:hover {
-    background: var(--color-primary-dark);
-    transform: scale(1.02);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.btn-add-deal i,
+.btn-add-deal span {
+    position: relative;
+    z-index: 1;
+}
+
+.flash-deals-footer {
+    margin-top: 50px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.btn-view-all-deals {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 40px;
+    background: white;
+    color: #dc2626;
+    border: 3px solid #dc2626;
+    border-radius: 50px;
+    font-size: 1.125rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.2);
+}
+
+.btn-view-all-deals:hover {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(220, 38, 38, 0.4);
+}
+
+.btn-view-all-deals i {
+    transition: transform 0.3s ease;
+}
+
+.btn-view-all-deals:hover i {
+    transform: translateX(5px);
 }
 
 /* Featured Products - Enhanced Design */
@@ -2598,6 +3083,11 @@
     .newsletter-container-modern {
         gap: 40px;
     }
+    
+    .flash-deals-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
 }
 
 @media (max-width: 992px) {
@@ -2635,6 +3125,33 @@
         width: 100%;
         justify-content: center;
     }
+    
+    .flash-deals-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .section-header-flash {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 25px;
+    }
+    
+    .flash-badge-wrapper {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .countdown-timer {
+        width: 100%;
+    }
+    
+    .section-title-main {
+        font-size: 2rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -2650,6 +3167,65 @@
     .newsletter-footer-info {
         flex-direction: column;
         text-align: center;
+    }
+    
+    .flash-deals-section {
+        padding: 60px 0;
+    }
+    
+    .section-header-flash {
+        margin-bottom: 35px;
+    }
+    
+    .flash-icon-box {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .flash-icon-box i {
+        font-size: 2rem;
+    }
+    
+    .section-title-main {
+        font-size: 1.75rem;
+    }
+    
+    .section-subtitle-main {
+        font-size: 0.875rem;
+    }
+    
+    .timer-box {
+        padding: 12px 14px;
+        min-width: 60px;
+    }
+    
+    .timer-number {
+        font-size: 1.5rem;
+    }
+    
+    .timer-label {
+        font-size: 0.65rem;
+    }
+    
+    .deal-image {
+        height: 200px;
+    }
+    
+    .deal-title {
+        font-size: 1rem;
+    }
+    
+    .price-sale {
+        font-size: 1.5rem;
+    }
+    
+    .flash-deals-footer {
+        margin-top: 40px;
+    }
+    
+    .btn-view-all-deals {
+        padding: 14px 32px;
+        font-size: 1rem;
     }
 }
 
@@ -2670,6 +3246,114 @@
     
     .stat-number-large {
         font-size: 2rem;
+    }
+    
+    .flash-deals-section {
+        padding: 50px 0;
+    }
+    
+    .flash-deals-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .flash-badge-wrapper {
+        gap: 12px;
+    }
+    
+    .flash-icon-box {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .flash-icon-box i {
+        font-size: 1.5rem;
+    }
+    
+    .section-title-main {
+        font-size: 1.5rem;
+    }
+    
+    .countdown-timer {
+        padding: 16px 20px;
+    }
+    
+    .timer-boxes {
+        gap: 8px;
+        justify-content: center;
+    }
+    
+    .timer-box {
+        padding: 10px 12px;
+        min-width: 55px;
+    }
+    
+    .timer-number {
+        font-size: 1.25rem;
+    }
+    
+    .timer-colon {
+        font-size: 1.25rem;
+    }
+    
+    .deal-card {
+        border-radius: 16px;
+    }
+    
+    .deal-image {
+        height: 220px;
+    }
+    
+    .deal-info {
+        padding: 20px;
+    }
+    
+    .deal-badge {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+    }
+    
+    .hot-badge {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .hot-badge i {
+        font-size: 1rem;
+    }
+    
+    .deal-title {
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+    }
+    
+    .deal-rating {
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 12px;
+    }
+    
+    .price-sale {
+        font-size: 1.375rem;
+    }
+    
+    .price-original {
+        font-size: 0.875rem;
+    }
+    
+    .btn-add-deal {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+    
+    .flash-deals-footer {
+        margin-top: 35px;
+    }
+    
+    .btn-view-all-deals {
+        padding: 12px 28px;
+        font-size: 0.95rem;
+        border-width: 2px;
     }
 }
 </style>

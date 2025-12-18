@@ -169,7 +169,7 @@
                                 <input type="radio" name="delivery" id="express" value="express">
                                 <label for="express" class="delivery-label">
                                     <div class="delivery-icon">
-                                        <i class="fa fa-shipping"></i>
+                                        <i class="fa fa-truck"></i>
                                     </div>
                                     <div class="delivery-info">
                                         <h4>Giao hàng nhanh</h4>
@@ -215,7 +215,7 @@
                                 <input type="radio" name="payment" id="cod" value="2" checked>
                                 <label for="cod" class="payment-label">
                                     <div class="payment-icon">
-                                        <i class="fa fa-money-bill"></i>
+                                        <i class="fa fa-money"></i>
                                     </div>
                                     <div class="payment-info">
                                         <h4>Thanh toán khi nhận hàng (COD)</h4>
