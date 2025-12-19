@@ -1098,6 +1098,1083 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--gradient-ocean);
         }
+
+        /* Beautiful Floating Action Buttons */
+        .floating-actions-beautiful {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .floating-btn-wrapper {
+            position: relative;
+            animation: floatBtnSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            animation-fill-mode: both;
+        }
+
+        .floating-btn-wrapper.chat-wrapper {
+            animation-delay: 0.1s;
+        }
+
+        .floating-btn-wrapper.follow-wrapper {
+            animation-delay: 0.2s;
+        }
+
+        .floating-btn-wrapper.scroll-wrapper {
+            animation-delay: 0.3s;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .floating-btn-wrapper.scroll-wrapper.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Hide all buttons when chat is active */
+        .floating-actions-beautiful.chat-active .floating-btn-wrapper {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(100px) scale(0.8);
+            pointer-events: none;
+        }
+
+        @keyframes floatBtnSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        .floating-btn-beautiful {
+            position: relative;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+            border: none;
+            text-decoration: none;
+            overflow: visible;
+        }
+
+        .floating-btn-beautiful:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-icon-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .floating-btn-beautiful i {
+            font-size: 24px;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .pulse-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid;
+            opacity: 0;
+            animation: pulseRing 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes pulseRing {
+            0% {
+                transform: scale(0.95);
+                opacity: 0.8;
+            }
+            50% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: scale(1.4);
+                opacity: 0;
+            }
+        }
+
+        .btn-tooltip {
+            position: absolute;
+            right: calc(100% + 12px);
+            background: rgba(31, 41, 55, 0.95);
+            color: white;
+            padding: 10px 16px;
+            border-radius: var(--border-radius-lg);
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-tooltip::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 6px solid rgba(31, 41, 55, 0.95);
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+        }
+
+        .floating-btn-wrapper:hover .btn-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 12px;
+            height: 12px;
+            background: #ef4444;
+            border-radius: 50%;
+            border: 2px solid white;
+            animation: notificationPulse 2s ease-in-out infinite;
+            z-index: 3;
+        }
+
+        @keyframes notificationPulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        /* Chat Button Styles */
+        .chat-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .chat-btn .pulse-ring {
+            border-color: #10b981;
+        }
+
+        .chat-btn:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        }
+
+        .chat-btn:hover i {
+            animation: chatBounce 0.6s ease-in-out;
+        }
+
+        @keyframes chatBounce {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1) rotate(-10deg); }
+            75% { transform: scale(1.1) rotate(10deg); }
+        }
+
+        /* Follow Button Styles */
+        .follow-btn {
+            background: linear-gradient(135deg, #1877f2 0%, #0a5dc2 100%);
+        }
+
+        .follow-btn .pulse-ring {
+            border-color: #1877f2;
+        }
+
+        .follow-btn:hover {
+            background: linear-gradient(135deg, #0a5dc2 0%, #084a9a 100%);
+        }
+
+        .follow-btn:hover i {
+            animation: followShake 0.6s ease-in-out;
+        }
+
+        @keyframes followShake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-15deg); }
+            75% { transform: rotate(15deg); }
+        }
+
+        /* Zalo Button Styles */
+        .zalo-btn {
+            background: linear-gradient(135deg, #0068FF 0%, #0084FF 100%);
+            box-shadow: 0 4px 15px rgba(0, 104, 255, 0.4);
+        }
+
+        .zalo-btn .pulse-ring {
+            border: 3px solid rgba(0, 104, 255, 0.5);
+        }
+
+        .zalo-btn .btn-icon-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .zalo-btn .btn-icon-container img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .zalo-btn:hover {
+            background: linear-gradient(135deg, #0084FF 0%, #0068FF 100%);
+            box-shadow: 0 6px 25px rgba(0, 104, 255, 0.6);
+            animation: zaloWave 0.6s ease;
+        }
+
+        .zalo-btn:hover .btn-icon-container img {
+            animation: zaloRing 0.6s ease;
+        }
+
+        @keyframes zaloWave {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.05) rotate(-3deg); }
+            50% { transform: scale(1.1); }
+            75% { transform: scale(1.05) rotate(3deg); }
+        }
+
+        @keyframes zaloRing {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            10% { transform: rotate(-15deg) scale(1.1); }
+            20% { transform: rotate(15deg) scale(1.1); }
+            30% { transform: rotate(-15deg) scale(1.1); }
+            40% { transform: rotate(15deg) scale(1.1); }
+            50% { transform: rotate(-10deg) scale(1.05); }
+            60% { transform: rotate(10deg) scale(1.05); }
+            70% { transform: rotate(-5deg) scale(1); }
+            80% { transform: rotate(5deg) scale(1); }
+        }
+
+        /* Scroll Top Button Styles */
+        .scroll-top-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        }
+
+        .scroll-top-btn:hover {
+            background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+        }
+
+        .scroll-top-btn:hover i {
+            animation: arrowUp 0.6s ease-in-out infinite;
+        }
+
+        @keyframes arrowUp {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        /* Chat Modal Styles */
+        .chat-modal-beautiful {
+            position: fixed;
+            bottom: 100px;
+            right: 24px;
+            width: 380px;
+            height: 600px;
+            max-height: calc(100vh - 120px);
+            background: white;
+            border-radius: var(--border-radius-2xl);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-modal-beautiful.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .chat-modal-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: var(--gradient-emerald);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .chat-header-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-avatar {
+            position: relative;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            flex-shrink: 0;
+            background-color: white;
+        }
+
+        .chat-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .online-status {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            background: #22c55e;
+            border-radius: 50%;
+            border: 2px solid white;
+            animation: onlinePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes onlinePulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .chat-header-text h4 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .chat-header-text p {
+            margin: 0;
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .chat-close-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .chat-body {
+            padding: 16px;
+            height: 400px;
+            overflow-y: auto;
+            background: var(--neutral-gray-50);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            flex: 1;
+        }
+
+        .chat-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-body::-webkit-scrollbar-thumb {
+            background: var(--neutral-gray-300);
+            border-radius: 3px;
+        }
+
+        .chat-welcome {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: var(--border-radius-lg);
+            margin-bottom: 16px;
+        }
+
+        .admin-status-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-radius: var(--border-radius-lg);
+            font-size: 13px;
+            color: var(--neutral-gray-700);
+        }
+
+        .admin-status-info i {
+            color: var(--primary-emerald);
+        }
+
+        .admin-status-info strong {
+            color: var(--primary-emerald);
+            font-weight: 700;
+        }
+
+        .welcome-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .welcome-icon i {
+            font-size: 32px;
+            color: var(--primary-emerald);
+        }
+
+        .chat-welcome h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--neutral-gray-900);
+            margin-bottom: 8px;
+        }
+
+        .chat-welcome p {
+            font-size: 14px;
+            color: var(--neutral-gray-500);
+            margin: 0;
+        }
+
+        .chat-quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .quick-action-btn {
+            padding: 16px;
+            background: var(--neutral-gray-50);
+            border: 2px solid transparent;
+            border-radius: var(--border-radius-lg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .quick-action-btn:hover {
+            background: white;
+            border-color: var(--primary-emerald);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+        }
+
+        .quick-action-btn i {
+            font-size: 24px;
+            color: var(--primary-emerald);
+        }
+
+        .quick-action-btn span {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--neutral-gray-700);
+        }
+
+        .chat-footer {
+            border-top: 2px solid var(--neutral-gray-100);
+            background: white;
+            flex-shrink: 0;
+        }
+
+        .chat-contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .contact-method-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: white;
+            border: 2px solid var(--neutral-gray-200);
+            border-radius: var(--border-radius-lg);
+            text-decoration: none;
+            color: var(--neutral-gray-700);
+            transition: all 0.3s ease;
+        }
+
+        .contact-method-btn:hover {
+            border-color: var(--primary-emerald);
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .contact-method-btn i {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--border-radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .phone-btn i {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            color: #3b82f6;
+        }
+
+        .messenger-btn i {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            color: #1877f2;
+        }
+
+        .zalo-btn i {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            color: #0068ff;
+        }
+
+        .method-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .method-label {
+            font-size: 11px;
+            color: var(--neutral-gray-500);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .method-value {
+            font-size: 14px;
+            color: var(--neutral-gray-900);
+            font-weight: 700;
+        }
+
+        /* Real-time Chat Styles */
+        .chat-messages {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 8px 0;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .message-wrapper {
+            display: flex;
+            gap: 8px;
+            animation: messageSlideIn 0.3s ease-out;
+        }
+
+        @keyframes messageSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-wrapper.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            overflow: hidden;
+            background: var(--gradient-emerald);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .message-wrapper.admin .message-avatar,
+        .message-wrapper.bot .message-avatar {
+            background: white;
+            border: 2px solid #e2e8f0;
+            padding: 4px;
+        }
+
+        .message-wrapper.user .message-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .message-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .message-content {
+            max-width: 70%;
+        }
+
+        .message-bubble {
+            padding: 12px 16px;
+            border-radius: 18px;
+            position: relative;
+            word-wrap: break-word;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .message-wrapper.bot .message-bubble,
+        .message-wrapper.admin .message-bubble {
+            background: white;
+            color: var(--neutral-gray-800);
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .message-wrapper.admin .message-bubble {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border: 1px solid #bfdbfe;
+        }
+
+        .message-wrapper.user .message-bubble {
+            background: var(--gradient-emerald);
+            color: white;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: var(--neutral-gray-400);
+            margin-top: 4px;
+            display: block;
+        }
+
+        .message-wrapper.user .message-time {
+            text-align: right;
+            color: var(--neutral-gray-500);
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: flex;
+            gap: 8px;
+            padding: 8px 0;
+            animation: messageSlideIn 0.3s ease-out;
+        }
+
+        .typing-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: white;
+            padding: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .typing-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .typing-bubble {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .typing-dots span {
+            width: 8px;
+            height: 8px;
+            background: var(--primary-emerald);
+            border-radius: 50%;
+            animation: typingDot 1.4s ease-in-out infinite;
+        }
+
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingDot {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            30% {
+                transform: translateY(-6px);
+                opacity: 1;
+            }
+        }
+
+        /* Chat Input Styles */
+        .chat-input-container {
+            padding: 16px;
+            background: white;
+            border-top: 2px solid var(--neutral-gray-100);
+        }
+
+        .user-name-input {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .name-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--neutral-gray-200);
+            border-radius: var(--border-radius-lg);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            color: var(--neutral-gray-800);
+            transition: all 0.3s ease;
+        }
+
+        .name-input:focus {
+            outline: none;
+            border-color: var(--primary-emerald);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .name-input::placeholder {
+            color: var(--neutral-gray-400);
+        }
+
+        .start-chat-btn {
+            padding: 12px 24px;
+            background: var(--gradient-emerald);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius-lg);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .start-chat-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        .start-chat-btn:active {
+            transform: translateY(0);
+        }
+
+        .chat-input-hint {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--neutral-gray-500);
+            margin-top: 8px;
+            padding: 8px;
+            background: var(--neutral-gray-50);
+            border-radius: var(--border-radius-md);
+        }
+
+        .chat-input-hint i {
+            color: var(--primary-emerald);
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--neutral-gray-50);
+            border: 2px solid var(--neutral-gray-200);
+            border-radius: 24px;
+            padding: 4px 4px 4px 12px;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input-wrapper:focus-within {
+            border-color: var(--primary-emerald);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .emoji-btn,
+        .attach-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            color: var(--neutral-gray-500);
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .emoji-btn:hover,
+        .attach-btn:hover {
+            background: var(--neutral-gray-200);
+            color: var(--primary-emerald);
+        }
+
+        .chat-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 8px 4px;
+            font-size: 14px;
+            color: var(--neutral-gray-800);
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .chat-input::placeholder {
+            color: var(--neutral-gray-400);
+        }
+
+        .send-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: var(--gradient-emerald);
+            color: white;
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .send-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        .send-btn:active {
+            transform: scale(0.95);
+        }
+
+        .send-btn i {
+            font-size: 14px;
+        }
+
+        /* Suggested messages */
+        .suggested-messages {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 12px 0;
+            animation: messageSlideIn 0.3s ease-out;
+        }
+
+        .suggested-msg-btn {
+            padding: 8px 14px;
+            background: white;
+            border: 2px solid var(--neutral-gray-200);
+            border-radius: 16px;
+            font-size: 13px;
+            color: var(--neutral-gray-700);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .suggested-msg-btn:hover {
+            border-color: var(--primary-emerald);
+            background: rgba(16, 185, 129, 0.05);
+            color: var(--primary-emerald);
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Responsive for Floating Buttons */
+        @media (max-width: 768px) {
+            .floating-actions-beautiful {
+                bottom: 16px;
+                right: 16px;
+                gap: 10px;
+            }
+
+            .floating-btn-beautiful {
+                width: 52px;
+                height: 52px;
+            }
+
+            .floating-btn-beautiful i {
+                font-size: 22px;
+            }
+
+            .btn-tooltip {
+                display: none;
+            }
+
+            .chat-modal-beautiful {
+                width: calc(100vw - 32px);
+                max-width: 380px;
+                height: calc(100vh - 180px);
+                max-height: 550px;
+                bottom: 90px;
+                right: 16px;
+            }
+
+            .chat-quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .quick-action-btn {
+                padding: 12px;
+            }
+
+            .quick-action-btn i {
+                font-size: 20px;
+            }
+
+            .quick-action-btn span {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .floating-btn-beautiful {
+                width: 48px;
+                height: 48px;
+            }
+
+            .floating-btn-beautiful i {
+                font-size: 20px;
+            }
+
+            .chat-modal-beautiful {
+                width: calc(100vw - 16px);
+                height: calc(100vh - 160px);
+                max-height: 500px;
+                right: 8px;
+                bottom: 80px;
+            }
+
+            .chat-body {
+                padding: 10px;
+                height: auto;
+                max-height: 300px;
+            }
+
+            .chat-quick-actions {
+                gap: 8px;
+                margin-top: 12px;
+            }
+
+            .chat-header {
+                padding: 16px;
+            }
+
+            .chat-input-container {
+                padding: 12px;
+            }
+
+            .user-name-input {
+                flex-direction: column;
+            }
+
+            .start-chat-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .quick-action-btn {
+                padding: 10px 8px;
+            }
+
+            .quick-action-btn i {
+                font-size: 20px;
+            }
+        }
     </style>
 </head>
 
@@ -1353,6 +2430,192 @@
 
     @yield('content')
 
+    <!-- Beautiful Floating Action Buttons -->
+    <div class="floating-actions-beautiful">
+        <!-- Chat Button -->
+        <div class="floating-btn-wrapper chat-wrapper">
+            <a href="#" class="floating-btn-beautiful chat-btn" id="chatBtn">
+                <div class="btn-icon-container">
+                    <i class="fa fa-comments"></i>
+                    <span class="pulse-ring"></span>
+                </div>
+                <span class="btn-tooltip">Chat với chúng tôi</span>
+                <span class="notification-dot"></span>
+            </a>
+        </div>
+
+        <!-- Follow Page Button -->
+        <div class="floating-btn-wrapper follow-wrapper">
+            <a href="#" class="floating-btn-beautiful follow-btn" id="followBtn">
+                <div class="btn-icon-container">
+                    <i class="fa fa-facebook"></i>
+                    <span class="pulse-ring"></span>
+                </div>
+                <span class="btn-tooltip">Theo dõi Fanpage</span>
+            </a>
+        </div>
+
+        <!-- Zalo Button -->
+        <div class="floating-btn-wrapper zalo-wrapper">
+            <a href="https://zalo.me/0988888888" target="_blank" class="floating-btn-beautiful zalo-btn" id="zaloBtn">
+                <div class="btn-icon-container">
+                    <img src="{{ asset('assets/frontend/img/zalo.png') }}" alt="">
+                    <span class="pulse-ring"></span>
+                </div>
+                <span class="btn-tooltip">Chat Zalo với chúng tôi</span>
+            </a>
+        </div>
+
+        <!-- Scroll to Top Button -->
+        <div class="floating-btn-wrapper scroll-wrapper">
+            <button class="floating-btn-beautiful scroll-top-btn" id="scrollTopBtn">
+                <div class="btn-icon-container">
+                    <i class="fa fa-arrow-up"></i>
+                </div>
+                <span class="btn-tooltip">Lên đầu trang</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Chat Modal with Real-time Messaging -->
+    <div class="chat-modal-beautiful" id="chatModal">
+        <div class="chat-modal-content">
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <div class="chat-avatar">
+                        <img src="{{ asset('assets/frontend/img/icon_logo.png') }}" alt="Support">
+                        <span class="online-status"></span>
+                    </div>
+                    <div class="chat-header-text">
+                        <h4>Nông Sản Việt</h4>
+                        <p id="chatStatus">Trực tuyến • Phản hồi ngay</p>
+                    </div>
+                </div>
+                <button class="chat-close-btn" id="closeChatBtn">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="chat-body" id="chatBody">
+                <!-- Welcome message -->
+                <div class="chat-welcome" id="chatWelcome">
+                    <div class="welcome-icon">
+                        <i class="fa fa-comments-o"></i>
+                    </div>
+                    <h3>Xin chào! 👋</h3>
+                    <p>Bắt đầu cuộc trò chuyện với chúng tôi</p>
+                    <div class="admin-status-info">
+                        <i class="fa fa-clock-o"></i>
+                        <span>Thời gian phản hồi: <strong>~2 phút</strong></span>
+                    </div>
+                </div>
+                
+                <!-- Quick actions -->
+                <div class="chat-quick-actions" id="quickActions">
+                    <button class="quick-action-btn" data-message="Tôi muốn đặt hàng">
+                        <i class="fa fa-shopping-bag"></i>
+                        <span>Đặt hàng</span>
+                    </button>
+                    <button class="quick-action-btn" data-message="Cho tôi xem các khuyến mãi hiện tại">
+                        <i class="fa fa-gift"></i>
+                        <span>Khuyến mãi</span>
+                    </button>
+                    <button class="quick-action-btn" data-message="Tôi muốn biết chính sách giao hàng">
+                        <i class="fa fa-truck"></i>
+                        <span>Giao hàng</span>
+                    </button>
+                    <button class="quick-action-btn" data-message="Tôi cần hỗ trợ">
+                        <i class="fa fa-headphones"></i>
+                        <span>Hỗ trợ</span>
+                    </button>
+                </div>
+
+                <!-- Messages container -->
+                <div class="chat-messages" id="chatMessages"></div>
+
+                <!-- Typing indicator -->
+                <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                    <div class="typing-avatar">
+                        <img src="{{ asset('assets/frontend/img/icon_logo.png') }}" alt="Admin">
+                    </div>
+                    <div class="typing-bubble">
+                        <div class="typing-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-footer">
+                <!-- Message input - Always visible for customer -->
+                <div class="chat-input-container" id="chatInputContainer">
+                    <div class="user-name-input" id="userNameInput">
+                        <input 
+                            type="text" 
+                            id="userName" 
+                            class="name-input" 
+                            placeholder="Nhập tên của bạn..."
+                            maxlength="30"
+                        >
+                        <button class="start-chat-btn" id="startChatBtn">
+                            <i class="fa fa-comment"></i>
+                            <span>Bắt đầu chat</span>
+                        </button>
+                    </div>
+                    <div class="chat-input-wrapper" id="messageInputWrapper" style="display: none;">
+                        <button class="emoji-btn" id="emojiBtn" title="Emoji">
+                            <i class="fa fa-smile-o"></i>
+                        </button>
+                        <input 
+                            type="text" 
+                            id="chatInput" 
+                            class="chat-input" 
+                            placeholder="Nhập tin nhắn gửi tới admin..."
+                            autocomplete="off"
+                        >
+                        <button class="attach-btn" id="attachBtn" title="Đính kèm file">
+                            <i class="fa fa-paperclip"></i>
+                        </button>
+                        <button class="send-btn" id="sendBtn" title="Gửi tin nhắn">
+                            <i class="fa fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="chat-input-hint">
+                        <i class="fa fa-info-circle"></i>
+                        <span>Nhắn tin trực tiếp với Admin - Phản hồi nhanh chóng</span>
+                    </div>
+                </div>
+
+                <!-- Contact methods (alternative contacts) -->
+                <div class="chat-contact-methods" id="contactMethods" style="display: none;">
+                    <a href="tel:0988888888" class="contact-method-btn phone-btn">
+                        <i class="fa fa-phone"></i>
+                        <div class="method-info">
+                            <span class="method-label">Gọi ngay</span>
+                            <span class="method-value">0988 888 888</span>
+                        </div>
+                    </a>
+                    <a href="https://facebook.com" target="_blank" class="contact-method-btn messenger-btn">
+                        <i class="fa fa-facebook-messenger"></i>
+                        <div class="method-info">
+                            <span class="method-label">Messenger</span>
+                            <span class="method-value">Chat Facebook</span>
+                        </div>
+                    </a>
+                    <a href="https://zalo.me" target="_blank" class="contact-method-btn zalo-btn">
+                        <i class="fa fa-commenting"></i>
+                        <div class="method-info">
+                            <span class="method-label">Zalo</span>
+                            <span class="method-value">Chat Zalo</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Elite Footer Begin -->
     <footer class="footer-elite">
         <div class="footer-content">
@@ -1456,6 +2719,14 @@
                 }
                 
                 lastScrollTop = scrollTop;
+
+                // Show/hide scroll to top button
+                const scrollTopBtn = document.querySelector('.scroll-wrapper');
+                if (scrollTop > 300) {
+                    scrollTopBtn.classList.add('visible');
+                } else {
+                    scrollTopBtn.classList.remove('visible');
+                }
             });
 
             // Enhanced search functionality
@@ -1492,6 +2763,479 @@
                     }
                 });
             });
+
+            // Real-time Chat System with Admin Support
+            class ChatSystem {
+                constructor() {
+                    this.chatBtn = document.getElementById('chatBtn');
+                    this.chatModal = document.getElementById('chatModal');
+                    this.closeChatBtn = document.getElementById('closeChatBtn');
+                    this.userNameInput = document.getElementById('userName');
+                    this.startChatBtn = document.getElementById('startChatBtn');
+                    this.userNameInputDiv = document.getElementById('userNameInput');
+                    this.messageInputWrapper = document.getElementById('messageInputWrapper');
+                    this.chatInput = document.getElementById('chatInput');
+                    this.sendBtn = document.getElementById('sendBtn');
+                    this.chatMessages = document.getElementById('chatMessages');
+                    this.chatBody = document.getElementById('chatBody');
+                    this.typingIndicator = document.getElementById('typingIndicator');
+                    this.chatWelcome = document.getElementById('chatWelcome');
+                    this.quickActions = document.getElementById('quickActions');
+                    this.chatInputContainer = document.getElementById('chatInputContainer');
+                    this.contactMethods = document.getElementById('contactMethods');
+                    this.chatStatus = document.getElementById('chatStatus');
+                    
+                    this.messages = this.loadMessages();
+                    this.isTyping = false;
+                    this.userName = this.getUserName();
+                    this.userImage = this.getUserImage();
+                    this.sessionId = this.getSessionId();
+                    this.isAdminOnline = true; // Simulate admin status
+                    
+                    this.init();
+                }
+
+                init() {
+                    // Open/close chat
+                    this.chatBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        this.openChat();
+                    });
+
+                    this.closeChatBtn.addEventListener('click', () => {
+                        this.closeChat();
+                    });
+
+                    // Start chat with name
+                    this.startChatBtn.addEventListener('click', () => {
+                        this.initializeChat();
+                    });
+
+                    this.userNameInput.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') {
+                            this.initializeChat();
+                        }
+                    });
+
+                    // Send message
+                    this.sendBtn.addEventListener('click', () => this.sendMessage());
+                    
+                    this.chatInput.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') {
+                            this.sendMessage();
+                        }
+                    });
+
+                    // Quick action buttons
+                    document.querySelectorAll('.quick-action-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const message = btn.getAttribute('data-message');
+                            if (!this.userName || this.userName === 'Khách') {
+                                this.userNameInput.focus();
+                                return;
+                            }
+                            this.startChat(message);
+                        });
+                    });
+
+                    // Close when clicking outside
+                    document.addEventListener('click', (e) => {
+                        if (!this.chatModal.contains(e.target) && !this.chatBtn.contains(e.target)) {
+                            this.closeChat();
+                        }
+                    });
+
+                    this.chatModal.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+
+                    // Load existing chat session
+                    if (this.userName && this.userName !== 'Khách' && this.messages.length > 0) {
+                        this.showChatMode();
+                        this.renderMessages();
+                    } else if (this.userName && this.userName !== 'Khách') {
+                        // User is logged in, skip name input
+                        @if (Auth::guard('web')->check())
+                            this.showChatMode();
+                            setTimeout(() => {
+                                this.addMessage('admin', `Xin chào ${this.userName}! Tôi là admin của Nông Sản Việt. Tôi có thể giúp gì cho bạn? 😊`);
+                            }, 500);
+                        @else
+                            this.userNameInput.value = this.userName;
+                        @endif
+                    }
+                }
+
+                initializeChat() {
+                    const name = this.userNameInput.value.trim();
+                    if (name === '') {
+                        this.userNameInput.focus();
+                        return;
+                    }
+                    
+                    this.userName = name;
+                    localStorage.setItem('chatUserName', name);
+                    
+                    // Send welcome message from admin
+                    this.showChatMode();
+                    setTimeout(() => {
+                        this.addMessage('admin', `Xin chào ${name}! Tôi là admin của Nông Sản Việt. Tôi có thể giúp gì cho bạn? 😊`);
+                    }, 500);
+                }
+
+                getUserName() {
+                    // Check if user is logged in from Laravel
+                    @if (Auth::guard('web')->check())
+                        return '{{ Auth::guard('web')->user()->name }}';
+                    @endif
+                    
+                    let name = localStorage.getItem('chatUserName');
+                    return name || null;
+                }
+
+                getUserImage() {
+                    // Check if user is logged in and has image from Laravel
+                    @if (Auth::guard('web')->check())
+                        @if (Auth::guard('web')->user()->avatar)
+                            return '{{ asset("storage/" . Auth::guard('web')->user()->avatar) }}';
+                        @endif
+                    @endif
+                    
+                    return null;
+                }
+
+                getSessionId() {
+                    let sessionId = localStorage.getItem('chatSessionId');
+                    if (!sessionId) {
+                        sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                        localStorage.setItem('chatSessionId', sessionId);
+                    }
+                    return sessionId;
+                }
+
+                openChat() {
+                    this.chatModal.classList.add('active');
+                    document.querySelector('.floating-actions-beautiful').classList.add('chat-active');
+                    if (this.messages.length > 0 && this.userName) {
+                        this.chatInput.focus();
+                    } else if (!this.userName || this.userName === 'Khách') {
+                        this.userNameInput.focus();
+                    }
+                }
+
+                closeChat() {
+                    this.chatModal.classList.remove('active');
+                    document.querySelector('.floating-actions-beautiful').classList.remove('chat-active');
+                }
+
+                startChat(initialMessage) {
+                    this.showChatMode();
+                    if (initialMessage) {
+                        setTimeout(() => {
+                            this.addMessage('user', initialMessage);
+                            this.adminResponse(initialMessage);
+                        }, 300);
+                    }
+                    this.chatInput.focus();
+                }
+
+                showChatMode() {
+                    this.chatWelcome.style.display = 'none';
+                    this.quickActions.style.display = 'none';
+                    this.chatMessages.style.display = 'flex';
+                    this.userNameInputDiv.style.display = 'none';
+                    this.messageInputWrapper.style.display = 'flex';
+                    this.contactMethods.style.display = 'none';
+                }
+
+                sendMessage() {
+                    const message = this.chatInput.value.trim();
+                    if (message === '') return;
+
+                    this.addMessage('user', message);
+                    this.chatInput.value = '';
+                    
+                    // Send to server (simulated with admin response)
+                    this.sendToServer(message);
+                    
+                    // Admin response after delay
+                    setTimeout(() => {
+                        this.adminResponse(message);
+                    }, 2000 + Math.random() * 2000);
+                }
+
+                sendToServer(message) {
+                    // Simulate sending to server
+                    const data = {
+                        sessionId: this.sessionId,
+                        userName: this.userName,
+                        message: message,
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    console.log('Sending to server:', data);
+                    
+                    // TODO: Replace with actual API call
+                    // fetch('/api/chat/send', {
+                    //     method: 'POST',
+                    //     headers: { 'Content-Type': 'application/json' },
+                    //     body: JSON.stringify(data)
+                    // });
+                }
+
+                addMessage(sender, text) {
+                    const timestamp = new Date().toLocaleTimeString('vi-VN', { 
+                        hour: '2-digit', 
+                        minute: '2-digit' 
+                    });
+
+                    const messageData = { sender, text, timestamp, sessionId: this.sessionId };
+                    this.messages.push(messageData);
+                    this.saveMessages();
+
+                    this.renderMessage(messageData);
+                    this.scrollToBottom();
+                }
+
+                renderMessage(messageData) {
+                    const { sender, text, timestamp } = messageData;
+                    
+                    const messageWrapper = document.createElement('div');
+                    messageWrapper.className = `message-wrapper ${sender}`;
+
+                    const avatar = document.createElement('div');
+                    avatar.className = 'message-avatar';
+                    
+                    if (sender === 'admin' || sender === 'bot') {
+                        avatar.innerHTML = '<img src="{{ asset("assets/frontend/img/icon_logo.png") }}" alt="Admin">';
+                    } else {
+                        if (this.userImage) {
+                            const img = document.createElement('img');
+                            img.src = this.userImage;
+                            img.alt = this.userName || 'User';
+                            img.onerror = () => {
+                                // If image fails to load, show letter avatar
+                                avatar.innerHTML = '';
+                                avatar.textContent = this.userName ? this.userName.charAt(0).toUpperCase() : 'K';
+                            };
+                            avatar.appendChild(img);
+                        } else {
+                            avatar.textContent = this.userName ? this.userName.charAt(0).toUpperCase() : 'K';
+                        }
+                    }
+
+                    const content = document.createElement('div');
+                    content.className = 'message-content';
+                    
+                    const bubble = document.createElement('div');
+                    bubble.className = 'message-bubble';
+                    bubble.textContent = text;
+
+                    const time = document.createElement('span');
+                    time.className = 'message-time';
+                    time.textContent = timestamp;
+
+                    content.appendChild(bubble);
+                    content.appendChild(time);
+
+                    messageWrapper.appendChild(avatar);
+                    messageWrapper.appendChild(content);
+
+                    this.chatMessages.appendChild(messageWrapper);
+                }
+
+                renderMessages() {
+                    this.chatMessages.innerHTML = '';
+                    this.messages.forEach(msg => this.renderMessage(msg));
+                    this.scrollToBottom();
+                }
+
+                showTyping() {
+                    this.typingIndicator.style.display = 'flex';
+                    this.chatStatus.textContent = 'Admin đang soạn tin nhắn...';
+                    this.scrollToBottom();
+                }
+
+                hideTyping() {
+                    this.typingIndicator.style.display = 'none';
+                    this.chatStatus.textContent = 'Trực tuyến • Phản hồi ngay';
+                }
+
+                adminResponse(userMessage) {
+                    this.showTyping();
+
+                    const responses = this.getAdminResponse(userMessage);
+                    const response = responses[Math.floor(Math.random() * responses.length)];
+
+                    setTimeout(() => {
+                        this.hideTyping();
+                        this.addMessage('admin', response);
+                        
+                        // Show suggested messages occasionally
+                        if (Math.random() > 0.6) {
+                            this.showSuggestedMessages();
+                        }
+                    }, 2000 + Math.random() * 2000);
+                }
+
+                getAdminResponse(message) {
+                    const lowerMessage = message.toLowerCase();
+
+                    if (lowerMessage.includes('đặt hàng') || lowerMessage.includes('mua')) {
+                        return [
+                            `Chào ${this.userName}! Tôi rất vui được hỗ trợ bạn đặt hàng. Bạn có thể xem sản phẩm tại trang Sản phẩm hoặc cho tôi biết bạn quan tâm loại nông sản nào? Tôi sẽ tư vấn cụ thể cho bạn! 🛒`,
+                            `Tuyệt vời ${this.userName}! Để đặt hàng, bạn chọn sản phẩm yêu thích và thêm vào giỏ. Nếu cần tư vấn về sản phẩm nào, cứ hỏi tôi nhé! 🌿`
+                        ];
+                    }
+
+                    if (lowerMessage.includes('khuyến mãi') || lowerMessage.includes('giảm giá')) {
+                        return [
+                            'Hiện chúng tôi đang có chương trình: Giảm 25% đơn đầu tiên + Freeship từ 500K. Ngoài ra còn nhiều Flash Sale hấp dẫn mỗi ngày! Bạn muốn đặt hàng luôn không? 🎉',
+                            'Ưu đãi hot hiện tại: -25% đơn đầu, miễn phí ship 500K+, và combo tiết kiệm đến 40%! Để tôi gửi bạn link sản phẩm đang sale nhé! 🎁'
+                        ];
+                    }
+
+                    if (lowerMessage.includes('giao hàng') || lowerMessage.includes('ship')) {
+                        return [
+                            'Về giao hàng, chúng tôi có 2 hình thức:\n• Giao nhanh (2-4h): Miễn phí\n• Giao tiêu chuẩn (1-2 ngày): 20.000đ\nBạn ở khu vực nào để tôi check thời gian giao cụ thể nhé? 🚚',
+                            'Chúng tôi giao hàng toàn quốc! Giao nhanh 2-4h hoặc tiêu chuẩn 1-2 ngày. Miễn phí ship cho đơn từ 500K. Bạn cần giao đến đâu ạ? 📦'
+                        ];
+                    }
+
+                    if (lowerMessage.includes('chất lượng') || lowerMessage.includes('tươi')) {
+                        return [
+                            'Về chất lượng bạn yên tâm nhé! 100% nông sản sạch, được kiểm tra kỹ từ vườn. Nếu có vấn đề gì, chúng tôi đổi trả miễn phí trong 24h. Cam kết tươi ngon! 🌱',
+                            'Tất cả sản phẩm đều là nông sản sạch, nguồn gốc rõ ràng từ các trang trại uy tín. Tôi có thể gửi bạn chứng nhận VietGAP nếu bạn cần! ✅'
+                        ];
+                    }
+
+                    if (lowerMessage.includes('cảm ơn') || lowerMessage.includes('thanks')) {
+                        return [
+                            `Rất vui được hỗ trợ ${this.userName}! Nếu cần gì thêm, cứ nhắn tin cho tôi bất cứ lúc nào nhé! 😊`,
+                            'Không có gì! Chúc bạn có trải nghiệm mua sắm tuyệt vời tại Nông Sản Việt! 🌟'
+                        ];
+                    }
+
+                    if (lowerMessage.includes('giá') || lowerMessage.includes('bao nhiêu')) {
+                        return [
+                            'Giá của chúng tôi rất cạnh tranh và cập nhật hàng ngày theo thị trường. Bạn quan tâm sản phẩm nào cụ thể? Tôi sẽ báo giá chi tiết và có thêm ưu đãi cho bạn! 💰',
+                            'Mỗi loại sản phẩm có giá khác nhau. Bạn muốn hỏi về sản phẩm nào? Tôi sẽ tư vấn giá tốt nhất cho bạn! 🏷️'
+                        ];
+                    }
+
+                    if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('chào')) {
+                        return [
+                            `Chào ${this.userName}! Rất vui được trò chuyện với bạn. Tôi có thể giúp bạn về đặt hàng, sản phẩm, khuyến mãi hay giao hàng. Bạn cần tư vấn gì nhé? 👋`,
+                            `Hi ${this.userName}! Tôi là admin của Nông Sản Việt. Cần tôi hỗ trợ gì cho bạn không? 😊`
+                        ];
+                    }
+
+                    // Default responses
+                    return [
+                        `${this.userName} ơi, tôi hiểu câu hỏi của bạn rồi. Để tôi hỗ trợ chính xác hơn, bạn có thể nói rõ hơn về: Sản phẩm nào bạn quan tâm? Hay cần tư vấn về đặt hàng, giao hàng? 😊`,
+                        'Tôi đang lắng nghe! Bạn cần tư vấn về sản phẩm, giá cả, khuyến mãi hay giao hàng? Cứ hỏi tôi bất cứ điều gì nhé! 💚',
+                        'Để tôi hỗ trợ bạn tốt nhất, bạn có thể cho tôi biết cụ thể hơn bạn cần gì không? Ví dụ: Loại rau củ, trái cây hay thực phẩm nào bạn đang tìm? 🌿'
+                    ];
+                }
+
+                showSuggestedMessages() {
+                    const suggestions = [
+                        'Xem sản phẩm mới',
+                        'Khuyến mãi hiện tại',
+                        'Chính sách đổi trả',
+                        'Liên hệ trực tiếp'
+                    ];
+
+                    const suggestedContainer = document.createElement('div');
+                    suggestedContainer.className = 'suggested-messages';
+
+                    suggestions.forEach(text => {
+                        const btn = document.createElement('button');
+                        btn.className = 'suggested-msg-btn';
+                        btn.textContent = text;
+                        btn.addEventListener('click', () => {
+                            this.addMessage('user', text);
+                            this.botResponse(text);
+                            suggestedContainer.remove();
+                        });
+                        suggestedContainer.appendChild(btn);
+                    });
+
+                    this.chatMessages.appendChild(suggestedContainer);
+                    this.scrollToBottom();
+                }
+
+                scrollToBottom() {
+                    setTimeout(() => {
+                        this.chatBody.scrollTop = this.chatBody.scrollHeight;
+                    }, 100);
+                }
+
+                saveMessages() {
+                    localStorage.setItem('chatMessages', JSON.stringify(this.messages));
+                }
+
+                loadMessages() {
+                    const saved = localStorage.getItem('chatMessages');
+                    return saved ? JSON.parse(saved) : [];
+                }
+
+                clearChat() {
+                    this.messages = [];
+                    this.saveMessages();
+                    this.chatMessages.innerHTML = '';
+                }
+            }
+
+            // Initialize chat system
+            const chatSystem = new ChatSystem();
+
+            // Scroll to Top Functionality
+            const scrollTopBtn = document.getElementById('scrollTopBtn');
+            if (scrollTopBtn) {
+                scrollTopBtn.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+
+            // Follow Button - Open Facebook page in new tab
+            const followBtn = document.getElementById('followBtn');
+            if (followBtn) {
+                followBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Replace with your actual Facebook page URL
+                    window.open('https://www.facebook.com/nongsanviet', '_blank');
+                });
+            }
+
+            // Quick action buttons functionality
+            const quickActionBtns = document.querySelectorAll('.quick-action-btn');
+            quickActionBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const text = this.querySelector('span').textContent;
+                    console.log('Quick action clicked:', text);
+                    // Add your custom logic here based on the action
+                });
+            });
+
+            // Auto-show chat modal on first visit (optional)
+            const hasSeenChat = localStorage.getItem('hasSeenChat');
+            if (!hasSeenChat) {
+                setTimeout(() => {
+                    if (chatModal) {
+                        chatModal.classList.add('active');
+                        localStorage.setItem('hasSeenChat', 'true');
+                        
+                        // Auto-hide after 5 seconds
+                        setTimeout(() => {
+                            chatModal.classList.remove('active');
+                        }, 5000);
+                    }
+                }, 3000);
+            }
         });
     </script>
 

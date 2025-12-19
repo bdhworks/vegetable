@@ -2038,6 +2038,7 @@
     box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
     position: relative;
     overflow: hidden;
+    text-decoration: none;
 }
 
 .btn-add-deal::before {
@@ -2061,6 +2062,7 @@
 .btn-add-deal:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    text-decoration: none;
 }
 
 .btn-add-deal i,
